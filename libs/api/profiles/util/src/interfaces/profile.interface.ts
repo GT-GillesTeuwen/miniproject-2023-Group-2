@@ -5,7 +5,7 @@ import { AgeGroup, Gender } from '../enums';
 import { IMatchDetails } from './match-details.interface';
 
 export interface IProfile {
-  UID: string ;
+  UID: string | null | undefined;
   Bio?: string | null | undefined;
   ProfilePhoto?: string | null | undefined;
   TimeRemaining?: number | null | undefined; 
@@ -18,5 +18,4 @@ export interface IProfile {
   ContactDetails?: IContactDetails | null | undefined;
   Matches?: IMatchDetails[] | null |undefined;
   Created?: Timestamp | null | undefined;
-  
 }

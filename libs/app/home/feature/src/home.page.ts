@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
-import { SubscribeToProfile } from '@mp/app/profile/util';
+import { SubscribeToProfile, SubscribeToMatches } from '@mp/app/profile/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -17,5 +17,6 @@ export class HomePage {
 
   ionViewWillEnter() {
     this.store.dispatch(new SubscribeToProfile());
+    this.store.dispatch(new SubscribeToMatches());
   }
 }

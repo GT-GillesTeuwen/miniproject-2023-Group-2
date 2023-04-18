@@ -13,6 +13,15 @@ export class SetProfile {
   constructor(public readonly profile: IProfile | null) {}
 }
 
+export class SubscribeToMatches {
+  static readonly type = '[Profile] SubscribeToMatches';
+}
+
+export class SetMatches {
+  static readonly type = '[Profile] SetMatches';
+  constructor(public readonly matches: IProfile[] | null) {}
+}
+
 export class UpdateAccountDetails {
   static readonly type = '[Profile] UpdateAccountDetails';
 }

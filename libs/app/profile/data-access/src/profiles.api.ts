@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { doc, docData, Firestore } from '@angular/fire/firestore';
+import { doc, docData, Firestore, collection } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   IGetUserProfileRequest, IGetUserProfileResponse,
@@ -17,6 +17,9 @@ import {
   IUpdateProfileRequest,
   IUpdateProfileResponse
 } from '@mp/api/profiles/util';
+import { all } from 'axios';
+import { QuerySnapshot } from 'firebase-admin/firestore';
+import { getDocs } from 'firebase/firestore';
 
 @Injectable()
 export class ProfilesApi {
@@ -37,6 +40,23 @@ export class ProfilesApi {
       toFirestore: (it: IProfile) => it,
     });
     return docData(docRef, { idField: 'id' });
+  }
+
+  async matches$(id: string): Promise<IProfile[]> {
+    const docRef = collection(this.firestore, 'profiles').withConverter<IProfile>({
+      fromFirestore: (snapshot) => {
+        return snapshot.data() as IProfile;
+      },
+      toFirestore: (it: IProfile) => it,
+    });
+  
+    try {
+      const querySnapshot = await getDocs(docRef);
+      return querySnapshot.docs.map((doc) => doc.data() as IProfile);
+    } catch (error) {
+      console.error('Error fetching profiles:', error);
+      return [];
+    }
   }
 
   async updateProfileDetails(request: IUpdateProfileRequest) {

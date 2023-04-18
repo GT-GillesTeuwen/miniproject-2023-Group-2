@@ -19,6 +19,8 @@ import {
     SaveProfileChanges,
     SetProfile,
     SubscribeToProfile,
+    SetMatches,
+    SubscribeToMatches,
     //UpdateAccountDetails,
     //UpdateAddressDetails,
     UpdateContactDetails,
@@ -28,41 +30,13 @@ import {
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
-import { tap } from 'rxjs';
+import { tap, from } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
 import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
-  accountDetailsForm: {
-    model: {
-      displayName: string | null;
-      email: string | null;
-      photoURL: string | null;
-      password: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  addressDetailsForm: {
-    model: {
-      residentialArea: string | null;
-      workArea: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  contactDetailsForm: {
-    model: {
-      cellphone: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
   personalDetailsForm: {
     model: {
       Hobby: string[] | null;
@@ -73,15 +47,7 @@ export interface ProfileStateModel {
     status: string;
     errors: object;
   };
-  occupationDetailsForm: {
-    model: {
-      householdIncome: HouseholdIncome | null;
-      occupation: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
+  matches: IProfile[] | null
 }
 
 export interface SaveProfileChangesModel{
@@ -99,34 +65,6 @@ export interface SaveProfileChangesModel{
   name: 'profile',
   defaults: {
     profile: null,
-    accountDetailsForm: {
-      model: {
-        displayName: null,
-        email: null,
-        photoURL: null,
-        password: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    addressDetailsForm: {
-      model: {
-        residentialArea: null,
-        workArea: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    contactDetailsForm: {
-      model: {
-        cellphone: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
     personalDetailsForm: {
       model: {
         Hobby: null,
@@ -137,17 +75,10 @@ export interface SaveProfileChangesModel{
       status: '',
       errors: {},
     },
-    occupationDetailsForm: {
-      model: {
-        householdIncome: null,
-        occupation: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
+    matches : null
   },
 })
+
 @Injectable()
 export class ProfileState {
   constructor(
@@ -159,6 +90,11 @@ export class ProfileState {
   @Selector()
   static profile(state: ProfileStateModel) {
     return state.profile;
+  }
+
+  @Selector()
+  static match(state: ProfileStateModel) {
+    return state.matches;
   }
 
   @Action(Logout)
@@ -181,6 +117,25 @@ export class ProfileState {
     return ctx.setState(
       produce((draft) => {
         draft.profile = profile;
+      })
+    );
+  }
+
+  @Action(SubscribeToMatches)
+  subscribeToMatches(ctx: StateContext<ProfileStateModel>) {
+    const user = this.store.selectSnapshot(AuthState.user);
+    if (!user) return ctx.dispatch(new SetError('User not set'));
+
+    return from( this.profileApi
+      .matches$(user.uid))
+      .pipe(tap((matches: IProfile[]) => ctx.dispatch(new SetMatches(matches))));
+  }
+
+  @Action(SetMatches)
+  setMatches(ctx: StateContext<ProfileStateModel>, { matches }: SetMatches) {
+    return ctx.setState(
+      produce((draft) => {
+        draft.matches = matches;
       })
     );
   }
@@ -362,13 +317,10 @@ export class ProfileState {
 
       const responseRef =await this.profileApi.updateProfilePhoto(request);
       const response = responseRef.data;
-      return ctx.dispatch(new SetProfile(response.profile));
+      return response;
+      // return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
   }
-
-  
-
- 
 }

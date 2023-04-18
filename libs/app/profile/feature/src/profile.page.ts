@@ -19,6 +19,8 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 })
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.match) matches$!: Observable<IProfile[] | null>;
+
   @Select(actionsExecuting([SaveProfileChanges])) busy$!: Observable<ActionsExecuting>;
   profileChangesForm = this.fb.group({
     aboutMe: [ '', [ Validators.maxLength(300)],],
