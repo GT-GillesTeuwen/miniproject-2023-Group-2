@@ -15,6 +15,8 @@ import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
 
+
+
 // export const updateAccountDetails = functions.https.onCall(
 //   async (
 //     request: IUpdateAccountDetailsRequest
@@ -24,6 +26,8 @@ import { CoreModule } from '../core.module';
 //     return service.updateAccountDetails(request);
 //   }
 // );
+
+
 
 export const updateAddressDetails = functions.https.onCall(
   async (

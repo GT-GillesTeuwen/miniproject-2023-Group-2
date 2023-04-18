@@ -20,10 +20,11 @@ export class UpdateDetailsHandler
     console.log(`${UpdateDetailsHandler.name}`);
 
     const request = command.request;
-    const profileDoc = await this.repository.findOne(request.profile);
+    console.log(request.profile.UID);
+    const profileDoc = await this.repository.findOne(request.profile)
     const profileData = profileDoc.data();
 
-    if (!profileData) throw new Error('Profile not found');
+    if (!profileData) throw ("Profile not found")
 
     const profile = this.publisher.mergeObjectContext(
       Profile.fromData(profileData)

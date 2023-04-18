@@ -83,7 +83,6 @@ export class ProfilesApi {
       };
 
       return await this.updateProfileDetails( {profile});
-
   }
 
   async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
@@ -95,6 +94,17 @@ export class ProfilesApi {
 
     return await this.updateProfileDetails( {profile});
 
+}
+
+
+async getUserProfileDetails(request: IGetUserProfileRequest) {
+  return await httpsCallable<
+    IGetUserProfileRequest,
+    IGetUserProfileResponse
+  >(
+    this.functions,
+    'getUserProfile'
+  )(request);
 }
 
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {
@@ -147,14 +157,5 @@ export class ProfilesApi {
     )(request);
   }
 
-  async getUserProfileDetails(request: IGetUserProfileRequest) {
-    return await httpsCallable<
-      IGetUserProfileRequest,
-      IGetUserProfileResponse
-    >(
-      this.functions,
-      'getUserProfile'
-    )(request);
-  }
 
 }

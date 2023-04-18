@@ -13,15 +13,19 @@ export const onAuthCreate = functions.auth
     service.onAuthCreate(user);
   });
 
-  export const updateProfile = functions.https.onCall(
+  export const updateProfile = functions
+
+  .
+  https.onCall(
     async (
       request: IUpdateProfileRequest
     ): Promise<IUpdateProfileResponse> => {
 
-
+  
       
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(AuthService);
       return service.updateProfile(request);
     }
   );
+
