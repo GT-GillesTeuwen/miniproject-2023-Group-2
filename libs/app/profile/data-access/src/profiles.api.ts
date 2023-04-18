@@ -77,6 +77,17 @@ export class ProfilesApi {
 
 }
 
+
+async getUserProfileDetails(request: IGetUserProfileRequest) {
+  return await httpsCallable<
+    IGetUserProfileRequest,
+    IGetUserProfileResponse
+  >(
+    this.functions,
+    'getUserProfile'
+  )(request);
+}
+
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {
     return await httpsCallable<
       IUpdateAccountDetailsRequest,
@@ -127,14 +138,5 @@ export class ProfilesApi {
     )(request);
   }
 
-  async getUserProfileDetails(request: IGetUserProfileRequest) {
-    return await httpsCallable<
-      IGetUserProfileRequest,
-      IGetUserProfileResponse
-    >(
-      this.functions,
-      'getUserProfile'
-    )(request);
-  }
 
 }

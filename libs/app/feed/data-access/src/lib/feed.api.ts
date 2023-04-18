@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {collection, collectionData, doc, docData, Firestore} from '@angular/fire/firestore';
-import {Functions} from "@angular/fire/functions";
-import {IProfile} from "@mp/api/profiles/util";
+import {Functions,httpsCallable} from "@angular/fire/functions";
+import {IProfile,IUpdateProfileRequest,IUpdateProfileResponse} from "@mp/api/profiles/util";
 import {Observable} from "rxjs";
+
 
 
 @Injectable()
@@ -16,4 +17,16 @@ export class FeedApi {
     const profileCollectionReference = collection(this.firestore, 'Profiles/');
     return collectionData(profileCollectionReference) as Observable<IProfile[]>;
   }
+
+
+  async updateProfileDetails(request: IUpdateProfileRequest) {
+    return await httpsCallable<
+      IUpdateProfileRequest,
+      IUpdateProfileResponse
+    >(
+      this.functions,   // auth.functio,ns.ts in api/core/feature
+      'updateProfile'
+    )(request);
+  }
+
 }

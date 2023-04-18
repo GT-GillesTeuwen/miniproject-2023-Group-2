@@ -14,6 +14,9 @@ import {
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
+import {IUpdateProfileRequest,IUpdateProfileResponse} from '@mp/api/profiles/util'
+import { AuthService } from '@mp/api/auth/feature';
+
 
 // export const updateAccountDetails = functions.https.onCall(
 //   async (
@@ -24,6 +27,19 @@ import { CoreModule } from '../core.module';
 //     return service.updateAccountDetails(request);
 //   }
 // );
+
+export const updateProfile = functions.https.onCall(
+  async (
+    request: IUpdateProfileRequest
+  ): Promise<IUpdateProfileResponse> => {
+
+
+    
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(AuthService);
+    return service.updateProfile(request);
+  }
+);
 
 export const updateAddressDetails = functions.https.onCall(
   async (
