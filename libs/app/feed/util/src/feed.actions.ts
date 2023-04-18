@@ -14,8 +14,6 @@ export class updateMatches {
   static readonly type = '[Feed] updateMatches';
   constructor(
     public readonly MatchUserID: string,
-    public readonly ConversationID: string,
-    public readonly MeetingID: string,
   ) {}
 }
  

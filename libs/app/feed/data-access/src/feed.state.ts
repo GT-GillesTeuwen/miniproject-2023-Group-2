@@ -10,8 +10,10 @@ import {
     SetProfile,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { ProfilesApi } from '@mp/app/profile/data-access';
+// import { ProfilesApi } from '@mp/app/profile/data-access';
 import { AuthApi } from '@mp/app/auth/data-access';
+import { updateMatches } from '@mp/api/feed/util';
+import { FeedApi } from './feed.api';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
@@ -38,7 +40,7 @@ export interface SaveProfileChangesModel{
 @Injectable()
 export class ProfileState {
   constructor(
-    private readonly profileApi: ProfilesApi,
+    private readonly feedApi: FeedApi,
     private readonly authApi: AuthApi,
     private readonly store: Store
   ) {}
@@ -51,43 +53,38 @@ export class ProfileState {
 
   
 
-//   @Action(updateMatches)
-//   async updateMatches(ctx: StateContext<ProfileStateModel>,{PID}: updateMatches) {
-//     try {
+  @Action(updateMatches)
+  async updateMatches(ctx: StateContext<ProfileStateModel>,{PID}: updateMatches) {
+    try {
      
-//       //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
-//       const state = ctx.getState();
-//       const UID= this.authApi.auth.currentUser?.uid;
-//       const MID = PID;
-//       const CID = null;
-//       const MEID =null;
-//       //alert("UID at saveProfileChanges is "+UID);
+      //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const MID = PID;
+      const CID = null;
+      const MEID =null;
+      //alert("UID at saveProfileChanges is "+UID);
 
+      const matches : IMatchDetails ={
+        MatchUserID:PID,
+        ConversationID: CID,
+        MeetingID : MEID
+      };
 
+      const request: IUpdateProfileRequest = {
+        profile: {
+          UID:UID,
+          Matches: [matches],
+        },
+      };
 
-//       /*TODO Generate conversation ID, Generate Meeting ID
-
-
-//       */
-
-//       const matches : IMatchDetails ={
-
-//       }
-
-//       const request: IUpdateProfileRequest = {
-//         profile: {
-//           UID:UID,
-//           Matches: [matches],
-//         },
-//       };
-
-//       const responseRef =await this.profileApi.saveProfileChanges(request);
-//       const response = responseRef.data;
-//       return ctx.dispatch(new SetProfile(response.profile));
-//     } catch (error) {
-//       return ctx.dispatch(new SetError((error as Error).message));
-//     }
-//   }
+      const responseRef =await this.feedApi.updateMatches(request);
+      const response = responseRef.data;
+      return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
 
   
 
