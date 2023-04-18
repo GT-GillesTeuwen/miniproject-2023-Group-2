@@ -3,9 +3,10 @@ import {collection, collectionData, doc, docData, Firestore} from '@angular/fire
 import {Functions,httpsCallable} from "@angular/fire/functions";
 import {IProfile,IUpdateProfileRequest,IUpdateProfileResponse} from "@mp/api/profiles/util";
 import {Observable} from "rxjs";
+import { register } from 'swiper/element/bundle';
 
 
-
+register();
 @Injectable()
 export class FeedApi {
   constructor(
@@ -29,5 +30,6 @@ export class FeedApi {
       'updateProfile'
     )(request);
   }
+
 
 }

@@ -30,7 +30,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
-import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
+import { AuthApi } from '@mp/app/auth/data-access';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {

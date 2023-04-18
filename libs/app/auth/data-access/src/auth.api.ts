@@ -74,7 +74,7 @@ export class AuthApi {
         Created: null,
       };
 
-       this.updateProfileDetails( {profile});
+       await this.updateProfileDetails( {profile});
        
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
