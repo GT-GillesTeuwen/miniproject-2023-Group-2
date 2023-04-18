@@ -63,7 +63,6 @@ export class ProfilesApi {
       };
 
       return await this.updateProfileDetails( {profile});
-
   }
 
   async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){

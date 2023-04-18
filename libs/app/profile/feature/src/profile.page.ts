@@ -7,7 +7,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
-import { SaveProfileChanges, UpdateProfilePhoto } from '../../util/src/profile.actions';
+import { SaveProfileChanges, UpdateProfilePhoto } from '@mp/app/profile/util';
 import { Logout } from '@mp/app/auth/util'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -255,7 +255,7 @@ export class ProfilePage {
       }
       
 
-      let hobbies: string[] = [];
+      const hobbies: string[] = [];
       if (this.showGamesTick)
         hobbies.push("games");
       if (this.showFootballTick)

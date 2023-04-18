@@ -19,6 +19,7 @@ export class FeedApi {
   }
 
 
+
   async updateProfileDetails(request: IUpdateProfileRequest) {
     return await httpsCallable<
       IUpdateProfileRequest,

@@ -27,6 +27,8 @@ export class AuthApi {
     return authState(this.auth);
   }
 
+  
+
   async login(email: string, password: string) {
     const userCredential= await signInWithEmailAndPassword(this.auth, email, password);
     return userCredential;
@@ -74,7 +76,7 @@ export class AuthApi {
 
        this.updateProfileDetails( {profile});
        
-       //alert("auth.api Id is: "+this.auth.currentUser?.uid);
+      //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
 
     }
