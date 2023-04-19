@@ -16,4 +16,3 @@ export class updateMatches {
     public readonly MatchUserID: string,
   ) {}
 }
- 
