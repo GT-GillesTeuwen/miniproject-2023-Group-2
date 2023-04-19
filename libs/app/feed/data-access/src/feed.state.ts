@@ -12,7 +12,7 @@ import {
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 // import { ProfilesApi } from '@mp/app/profile/data-access';
 import { AuthApi } from '@mp/app/auth/data-access';
-import { updateMatches } from '@mp/api/feed/util';
+import { updateMatches } from '@mp/app/feed/util';
 import { FeedApi } from './feed.api';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -54,19 +54,19 @@ export class ProfileState {
   
 
   @Action(updateMatches)
-  async updateMatches(ctx: StateContext<ProfileStateModel>,{PID}: updateMatches) {
+  async updateMatches(ctx: StateContext<ProfileStateModel>,{MatchUserID}: updateMatches) {
     try {
      
       //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
-      const MID = PID;
+      const MID = MatchUserID;
       const CID = null;
       const MEID =null;
       //alert("UID at saveProfileChanges is "+UID);
 
       const matches : IMatchDetails ={
-        MatchUserID:PID,
+        MatchUserID:MatchUserID,
         ConversationID: CID,
         MeetingID : MEID
       };
