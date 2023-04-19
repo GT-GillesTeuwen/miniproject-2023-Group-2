@@ -4,7 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { IProfile } from '@mp/api/profiles/util';
 import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
-import {CardItemComponent} from "../card-item/card-item.component";
+//import {CardItemComponent} from "../card-item/card-item.component";
 import { UpdateTime } from '@mp/app/profile/util'
 
 @Component({

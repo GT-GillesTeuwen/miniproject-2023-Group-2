@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {collection, collectionData, doc, docData, Firestore} from '@angular/fire/firestore';
+import {collection, collectionData, Firestore} from '@angular/fire/firestore';
 import {Functions,httpsCallable} from "@angular/fire/functions";
-import {IProfile,IUpdateProfileResponse, IUpdateTimeRequest, IUpdateTimeResponse} from "@mp/api/profiles/util";
+import {IProfile, IUpdateTimeRequest, IUpdateTimeResponse} from "@mp/api/profiles/util";
 import {Observable} from "rxjs";
 import { register } from 'swiper/element/bundle';
 import {IUpdateMatchRequest, IUpdateMatchResponse} from '@mp/api/feed/util'
@@ -29,6 +29,15 @@ export class FeedApi {
     >(
       this.functions,   // feed.functions.ts in api/core/feature
       'updateMatch'
+    )(request);
+  }
+  async updateTime(request: IUpdateTimeRequest) {
+    return await httpsCallable<
+      IUpdateTimeRequest,
+      IUpdateTimeResponse
+    >(
+      this.functions,   // auth.functio,ns.ts in api/core/feature
+      'updateTime'
     )(request);
   }
 
