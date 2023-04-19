@@ -73,7 +73,8 @@ export class AuthApi {
         Matches : null,
         Created: null,
       };
-
+      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+      await sleep(2000)
        await this.updateProfileDetails( {profile});
        
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);

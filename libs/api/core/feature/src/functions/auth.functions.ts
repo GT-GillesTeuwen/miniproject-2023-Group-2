@@ -24,10 +24,7 @@ export const onAuthCreate = functions.auth
       
       
       const app = await NestFactory.createApplicationContext(CoreModule);
-      const service = app.get(AuthService);
-      console.log("MEKHAIL!!! " +request.profile.UID + " , AGE: " + request.profile.Age)
-      //const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
-      //await sleep(1000)
+      const service = app.get(AuthService);      
       return service.updateProfile(request);
     }
   );
