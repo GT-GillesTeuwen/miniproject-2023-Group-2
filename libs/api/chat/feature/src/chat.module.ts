@@ -5,25 +5,24 @@ import {
     CreateConversationHandler,
 } from './commands';
 import {
-    ConversationCreatedHandler
+    ConversationCreatedHandler, MessageSentHandler
 } from './events';
 import { ChatSagas } from './chat.sagas';
 import { ChatService } from './chat.service';
+import { SendMessageHandler } from './commands/send-message.handler';
+
 export const CommandHandlers = [
   CreateConversationHandler,
+  SendMessageHandler,
 ];
 export const EventHandlers = [
   ConversationCreatedHandler,
+  MessageSentHandler
 ];
 
 @Module({
   imports: [CqrsModule, ChatDataAccessModule],
-  providers: [
-    ChatService,
-    ...CommandHandlers,
-    ...EventHandlers,
-    ChatSagas,
-  ],
+  providers: [ChatService, ...CommandHandlers, ...EventHandlers, ChatSagas],
   exports: [ChatService],
 })
 export class ChatModule {}
