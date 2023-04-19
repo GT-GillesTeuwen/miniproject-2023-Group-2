@@ -47,7 +47,7 @@ export class UpdateProfilePhoto{
   static readonly type = '[Profile] UpdateProfilePhoto';
   constructor(
     public readonly profilePhoto: string,
-  ) {}
+  ) {alert("at profile actions")}
 }
 
 

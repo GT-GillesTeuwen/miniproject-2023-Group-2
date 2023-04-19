@@ -11893,6 +11893,11 @@ sshpk@^1.14.1:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/ssr-window/-/ssr-window-4.0.2.tgz#dc6b3ee37be86ac0e3ddc60030f7b3bc9b8553be"
+  integrity sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==
+
 ssri@^10.0.0:
   version "10.0.1"
   resolved "https://registry.npmjs.org/ssri/-/ssri-10.0.1.tgz"
@@ -11933,6 +11938,13 @@ statuses@2.0.1:
   version "1.5.0"
   resolved "https://registry.npmjs.org/statuses/-/statuses-1.5.0.tgz"
   integrity sha512-OpZ3zP+jT1PI7I8nemJX4AKmAX070ZkYPVWV/AaKTJl+tXCTGyVdC1a4SL8RUQYEwk/f34ZX8UTykN68FwrqAA==
+
+stencil@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/stencil/-/stencil-0.0.5.tgz#d71fdd933e3b1f724736b5c388f191a7e7fc1d47"
+  integrity sha512-UwOSrS3i9Z2DQAbI+hxxzBMJKwJxRLVrTVGqAahs/GAAeB/82QjxmcD91CJ/UpMLk2aCxxqbCC4Rl8f1UJ27+Q==
+  dependencies:
+    xmldom "0.1.15"
 
 stop-iteration-iterator@^1.0.0:
   version "1.0.0"
@@ -12119,6 +12131,13 @@ svgo@^2.7.0:
     csso "^4.2.0"
     picocolors "^1.0.0"
     stable "^0.1.8"
+
+swiper@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-9.2.0.tgz#40e950b1c0d516403b3bf7083560ebac22a6f325"
+  integrity sha512-lWK9toYumUQss+YuTL+Mt0+8twiMJEyzioER4bbS4rrGHlkeLrDM8uhtAmnpdijELrNscuNUujDgKoMQZfQGlQ==
+  dependencies:
+    ssr-window "^4.0.2"
 
 symbol-observable@4.0.0:
   version "4.0.0"
@@ -13128,6 +13147,11 @@ xmlcreate@^2.0.4:
   version "2.0.4"
   resolved "https://registry.npmjs.org/xmlcreate/-/xmlcreate-2.0.4.tgz"
   integrity sha512-nquOebG4sngPmGPICTS5EnxqhKbCmz5Ox5hsszI2T6U5qdrJizBc+0ilYSEjTSzU0yZcmvppztXe/5Al5fUwdg==
+
+xmldom@0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.15.tgz#b3048062f1bdd52edc421424459f06dceeb2f94d"
+  integrity sha512-ssWmE9kBZudhl4iPLmXqaShPuASNKIQIikBzsloOjZqMyfbuQRn/ggz0k9NDa9YFI3+oFvp8t7TsqwmZLTvpoA==
 
 xtend@^4.0.0:
   version "4.0.2"

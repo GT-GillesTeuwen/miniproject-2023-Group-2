@@ -5,6 +5,9 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ProfilesRepository {
   async findOne(profile: IProfile) {
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')
@@ -20,7 +23,9 @@ export class ProfilesRepository {
 
   async createProfile(profile: IProfile) {
     // Remove password field if present
-
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')
@@ -29,6 +34,9 @@ export class ProfilesRepository {
   }
 
   async updateProfile(profile: IProfile) {
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')

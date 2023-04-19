@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-    //AgeGroup,
-    //Ethnicity,
-    //Gender,
-    HouseholdIncome,
-    IProfile,
-    //IUpdateAccountDetailsRequest,
-    //IUpdateAddressDetailsRequest,
-    IUpdateContactDetailsRequest,
-    //IUpdateOccupationDetailsRequest,
-    IUpdatePersonalDetailsRequest
+    IProfile, IUpdatePersonalDetailsRequest,
 } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
@@ -19,10 +10,6 @@ import {
     SaveProfileChanges,
     SetProfile,
     SubscribeToProfile,
-    //UpdateAccountDetails,
-    //UpdateAddressDetails,
-    UpdateContactDetails,
-    //UpdateOccupationDetails,
     UpdatePersonalDetails,
     UpdateProfilePhoto,
 } from '@mp/app/profile/util';
@@ -35,53 +22,6 @@ import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
-  accountDetailsForm: {
-    model: {
-      displayName: string | null;
-      email: string | null;
-      photoURL: string | null;
-      password: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  addressDetailsForm: {
-    model: {
-      residentialArea: string | null;
-      workArea: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  contactDetailsForm: {
-    model: {
-      cellphone: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  personalDetailsForm: {
-    model: {
-      Hobby: string[] | null;
-      Major: string | null;
-      Cell: string | null
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  occupationDetailsForm: {
-    model: {
-      householdIncome: HouseholdIncome | null;
-      occupation: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
 }
 
 export interface SaveProfileChangesModel{
@@ -99,53 +39,6 @@ export interface SaveProfileChangesModel{
   name: 'profile',
   defaults: {
     profile: null,
-    accountDetailsForm: {
-      model: {
-        displayName: null,
-        email: null,
-        photoURL: null,
-        password: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    addressDetailsForm: {
-      model: {
-        residentialArea: null,
-        workArea: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    contactDetailsForm: {
-      model: {
-        cellphone: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    personalDetailsForm: {
-      model: {
-        Hobby: null,
-        Major: null,
-        Cell: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    occupationDetailsForm: {
-      model: {
-        householdIncome: null,
-        occupation: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
   },
 })
 @Injectable()
@@ -159,6 +52,11 @@ export class ProfileState {
   @Selector()
   static profile(state: ProfileStateModel) {
     return state.profile;
+  }
+
+  @Selector()
+  static matches(state: ProfileStateModel) {
+    return state.profile?.Matches;
   }
 
   @Action(Logout)
@@ -281,9 +179,9 @@ export class ProfileState {
     try {
       const state = ctx.getState();
       const UID = state.profile?.UID;
-      const Hobby = state.personalDetailsForm.model.Hobby;
-      const Major = state.personalDetailsForm.model.Major;
-      const Cell = state.personalDetailsForm.model.Cell;
+      const Hobby = ["hobby test"];
+      const Major = "major test";
+      const Cell = "cell test";
 
       if (!UID || !Hobby || !Major || !Cell)
         return ctx.dispatch(
@@ -345,6 +243,7 @@ export class ProfileState {
 
   @Action(UpdateProfilePhoto)
   async updateProfilePhoto(ctx: StateContext<ProfileStateModel>,{profilePhoto}: UpdateProfilePhoto) {
+    alert("at profile state")
     try {
      
       alert("this is in updata photo state "+profilePhoto);

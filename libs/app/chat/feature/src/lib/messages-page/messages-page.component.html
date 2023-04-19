@@ -92,7 +92,7 @@
             <mp-received-emoji-ui></mp-received-emoji-ui>
 
             <!-- FROM ME -->
-            <mp-sent-bubble-ui></mp-sent-bubble-ui>
+            <mp-sent-bubble-ui *ngIf="(profile$ | async) as profile;" imgSrc="{{profile?.ProfilePhoto}}"></mp-sent-bubble-ui>
 
             <!-- FROM ME -->
             <mp-sent-emoji-ui></mp-sent-emoji-ui>

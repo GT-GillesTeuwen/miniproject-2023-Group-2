@@ -11,9 +11,11 @@
     </ion-toolbar>
   </ion-header>
 
+  <!--
   <ng-container *ngIf="(profile$ | async) as profile; else noProfile">
     <ms-profile-status-component></ms-profile-status-component>
   </ng-container>
+
   <ng-template #noProfile>
     <ion-grid>
       <ion-row>
@@ -26,4 +28,6 @@
       </ion-row>
     </ion-grid>
   </ng-template>
+  -->
+  <card-stack-container></card-stack-container>
 </ion-content>

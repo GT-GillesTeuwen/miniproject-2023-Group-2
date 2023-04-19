@@ -5,6 +5,7 @@ import { ProfileModule } from '@mp/app/profile/ui';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { DashboardPage } from './dashboard.page';
 import { DashboardRouting } from './dashboard.routing';
+import { CardStackContainerComponent } from './lib/card-stack-container/card-stack-container.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { DashboardRouting } from './dashboard.routing';
     ProfileModule,
     NgxSkeletonLoaderModule,
   ],
-  declarations: [DashboardPage],
+  declarations: [DashboardPage, CardStackContainerComponent],
 })
 export class DashboardModule {}

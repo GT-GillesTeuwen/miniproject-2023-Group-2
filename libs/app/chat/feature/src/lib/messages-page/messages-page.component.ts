@@ -2,13 +2,16 @@ import { Component, ViewChild } from '@angular/core';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ProfileState } from '@mp/app/profile/data-access';
+import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
+import { CreateConversation } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
+import { IConversation } from '@mp/api/chat/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -16,12 +19,16 @@ import { Time } from '@angular/common';
   styleUrls: ['./messages-page.component.scss'],
 })
 export class MessagesPageComponent {
-
+  @Select(ChatState.conversation) chat$!: Observable<IConversation | null>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
   public isSearchBarOpened = false;
 
   @ViewChild(IonModal) modal!: IonModal;
+
+
+    //ROUTING TO VERIFICATION PAGE
+    constructor(private navCtrl: NavController, private readonly store: Store) {}
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   dateSelected!: string;
@@ -102,10 +109,18 @@ export class MessagesPageComponent {
 
   sendMessage(){
     alert("Message to send is: " + this.messageToSend);
+    const conversation: IConversation ={
+      ConversationID:"1",
+      User1ID:"u1",
+      User2ID:"u2",
+      Messages:[]
+    }
+    //this.store.dispatch(new )
+    this.store.dispatch(new CreateConversation(conversation));
+    alert("dispatch done");
   }
 
-  //ROUTING TO VERIFICATION PAGE
-  constructor(private navCtrl: NavController) {}
+
 
   openVerifyPage() {
     if(this.verifyPass == true){

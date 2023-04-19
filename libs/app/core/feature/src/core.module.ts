@@ -50,6 +50,7 @@ import { NgxsModule } from '@ngxs/store';
 import { MomentModule } from 'ngx-moment';
 import { CoreRouting } from './core.routing';
 import { CoreShell } from './core.shell';
+import { ChatState } from '@mp/app/chat/data-access';
 
 let resolvePersistenceEnabled: (enabled: boolean) => void;
 

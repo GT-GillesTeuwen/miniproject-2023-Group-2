@@ -14,7 +14,11 @@ import { ReceivedBubbleUiComponent } from './received-bubble-ui/received-bubble-
 import { ReceivedEmojiUiComponent } from './received-emoji-ui/received-emoji-ui.component';
 import { SentEmojiUiComponent } from './sent-emoji-ui/sent-emoji-ui.component';
 import { VerifyPageComponent } from './verify-page/verify-page.component';
+
+import { ChatModule } from '@mp/app/chat/data-access';
+
 import { VerifiedPageComponent } from './verified-page/verified-page.component';
+
 
 @NgModule({
   imports: [
@@ -22,6 +26,7 @@ import { VerifiedPageComponent } from './verified-page/verified-page.component';
     RouterModule.forChild(appChatFeatureRoutes),
     IonicModule,
     FormsModule,
+    ChatModule,
   ],
   declarations: [
     ChatPageComponent,

@@ -1,6 +1,6 @@
 {
   "name": "mystery-shopper",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "license": "MIT",
   "scripts": {
     "firebase:use:dev": "firebase use default",
@@ -68,6 +68,8 @@
     "ngx-skeleton-loader": "^7.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.5.0",
+    "stencil": "^0.0.5",
+    "swiper": "^9.2.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
