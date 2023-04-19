@@ -10,7 +10,7 @@ export const onAuthCreate = functions.auth
   .onCreate(async (user: UserRecord) => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(AuthService);
-    service.onAuthCreate(user);
+    await service.onAuthCreate(user);
   });
 
   export const updateProfile = functions
@@ -25,6 +25,9 @@ export const onAuthCreate = functions.auth
       
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(AuthService);
+      console.log("MEKHAIL!!! " +request.profile.UID + " , AGE: " + request.profile.Age)
+      //const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+      //await sleep(1000)
       return service.updateProfile(request);
     }
   );

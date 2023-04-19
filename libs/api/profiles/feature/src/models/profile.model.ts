@@ -51,7 +51,7 @@ export class Profile extends AggregateRoot implements IProfile {
     return instance;
   }
 
-  create() {
+  async create() {
     this.apply(new ProfileCreatedEvent(this.toJSON()));
   }
 

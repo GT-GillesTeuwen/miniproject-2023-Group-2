@@ -23,7 +23,7 @@ export class UpdateContactDetailsHandler
     const profileDoc = await this.repository.findOne(request.profile);
     const profileData = profileDoc.data();
 
-    if (!profileData) throw new Error('Profile not found');
+    if (!profileData) throw new Error('Profile not found 52');
 
     const profile = this.publisher.mergeObjectContext(
       Profile.fromData(profileData)

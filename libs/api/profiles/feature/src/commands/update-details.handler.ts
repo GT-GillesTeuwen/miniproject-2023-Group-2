@@ -21,12 +21,14 @@ export class UpdateDetailsHandler
 
     const request = command.request;
     console.log(request.profile.UID);
+    console.log("logged UID");
     const profileDoc = await this.repository.findOne(request.profile)
 
-    if(!profileDoc) throw ("Profile not found")
-    const profileData = profileDoc.data();
+    if(!profileDoc) throw ("Profile not found 53")
+    console.log(profileDoc.data())
+    const profileData = profileDoc.data(); 
 
-    if (!profileData) throw ("Profile not found")
+    if (!profileData) throw ("Profile not found 54")
 
     const profile = this.publisher.mergeObjectContext(
       Profile.fromData(profileData)

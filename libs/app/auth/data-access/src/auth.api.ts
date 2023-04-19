@@ -51,7 +51,7 @@ export class AuthApi {
       const userCredential =  await createUserWithEmailAndPassword(this.auth, email, password);
 
       const id = userCredential.user.uid;
-
+      console.log("MEKHAIL-> UID = " + id)
       const profile: IProfile = {
         UID: id, 
         Bio: null,
