@@ -22,6 +22,8 @@ export class UpdateDetailsHandler
     const request = command.request;
     console.log(request.profile.UID);
     const profileDoc = await this.repository.findOne(request.profile)
+
+    if(!profileDoc) throw ("Profile not found")
     const profileData = profileDoc.data();
 
     if (!profileData) throw ("Profile not found")
