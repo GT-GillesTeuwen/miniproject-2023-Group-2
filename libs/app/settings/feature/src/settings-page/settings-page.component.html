@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Privacy card -->
+<ion-card class="coral-theme">
+  <ion-card-header>
+    <ion-card-title>Privacy</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-radio-group [(ngModel)]="selectedValue" (ngModelChange)="onVisibilityChange()">
+      <ion-item>
+        <ion-label>Private</ion-label>
+        <ion-radio slot="start" value="Private" ></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Public</ion-label>
+        <ion-radio slot="start" value="Public" ></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+    <!-- <ion-item>this is what you selected {{selectedValue}}</ion-item> -->
+  </ion-card-content>
+</ion-card>
+
+
+<!-- Age preference card -->
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Age preference</ion-card-title>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-range aria-label="Dual Knobs Range" [dualKnobs]="true" [pin]="true" [pinFormatter]="pinFormatter" [(ngModel)]="rangeValue"  (ngModelChange)="onVisibilityChange()">
+
+    </ion-range>
+
+    <ion-item>
+    <ion-label >You age preference is between {{ rangeValue.lower }} - {{rangeValue.upper}}</ion-label>
+  </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<!-- Blocked List -->
+
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Blocked</ion-card-title>
+    <ion-card-subtitle></ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>John</ion-label>
+        <ion-button><ion-icon slot="icon-only" name="check"></ion-icon></ion-button>
+      </ion-item> 
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>Peter</ion-label>
+        <ion-button><ion-icon slot="icon-only" name="check"></ion-icon></ion-button>
+      </ion-item>
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>Gilles</ion-label>
+        <ion-button><ion-icon slot="icon-only" name="check"></ion-icon></ion-button>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>This is all default values</ion-label>
+        <ion-button><ion-icon slot="icon-only" name="check"></ion-icon></ion-button>
+      </ion-item>
+    </ion-list>
+    
+  </ion-card-content>
+</ion-card>
+
+<div style="display: flex; justify-content: center;">
+  <ion-fab-button color="danger" shape="round" slot="fixed">Log out</ion-fab-button>
+</div>
+
+
+<!-- confirmation button -->
+<ion-button *ngIf="showSaveButton" (click)="SaveChanges()">Save Changes</ion-button>
+
+
+
