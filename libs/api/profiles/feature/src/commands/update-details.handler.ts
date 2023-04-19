@@ -18,11 +18,11 @@ export class UpdateDetailsHandler
 
   async execute(command: UpdateDetailsCommand) {
     console.log(`${UpdateDetailsHandler.name}`);
-
     const request = command.request;
+    console.log(request.profile.Settings?.AgeRange);
     const profileDoc = await this.repository.findOne(request.profile);
     const profileData = profileDoc.data();
-
+    
     if (!profileData) throw new Error('Profile not found');
 
     const profile = this.publisher.mergeObjectContext(

@@ -2,6 +2,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { IContactDetails } from './contact-details.interface';
 import { IPersonalDetails } from './personal-details.interface';
 import { IMatchDetails } from './match-details.interface';
+import { ISettings } from './settings.interface';
 
 export interface IProfile {
 
@@ -18,4 +19,5 @@ export interface IProfile {
   ContactDetails?: IContactDetails | null | undefined;
   Matches?: IMatchDetails[] | null |undefined;
   Created?: Timestamp | null | undefined;
+  Settings?: ISettings | null | undefined;
 }

@@ -17,6 +17,7 @@ export const onAuthCreate = functions.auth
     async (
       request: IUpdateProfileRequest
     ): Promise<IUpdateProfileResponse> => {
+      console.log(request);
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(AuthService);
       return service.updateProfile(request);

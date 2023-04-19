@@ -5,7 +5,7 @@ import {
     IProfile,
     PersonalDetailsUpdatedEvent,
     ProfileCreatedEvent,
-    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails
+    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ISettings
 } from '@mp/api/profiles/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -27,7 +27,8 @@ export class Profile extends AggregateRoot implements IProfile {
     public Name?: IPersonalDetails | null | undefined,
     public ContactDetails?: IContactDetails | null | undefined,
     public Matches?: IMatchDetails[] | null | undefined,
-    public Created?: FirebaseFirestore.Timestamp | null | undefined
+    public Created?: FirebaseFirestore.Timestamp | null | undefined,
+    public Settings?: ISettings | null | undefined,
   ) {
     super();
   }
@@ -46,7 +47,8 @@ export class Profile extends AggregateRoot implements IProfile {
       profile.Name,
       profile.ContactDetails,
       profile.Matches,
-      profile.Created
+      profile.Created,
+      profile.Settings
     );
     return instance;
   }
@@ -80,6 +82,7 @@ export class Profile extends AggregateRoot implements IProfile {
     this.Major = profile.Major;
     this.Matches = profile.Matches;
     this.ContactDetails = profile.ContactDetails;
+    this.Settings=profile.Settings;
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
   }
 
@@ -112,6 +115,7 @@ export class Profile extends AggregateRoot implements IProfile {
       ContactDetails : this.ContactDetails,
       Matches: this.Matches,
       Created: this.Created,
+      Settings: this.Settings,
     };
   }
 
