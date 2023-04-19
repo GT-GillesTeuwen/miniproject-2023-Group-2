@@ -45,9 +45,7 @@ export class AuthApi {
   }
 
   async register(gender : string,age : string,firstname : string, lastname : string,email: string, password: string) {
-    
 
-    try {
       const userCredential =  await createUserWithEmailAndPassword(this.auth, email, password);
 
       const id = userCredential.user.uid;
@@ -79,15 +77,6 @@ export class AuthApi {
        
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
-
-    }
-    catch(error)  { // invalid password
-      console.error(error);
-      console.log("meep")
-      return null;
-    };
-
-
   }
 
   

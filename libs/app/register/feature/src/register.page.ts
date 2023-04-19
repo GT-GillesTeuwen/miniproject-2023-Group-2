@@ -116,9 +116,9 @@ export class RegisterPage {
   ) {}
 
   register() {
-    if (this.registerForm.valid) {
-      this.store.dispatch(new Register());
-    }
+      if (this.registerForm.valid) {
+        this.store.dispatch(new Register())
+      }
   }
 
   toggleShowPassword() {
