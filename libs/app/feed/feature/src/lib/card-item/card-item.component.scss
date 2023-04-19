@@ -1,0 +1,14 @@
+.swipe-card-component {
+  height: 80%;
+  margin-top: 5rem;
+
+  .image-swipe-area{
+    height: 25rem;
+
+    img {
+      height: 25rem;
+      background-size: contain;
+      background-position: center;
+    }
+  }
+}

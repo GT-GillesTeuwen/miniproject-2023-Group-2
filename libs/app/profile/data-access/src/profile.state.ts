@@ -1,149 +1,62 @@
 import { Injectable } from '@angular/core';
 import {
-    //AgeGroup,
-    //Ethnicity,
-    //Gender,
-    HouseholdIncome,
-    IProfile,
-    //IUpdateAccountDetailsRequest,
-    //IUpdateAddressDetailsRequest,
-    IUpdateContactDetailsRequest,
-    //IUpdateOccupationDetailsRequest,
-    IUpdatePersonalDetailsRequest
+    IProfile, IUpdatePersonalDetailsRequest,
 } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import {
     Logout,
+    SaveProfileChanges,
     SetProfile,
     SubscribeToProfile,
-    //UpdateAccountDetails,
-    //UpdateAddressDetails,
-    UpdateContactDetails,
-    //UpdateOccupationDetails,
-    UpdatePersonalDetails
+    UpdatePersonalDetails,
+    UpdateProfilePhoto,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
+import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
-  accountDetailsForm: {
-    model: {
-      displayName: string | null;
-      email: string | null;
-      photoURL: string | null;
-      password: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  addressDetailsForm: {
-    model: {
-      residentialArea: string | null;
-      workArea: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  contactDetailsForm: {
-    model: {
-      cellphone: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  personalDetailsForm: {
-    model: {
-      Hobby: string[] | null;
-      Major: string | null;
-      Cell: string | null
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
-  occupationDetailsForm: {
-    model: {
-      householdIncome: HouseholdIncome | null;
-      occupation: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
 }
+
+export interface SaveProfileChangesModel{
+ changes: SaveProfileChanges | null;
+}
+
+@State<SaveProfileChangesModel>({
+  name: 'profileChanges',
+  defaults:{
+    changes: null
+  }
+})
 
 @State<ProfileStateModel>({
   name: 'profile',
   defaults: {
     profile: null,
-    accountDetailsForm: {
-      model: {
-        displayName: null,
-        email: null,
-        photoURL: null,
-        password: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    addressDetailsForm: {
-      model: {
-        residentialArea: null,
-        workArea: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    contactDetailsForm: {
-      model: {
-        cellphone: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    personalDetailsForm: {
-      model: {
-        Hobby: null,
-        Major: null,
-        Cell: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
-    occupationDetailsForm: {
-      model: {
-        householdIncome: null,
-        occupation: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
   },
 })
 @Injectable()
 export class ProfileState {
   constructor(
     private readonly profileApi: ProfilesApi,
+    private readonly authApi: AuthApi,
     private readonly store: Store
   ) {}
 
   @Selector()
   static profile(state: ProfileStateModel) {
     return state.profile;
+  }
+
+  @Selector()
+  static matches(state: ProfileStateModel) {
+    return state.profile?.Matches;
   }
 
   @Action(Logout)
@@ -266,9 +179,9 @@ export class ProfileState {
     try {
       const state = ctx.getState();
       const UID = state.profile?.UID;
-      const Hobby = state.personalDetailsForm.model.Hobby;
-      const Major = state.personalDetailsForm.model.Major;
-      const Cell = state.personalDetailsForm.model.Cell;
+      const Hobby = ["hobby test"];
+      const Major = "major test";
+      const Cell = "cell test";
 
       if (!UID || !Hobby || !Major || !Cell)
         return ctx.dispatch(
@@ -293,35 +206,68 @@ export class ProfileState {
     }
   }
 
-  //@Action(UpdateOccupationDetails)
-  //async updateOccupationDetails(ctx: StateContext<ProfileStateModel>) {
-  //  try {
-  //    const state = ctx.getState();
-  //    const userId = state.profile?.UID;
-  //    const householdIncome = state.occupationDetailsForm.model.householdIncome;
-  //    const occupation = state.occupationDetailsForm.model.occupation;
+  
 
-  //    if (!userId || !householdIncome || !occupation)
-  //      return ctx.dispatch(
-  //        new SetError('UserId or householdIncome or occupation not set')
-  //      );
+  @Action(SaveProfileChanges)
+  async saveProfileChanges(ctx: StateContext<ProfileStateModel>,{bio,major,cell,hobbies}: SaveProfileChanges) {
+    try {
+     
+      //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const Bio = bio
+      const Major = major;
+      const Cell =cell;
+      const Hobbies=hobbies;
+      //alert("UID at saveProfileChanges is "+UID);
 
-  //    const request: IUpdateOccupationDetailsRequest = {
-  //      profile: {
-  //        UID,
-  //        occupationDetails: {
-  //          householdIncome,
-  //          occupation,
-  //        },
-  //      },
-  //    };
-  //    const responseRef = await this.profileApi.updateOccupationDetails(
-  //      request
-  //    );
-  //    const response = responseRef.data;
-  //    return ctx.dispatch(new SetProfile(response.profile));
-  //  } catch (error) {
-  //    return ctx.dispatch(new SetError((error as Error).message));
-  //  }
-  //}
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:UID,
+          Bio:Bio,
+          ContactDetails: {
+            Cell:Cell,
+          },
+          Major:Major,
+          Hobby:Hobbies
+        },
+      };
+
+      const responseRef =await this.profileApi.saveProfileChanges(request);
+      const response = responseRef.data;
+      return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateProfilePhoto)
+  async updateProfilePhoto(ctx: StateContext<ProfileStateModel>,{profilePhoto}: UpdateProfilePhoto) {
+    alert("at profile state")
+    try {
+     
+      alert("this is in updata photo state "+profilePhoto);
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const ProfilePhoto = profilePhoto;
+      //alert("UID at saveProfileChanges is "+UID);
+
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:UID,
+          ProfilePhoto:ProfilePhoto,
+        },
+      };
+
+      const responseRef =await this.profileApi.updateProfilePhoto(request);
+      const response = responseRef.data;
+      return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  
+
+ 
 }

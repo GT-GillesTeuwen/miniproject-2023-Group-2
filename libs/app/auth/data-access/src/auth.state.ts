@@ -58,6 +58,7 @@ export class AuthState {
   async login(ctx: StateContext<AuthStateModel>, { email, password }: Login) {
     try {
       await this.authApi.login(email, password);
+      
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
@@ -70,7 +71,9 @@ export class AuthState {
     {gender,age,firstname,lastname, email ,password }: Register
   ) {
     try {
-      await this.authApi.register(gender,age,firstname,lastname,email,password);
+      const userCredential=await this.authApi.register(gender,age,firstname,lastname,email,password);
+      //alert("id is "+userCredential?.user.uid);
+      
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));

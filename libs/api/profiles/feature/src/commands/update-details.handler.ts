@@ -29,8 +29,7 @@ export class UpdateDetailsHandler
       Profile.fromData(profileData)
     );
 
-    if (!request.profile.ContactDetails)
-      throw new Error('Profile contact details not found');
+    
     profile.updateDetails(request.profile);
     profile.commit();
 

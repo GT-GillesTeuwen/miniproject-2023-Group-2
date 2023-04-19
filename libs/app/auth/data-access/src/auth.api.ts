@@ -10,6 +10,7 @@ import {
   sendPasswordResetEmail
 } from '@angular/fire/auth';
 
+
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { signOut } from '@firebase/auth';
@@ -18,7 +19,7 @@ import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/
 @Injectable()
 export class AuthApi {
   constructor(
-    private readonly auth: Auth,
+    public readonly auth: Auth,
     private readonly functions: Functions
     ) {}
 
@@ -27,7 +28,8 @@ export class AuthApi {
   }
 
   async login(email: string, password: string) {
-    return await signInWithEmailAndPassword(this.auth, email, password);
+    const userCredential= await signInWithEmailAndPassword(this.auth, email, password);
+    return userCredential;
   }
 
   async updateProfileDetails(request: IUpdateProfileRequest) {
@@ -50,7 +52,9 @@ export class AuthApi {
 
       const profile: IProfile = {
         UID: id, 
-        TimeRemaining: null,
+        Bio: null,
+        ProfilePhoto: "https://picsum.photos/200/400?random=13",
+        TimeRemaining: 250,
         RecentlyActive: null,
         Gender: gender,
         Age: age,
@@ -64,10 +68,13 @@ export class AuthApi {
           Email : email,
           Cell : null
         },
+        Matches : null,
         Created: null,
       };
 
        this.updateProfileDetails( {profile});
+       
+       //alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
 
     }

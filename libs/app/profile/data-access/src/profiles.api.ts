@@ -13,7 +13,9 @@ import {
   IUpdateOccupationDetailsRequest,
   IUpdateOccupationDetailsResponse,
   IUpdatePersonalDetailsRequest,
-  IUpdatePersonalDetailsResponse
+  IUpdatePersonalDetailsResponse,
+  IUpdateProfileRequest,
+  IUpdateProfileResponse
 } from '@mp/api/profiles/util';
 
 @Injectable()
@@ -24,6 +26,7 @@ export class ProfilesApi {
   ) {}
 
   profile$(id: string) {
+    console.log
     const docRef = doc(
       this.firestore,
       `profiles/${id}`
@@ -35,6 +38,44 @@ export class ProfilesApi {
     });
     return docData(docRef, { idField: 'id' });
   }
+
+  async updateProfileDetails(request: IUpdateProfileRequest) {
+    return await httpsCallable<
+      IUpdateProfileRequest,
+      IUpdateProfileResponse
+    >(
+      this.functions,   // auth.functions.ts in api/core/feature
+      'updateProfile'
+    )(request);
+  }
+
+
+  async saveProfileChanges(request: IUpdatePersonalDetailsRequest){
+      
+      const profile: IProfile = {
+        UID:request.profile.UID, 
+        Bio: request.profile.Bio,
+        Hobby: request.profile.Hobby,
+        Major: request.profile.Major,
+        ContactDetails: {
+          Cell : request.profile.ContactDetails?.Cell
+        },
+      };
+
+      return await this.updateProfileDetails( {profile});
+
+  }
+
+  async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
+      alert("this is in update photo api")
+    const profile: IProfile = {
+      UID:request.profile.UID, 
+      ProfilePhoto: request.profile.ProfilePhoto,
+    };
+
+    return await this.updateProfileDetails( {profile});
+
+}
 
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {
     return await httpsCallable<

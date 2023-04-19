@@ -5,7 +5,6 @@ import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
 import {IUpdateProfileRequest,IUpdateProfileResponse} from '@mp/api/profiles/util'
 
-
 export const onAuthCreate = functions.auth
   .user()
   .onCreate(async (user: UserRecord) => {
@@ -18,9 +17,6 @@ export const onAuthCreate = functions.auth
     async (
       request: IUpdateProfileRequest
     ): Promise<IUpdateProfileResponse> => {
-
-
-      
       const app = await NestFactory.createApplicationContext(CoreModule);
       const service = app.get(AuthService);
       return service.updateProfile(request);

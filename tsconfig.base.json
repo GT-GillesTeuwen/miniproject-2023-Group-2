@@ -35,8 +35,13 @@
       "@mp/api/profiles/data-access": [
         "libs/api/profiles/data-access/src/index.ts"
       ],
+      "@mp/api/chat/data-access": [
+        "libs/api/chat/data-access/src/index.ts"
+      ],
       "@mp/api/profiles/feature": ["libs/api/profiles/feature/src/index.ts"],
+      "@mp/api/chat/feature": ["libs/api/chat/feature/src/index.ts"],
       "@mp/api/profiles/util": ["libs/api/profiles/util/src/index.ts"],
+      "@mp/api/chat/util": ["libs/api/chat/util/src/index.ts"],
       "@mp/api/settings/data-access": [
         "libs/api/settings/data-access/src/index.ts"
       ],
@@ -48,6 +53,7 @@
       "@mp/app/auth/data-access": ["libs/app/auth/data-access/src/index.ts"],
       "@mp/app/auth/feature": ["libs/app/auth/feature/src/index.ts"],
       "@mp/app/auth/util": ["libs/app/auth/util/src/index.ts"],
+      "@mp/app/chat/util": ["libs/app/chat/util/src/index.ts"],
       "@mp/app/chat/feature": ["libs/app/chat/feature/src/index.ts"],
       "@mp/app/copyright/ui": ["libs/app/copyright/ui/src/index.ts"],
       "@mp/app/core/feature": ["libs/app/core/feature/src/index.ts"],
@@ -61,6 +67,7 @@
       ],
       "@mp/app/errors/feature": ["libs/app/errors/feature/src/index.ts"],
       "@mp/app/errors/util": ["libs/app/errors/util/src/index.ts"],
+      "@mp/app/feed/data-access": ["libs/app/feed/data-access/src/index.ts"],
       "@mp/app/feed/feature": ["libs/app/feed/feature/src/index.ts"],
       "@mp/app/forgot/data-access": [
         "libs/app/forgot/data-access/src/index.ts"
@@ -75,9 +82,13 @@
       "@mp/app/profile/data-access": [
         "libs/app/profile/data-access/src/index.ts"
       ],
+      "@mp/app/chat/data-access": [
+        "libs/app/chat/data-access/src/index.ts"
+      ],
       "@mp/app/profile/feature": ["libs/app/profile/feature/src/index.ts"],
       "@mp/app/profile/ui": ["libs/app/profile/ui/src/index.ts"],
       "@mp/app/profile/util": ["libs/app/profile/util/src/index.ts"],
+      "@mp/app/chat/util": ["libs/app/chat/util/src/index.ts"],
       "@mp/app/register/data-access": [
         "libs/app/register/data-access/src/index.ts"
       ],

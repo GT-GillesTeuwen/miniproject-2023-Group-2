@@ -25,6 +25,8 @@ export class CreateProfileHandler
 
     const data: IProfile = {
       UID,
+      Bio : null,
+      ProfilePhoto: null,
       TimeRemaining : null,
       RecentlyActive : null ,
       Gender: null,
@@ -39,6 +41,7 @@ export class CreateProfileHandler
         Email : email,
         Cell : cellphone
       },
+      Matches: null,
       Created: Timestamp.fromDate(new Date()),
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));

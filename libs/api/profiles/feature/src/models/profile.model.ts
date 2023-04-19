@@ -5,7 +5,7 @@ import {
     IProfile,
     PersonalDetailsUpdatedEvent,
     ProfileCreatedEvent,
-    AgeGroup,Gender, ProfileDetailsUpdatedEvent
+    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails
 } from '@mp/api/profiles/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -16,6 +16,8 @@ export class Profile extends AggregateRoot implements IProfile {
   constructor(
 
     public UID: string,
+    public Bio?: string | null | undefined,
+    public ProfilePhoto?: string | null | undefined,
     public TimeRemaining?: number | null | undefined,
     public RecentlyActive?: boolean | null | undefined,
     public Gender?: string | null | undefined,
@@ -24,6 +26,7 @@ export class Profile extends AggregateRoot implements IProfile {
     public Major?: string | null | undefined,
     public Name?: IPersonalDetails | null | undefined,
     public ContactDetails?: IContactDetails | null | undefined,
+    public Matches?: IMatchDetails[] | null | undefined,
     public Created?: FirebaseFirestore.Timestamp | null | undefined
   ) {
     super();
@@ -32,6 +35,8 @@ export class Profile extends AggregateRoot implements IProfile {
   static fromData(profile: IProfile): Profile {
     const instance = new Profile(
       profile.UID,
+      profile.Bio,
+      profile.ProfilePhoto,
       profile.TimeRemaining,
       profile.RecentlyActive,
       profile.Gender,
@@ -40,6 +45,7 @@ export class Profile extends AggregateRoot implements IProfile {
       profile.Major,
       profile.Name,
       profile.ContactDetails,
+      profile.Matches,
       profile.Created
     );
     return instance;
@@ -63,6 +69,8 @@ export class Profile extends AggregateRoot implements IProfile {
   
   updateDetails(profile : IProfile) {
     this.UID = profile.UID;
+    this.Bio=profile.Bio;
+    this.ProfilePhoto=profile.ProfilePhoto;
     this.TimeRemaining = profile.TimeRemaining;
     this.RecentlyActive = profile.RecentlyActive;
     this.Gender = profile.Gender;
@@ -70,6 +78,7 @@ export class Profile extends AggregateRoot implements IProfile {
     this.Hobby = profile.Hobby;
     this.Name = profile.Name;
     this.Major = profile.Major;
+    this.Matches = profile.Matches;
     this.ContactDetails = profile.ContactDetails;
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
   }
@@ -91,13 +100,17 @@ export class Profile extends AggregateRoot implements IProfile {
   toJSON(): IProfile {
     return {
       UID: this.UID,
+      Bio: this.Bio,
+      ProfilePhoto: this.ProfilePhoto,
       TimeRemaining: this.TimeRemaining,
       RecentlyActive: this.RecentlyActive,
       Gender: this.Gender,
       Age: this.Age,
       Hobby: this.Hobby,
       Name: this.Name,
+      Major:this.Major,
       ContactDetails : this.ContactDetails,
+      Matches: this.Matches,
       Created: this.Created,
     };
   }
