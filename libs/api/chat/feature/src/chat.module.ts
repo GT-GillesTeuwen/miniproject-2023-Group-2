@@ -5,19 +5,22 @@ import {
     CreateConversationHandler,
 } from './commands';
 import {
-    ConversationCreatedHandler, MessageSentHandler
+    ConversationCreatedHandler, MeetingUpdatedHandler, MessageSentHandler
 } from './events';
 import { ChatSagas } from './chat.sagas';
 import { ChatService } from './chat.service';
 import { SendMessageHandler } from './commands/send-message.handler';
+import { UpdateMeetinHandler } from './commands/update-meeting.handler';
 
 export const CommandHandlers = [
   CreateConversationHandler,
   SendMessageHandler,
+  UpdateMeetinHandler
 ];
 export const EventHandlers = [
   ConversationCreatedHandler,
-  MessageSentHandler
+  MessageSentHandler,
+  MeetingUpdatedHandler
 ];
 
 @Module({

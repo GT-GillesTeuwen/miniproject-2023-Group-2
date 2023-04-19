@@ -1,7 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { ICreateConversationRequest,ICreateConversationResponse,CreateConversationCommand, IMessageSendRequest,IMessageSendResponse, MessageSendCommand } from '@mp/api/chat/util';
+import { ICreateConversationRequest,ICreateConversationResponse,CreateConversationCommand, IMessageSendRequest,IMessageSendResponse, MessageSendCommand, IUpdateMeetingRequest, IUpdateMeetingResponse, UpdateMeetingCommand } from '@mp/api/chat/util';
 
 @Injectable()
 export class ChatService {
@@ -25,6 +25,16 @@ export class ChatService {
       MessageSendCommand,
       IMessageSendResponse
     >(new MessageSendCommand(request));
+  }
+
+  async updateMeeting(
+    request: IUpdateMeetingRequest
+  ): Promise<IUpdateMeetingResponse> {
+    console.log("AHHHH in service");
+    return await this.commandBus.execute<
+      UpdateMeetingCommand,
+      IUpdateMeetingResponse
+    >(new UpdateMeetingCommand(request));
   }
 
  

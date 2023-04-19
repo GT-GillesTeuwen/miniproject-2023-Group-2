@@ -1,4 +1,4 @@
 export * from './create-conversation.request';
 export * from './message-send.request';
-export * from '.'
+export * from './update-meeting.request'
 

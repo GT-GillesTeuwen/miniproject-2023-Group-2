@@ -1,6 +1,6 @@
 import { IProfile } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
-import { IConversation, IMessage } from '@mp/api/chat/util';
+import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 import * as admin from 'firebase-admin';
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
@@ -70,6 +70,23 @@ export class ChatRepository {
       .collection('conversations')
       .doc(conversationID)
       .set(convoData, { merge: true });
+    
+    
+  }
+
+  async updateMeeting(meeting: IMeetingDetails, conversationID: string) {
+    // Remove password field if present
+    if (conversationID == null) {
+      throw new Error("Conversation ID is null in sendMessage() in chat.repository.ts");
+    }
+    
+    return await admin
+      .firestore()
+      .collection('conversations')
+      .doc(conversationID)
+      .update({
+        "Meeting": meeting
+      });
     
     
   }

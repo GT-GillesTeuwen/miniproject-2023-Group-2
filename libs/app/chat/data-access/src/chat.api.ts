@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-import { IConversation, ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest, IMessageSendResponse } from '@mp/api/chat/util';
+import { IConversation, ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest, IMessageSendResponse, IUpdateMeetingRequest, IUpdateMeetingResponse } from '@mp/api/chat/util';
 import {
   IGetUserProfileRequest, IGetUserProfileResponse,
   IProfile,
@@ -94,13 +94,22 @@ export class ChatApi {
   }
 
   async sendMessage(request: IMessageSendRequest) {
-    alert("at API");
     return await httpsCallable<
       IMessageSendRequest,
       IMessageSendResponse
     >(
       this.functions,
       'sendMessage'
+    )(request);
+  }
+
+  async updateMeeting(request: IUpdateMeetingRequest) {
+    return await httpsCallable<
+      IUpdateMeetingRequest,
+      IUpdateMeetingResponse
+    >(
+      this.functions,
+      'updateMeeting'
     )(request);
   }
 

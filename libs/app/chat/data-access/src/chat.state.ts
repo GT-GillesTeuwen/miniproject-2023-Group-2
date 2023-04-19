@@ -4,13 +4,13 @@ import { AuthState } from '@mp/app/auth/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
-import {CreateConversation, SendMessage, SetConversation,SubscribeToConversation} from '@mp/app/chat/util'
+import {CreateConversation, SendMessage, SetConversation,SubscribeToConversation, UpdateMeetingDetails} from '@mp/app/chat/util'
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ChatApi } from './chat.api';
 import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
-import { IConversation, ICreateConversationRequest, IMessage, IMessageSendRequest } from '@mp/api/chat/util';
+import { IConversation, ICreateConversationRequest, IMessage, IMessageSendRequest, IUpdateMeetingRequest } from '@mp/api/chat/util';
 import { Navigate } from '@ngxs/router-plugin';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -84,7 +84,7 @@ export class ChatState {
                User1ID:conversation.User1ID,
                 User2ID:conversation.User2ID,
                 Messages:conversation.Messages,
-               
+                MeetingDetails:conversation.MeetingDetails,
              },
            };
       const userCredential=await this.chatApi.createConversation3(request);
@@ -109,6 +109,28 @@ export class ChatState {
              },
            };
       const userCredential=await this.chatApi.sendMessage(request);
+      //alert("id is "+userCredential?.user.uid);
+      return userCredential;
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateMeetingDetails)
+  async updateMeetingDetails(ctx: StateContext<ConversationStateModel>, { conversationID,meeting }: UpdateMeetingDetails) {
+    
+    try {
+      const request: IUpdateMeetingRequest = {
+              conversation:conversationID,
+              meeting: {
+               Date: meeting.Date,
+               Time: meeting.Time,
+               Location:meeting.Location,
+               FoodPreference:meeting.FoodPreference,
+               DressCode:meeting.DressCode,
+             },
+           };
+      const userCredential=await this.chatApi.updateMeeting(request);
       //alert("id is "+userCredential?.user.uid);
       return userCredential;
     } catch (error) {

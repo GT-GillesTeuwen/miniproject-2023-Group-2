@@ -6,12 +6,12 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
-import { CreateConversation, SendMessage } from '@mp/app/chat/util';
+import { CreateConversation, SendMessage,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
-import { IConversation, IMessage } from '@mp/api/chat/util';
+import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -32,7 +32,14 @@ export class MessagesPageComponent {
       ConversationID:"1",
       User1ID:"u1",
       User2ID:"u2",
-      Messages:[]
+      Messages:[],
+      MeetingDetails:{
+        Date: null,
+        Time: null,
+        Location:null,
+        FoodPreference: null,
+        DressCode: null
+      }
     }
     //this.store.dispatch(new )
     this.store.dispatch(new CreateConversation(conversation));
@@ -100,6 +107,15 @@ export class MessagesPageComponent {
       this.showVerifyError = false;
       alert("date selected: " + this.dateSelected + "\ntime selected: " + this.timeSelected + "\nlocation selected: " + this.locationSelected + "\nfood selected: " + this.foodSelected + "\ndress selected: " + this.dressSelected );
       this.modal.dismiss(this.locationSelected, 'confirm');
+      const meetingDetails: IMeetingDetails ={
+        Date:this.dateSelected,
+        Time:this.timeSelected,
+        Location:this.locationSelected,
+        FoodPreference:this.foodSelected,
+        DressCode:this.dressSelected
+      }
+      this.store.dispatch(new UpdateMeetingDetails("1",meetingDetails));
+      
     }else{
       this.verifyPass = false;
     }

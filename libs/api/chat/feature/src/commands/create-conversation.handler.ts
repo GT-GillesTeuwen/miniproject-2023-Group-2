@@ -20,13 +20,15 @@ export class CreateConversationHandler
     const conversationID = request.conversation.ConversationID;
     const user1ID = request.conversation.User1ID;
     const user2ID = request.conversation.User2ID;
-    const message = request.conversation.Messages;
+    const messages = request.conversation.Messages;
+    const meetingDetails=request.conversation.MeetingDetails;
 
     const data: IConversation = {
       ConversationID:conversationID,
       User1ID : user1ID,
       User2ID: user2ID,
-      Messages : message,
+      Messages : messages,
+      MeetingDetails:meetingDetails,
     };
     const conversation = this.publisher.mergeObjectContext(Conversation.fromData(data));
     console.log("here2");

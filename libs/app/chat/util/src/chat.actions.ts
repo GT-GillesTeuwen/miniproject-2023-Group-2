@@ -1,4 +1,4 @@
-import { IConversation, IMessage } from '@mp/api/chat/util';
+import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 
 
 export class SubscribeToConversation {
@@ -22,6 +22,14 @@ export class SendMessage{
   constructor(
     public readonly conversationID: string,
     public readonly message: IMessage,
+  ) {}
+}
+
+export class UpdateMeetingDetails{
+  static readonly type = '[Chat] UpdateMeeingDetails';
+  constructor(
+    public readonly conversationID: string,
+    public readonly meeting: IMeetingDetails,
   ) {}
 }
 
