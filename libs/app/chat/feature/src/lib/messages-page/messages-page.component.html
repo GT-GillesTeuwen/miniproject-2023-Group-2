@@ -7,7 +7,7 @@
       <ion-title class="ion-text-center">
         <div class="time-remaining-outer-wrapper">
           <div class="time-remaining-inner-wrapper"  *ngIf="(profile$ | async) as profile;">
-            {{profile?.TimeRemaining}} <!--REPLACE WITH TimeRemaining-->
+            ${{profile?.TimeRemaining}} <!--REPLACE WITH TimeRemaining-->
           </div>
         </div>
       </ion-title>
@@ -37,6 +37,10 @@
 
 <ng-container>
     <ion-content class="header-content">  
+
+      <div class="time-remaining-inner-wrapper" *ngIf="(chat$ | async) as chat;">
+        {{chat?.User1ID}}
+      </div>
       
         <div class="user-header">
             <div class="img-outer-wrapper">
@@ -59,7 +63,7 @@
                             <div class="text-wrapper">
                                 <h2>Time Invested</h2>
                                 <p>You have invested</p>
-                                <h1>$450</h1>
+                                <h1 *ngIf="(profile$ | async) as profile;">${{profile?.TimeRemaining}}</h1>
                                 <p>in this meeting. Don't let it go to waste. Confirm and verify a meeting with <span>Obi Wan Kenobi</span> to get rewarded more time!</p>
                             </div>
                         </ion-content>

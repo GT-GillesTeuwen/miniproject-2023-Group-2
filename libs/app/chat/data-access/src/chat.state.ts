@@ -56,7 +56,7 @@ export class ChatState {
   }
 
   @Action(SubscribeToConversation)
-  subscribeToProfile(ctx: StateContext<ConversationStateModel>) {
+  subscribeToConversation(ctx: StateContext<ConversationStateModel>) {
     const matches = this.store.selectSnapshot(ProfileState.matches);
     if (!matches) return ctx.dispatch(new SetError('User not set'));
 
@@ -66,7 +66,7 @@ export class ChatState {
   }
 
   @Action(SetConversation)
-  setProfile(ctx: StateContext<ConversationStateModel>, { conversation }: SetConversation) {
+  setConservation(ctx: StateContext<ConversationStateModel>, { conversation }: SetConversation) {
     return ctx.setState(
       produce((draft) => {
         draft.conversation = conversation;
@@ -76,7 +76,6 @@ export class ChatState {
 
   @Action(CreateConversation)
   async createConversation4(ctx: StateContext<ConversationStateModel>, { conversation }: CreateConversation) {
-    alert("At State");
     try {
       const request: ICreateConversationRequest = {
              conversation: {

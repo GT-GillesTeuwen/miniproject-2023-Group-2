@@ -44,7 +44,6 @@ export class MessagesPageComponent {
     }
     //this.store.dispatch(new )
     this.store.dispatch(new CreateConversation(conversation));
-    alert("made thing");
   }
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';

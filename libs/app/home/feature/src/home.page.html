@@ -8,7 +8,7 @@
     <ion-title class="ion-text-center">
       <div class="time-remaining-outer-wrapper">
         <div class="time-remaining-inner-wrapper"  *ngIf="(profile$ | async) as profile;">
-          {{profile?.TimeRemaining}}
+          ${{profile?.TimeRemaining}}
         </div>
       </div>
     </ion-title>

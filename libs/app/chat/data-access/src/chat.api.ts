@@ -34,7 +34,7 @@ export class ChatApi {
     console.log
     const docRef = doc(
       this.firestore,
-      `collections/${id}`
+      `conversations/${id}`
     ).withConverter<IConversation>({
       fromFirestore: (snapshot) => {
         return snapshot.data() as IConversation;
@@ -72,7 +72,6 @@ export class ChatApi {
   }
 
   async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
-      alert("this is in update photo api")
     const profile: IProfile = {
       UID:request.profile.UID, 
       ProfilePhoto: request.profile.ProfilePhoto,
@@ -83,7 +82,6 @@ export class ChatApi {
 }
 
   async createConversation3(request: ICreateConversationRequest) {
-    alert("at API");
     return await httpsCallable<
       ICreateConversationRequest,
       ICreateConversationResponse
