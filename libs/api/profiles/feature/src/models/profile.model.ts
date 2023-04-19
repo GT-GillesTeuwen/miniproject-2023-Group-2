@@ -15,9 +15,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Profile extends AggregateRoot implements IProfile {
   constructor(
 
-    public UID: string,
+    public UID: string | null |undefined ,
     public Bio?: string | null | undefined,
-    public ProfilePhoto?: string | null | undefined,
+    public ProfilePhotos?: string[] |null | undefined,
     public TimeRemaining?: number | null | undefined,
     public RecentlyActive?: boolean | null | undefined,
     public Gender?: string | null | undefined,
@@ -36,7 +36,7 @@ export class Profile extends AggregateRoot implements IProfile {
     const instance = new Profile(
       profile.UID,
       profile.Bio,
-      profile.ProfilePhoto,
+      profile.ProfilePhotos,
       profile.TimeRemaining,
       profile.RecentlyActive,
       profile.Gender,
@@ -70,7 +70,7 @@ export class Profile extends AggregateRoot implements IProfile {
   updateDetails(profile : IProfile) {
     this.UID = profile.UID;
     this.Bio=profile.Bio;
-    this.ProfilePhoto=profile.ProfilePhoto;
+    this.ProfilePhotos=profile.ProfilePhotos;
     this.TimeRemaining = profile.TimeRemaining;
     this.RecentlyActive = profile.RecentlyActive;
     this.Gender = profile.Gender;
@@ -101,7 +101,7 @@ export class Profile extends AggregateRoot implements IProfile {
     return {
       UID: this.UID,
       Bio: this.Bio,
-      ProfilePhoto: this.ProfilePhoto,
+      ProfilePhotos: this.ProfilePhotos,
       TimeRemaining: this.TimeRemaining,
       RecentlyActive: this.RecentlyActive,
       Gender: this.Gender,

@@ -7,7 +7,7 @@ export interface IProfile {
 
   UID: string | null | undefined;
   Bio?: string | null | undefined;
-  ProfilePhoto?: string | null | undefined;
+  ProfilePhotos?: string[] | null |undefined;
   TimeRemaining?: number | null | undefined; 
   RecentlyActive?: boolean | null | undefined;
   Gender?: string | null | undefined;

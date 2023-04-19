@@ -66,11 +66,11 @@ export class ProfilesApi {
 
   }
 
-  async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
+  async updateProfilePhotos(request: IUpdatePersonalDetailsRequest){
       alert("this is in update photo api")
     const profile: IProfile = {
       UID:request.profile.UID, 
-      ProfilePhoto: request.profile.ProfilePhoto,
+      ProfilePhotos: request.profile.ProfilePhotos,
     };
 
     return await this.updateProfileDetails( {profile});

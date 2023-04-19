@@ -74,7 +74,7 @@ export class ChatApi {
   async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
     const profile: IProfile = {
       UID:request.profile.UID, 
-      ProfilePhoto: request.profile.ProfilePhoto,
+      ProfilePhotos: request.profile.ProfilePhotos,
     };
 
     return await this.updateProfileDetails( {profile});

@@ -26,7 +26,7 @@ export class CreateProfileHandler
     const data: IProfile = {
       UID,
       Bio : null,
-      ProfilePhoto: null,
+      ProfilePhotos: null,
       TimeRemaining : null,
       RecentlyActive : null ,
       Gender: null,

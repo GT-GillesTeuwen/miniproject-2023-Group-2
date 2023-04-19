@@ -11,7 +11,7 @@ import {
     SetProfile,
     SubscribeToProfile,
     UpdatePersonalDetails,
-    UpdateProfilePhoto,
+    UpdateProfilePhotos,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -57,6 +57,11 @@ export class ProfileState {
   @Selector()
   static matches(state: ProfileStateModel) {
     return state.profile?.Matches;
+  }
+
+  @Selector()
+  static profilePhotos(state: ProfileStateModel) {
+    return state.profile?.ProfilePhotos;
   }
 
   @Action(Logout)
@@ -241,25 +246,25 @@ export class ProfileState {
     }
   }
 
-  @Action(UpdateProfilePhoto)
-  async updateProfilePhoto(ctx: StateContext<ProfileStateModel>,{profilePhoto}: UpdateProfilePhoto) {
+  @Action(UpdateProfilePhotos)
+  async updateProfilePhotos(ctx: StateContext<ProfileStateModel>,{profilePhotos}: UpdateProfilePhotos) {
     alert("at profile state")
     try {
      
-      alert("this is in updata photo state "+profilePhoto);
+      alert("this is in updata photo state "+profilePhotos);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
-      const ProfilePhoto = profilePhoto;
+      const ProfilePhotos = profilePhotos;
       //alert("UID at saveProfileChanges is "+UID);
 
       const request: IUpdatePersonalDetailsRequest = {
         profile: {
           UID:UID,
-          ProfilePhoto:ProfilePhoto,
+          ProfilePhotos:ProfilePhotos,
         },
       };
 
-      const responseRef =await this.profileApi.updateProfilePhoto(request);
+      const responseRef =await this.profileApi.updateProfilePhotos(request);
       const response = responseRef.data;
       return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {

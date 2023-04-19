@@ -53,7 +53,7 @@ export class AuthApi {
       const profile: IProfile = {
         UID: id, 
         Bio: null,
-        ProfilePhoto: "https://picsum.photos/200/400?random=13",
+        ProfilePhotos: ["https://picsum.photos/200/400?random=13"],
         TimeRemaining: 250,
         RecentlyActive: null,
         Gender: gender,

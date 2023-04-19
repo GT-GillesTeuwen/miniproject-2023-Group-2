@@ -43,10 +43,10 @@ export class SaveProfileChanges{
   ) {}
 }
 
-export class UpdateProfilePhoto{
-  static readonly type = '[Profile] UpdateProfilePhoto';
+export class UpdateProfilePhotos{
+  static readonly type = '[Profile] UpdateProfilePhotos';
   constructor(
-    public readonly profilePhoto: string,
+    public readonly profilePhotos: string[],
   ) {alert("at profile actions")}
 }
 
