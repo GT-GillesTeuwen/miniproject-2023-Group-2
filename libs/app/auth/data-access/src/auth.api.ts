@@ -101,7 +101,6 @@ export class AuthApi {
     }
     catch(error)  { // invalid password
       console.error(error);
-      console.log("meep")
     };
   }
 
