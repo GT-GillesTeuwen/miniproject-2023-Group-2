@@ -20,8 +20,7 @@
     <ion-toolbar>
       <ion-title size="large" class="ion-align-items-center">
         Profile
-        <!-- <ng-container *ngIf="(profile$ | async) as profile;">
-
+       <ng-container *ngIf="(profile$ | async) as profile;">
           <ion-icon
             *ngIf="profile.status == 'Incomplete'"
             color="danger"
@@ -30,7 +29,6 @@
             *ngIf="profile.status == 'Complete'"
             color="success"
             name="checkmark-circle-outline"></ion-icon>
-
         </ng-container> -->
 
       </ion-title>
@@ -296,4 +294,3 @@
       </ion-row>
     </ion-grid>
   </ng-template>
-</ion-content>

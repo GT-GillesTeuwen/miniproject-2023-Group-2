@@ -6,12 +6,12 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
-import { CreateConversation } from '@mp/app/chat/util';
+import { CreateConversation, SendMessage } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
-import { IConversation } from '@mp/api/chat/util';
+import { IConversation, IMessage } from '@mp/api/chat/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -28,7 +28,16 @@ export class MessagesPageComponent {
 
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store) {}
+    constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
+      ConversationID:"1",
+      User1ID:"u1",
+      User2ID:"u2",
+      Messages:[]
+    }
+    //this.store.dispatch(new )
+    this.store.dispatch(new CreateConversation(conversation));
+    alert("made thing");
+  }
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   dateSelected!: string;
@@ -109,14 +118,13 @@ export class MessagesPageComponent {
 
   sendMessage(){
     alert("Message to send is: " + this.messageToSend);
-    const conversation: IConversation ={
-      ConversationID:"1",
-      User1ID:"u1",
-      User2ID:"u2",
-      Messages:[]
+    const message: IMessage ={
+      ToUserID:"u1",
+      FromUserID:"u2",
+      Content:this.messageToSend
     }
     //this.store.dispatch(new )
-    this.store.dispatch(new CreateConversation(conversation));
+    this.store.dispatch(new SendMessage("1",message));
     alert("dispatch done");
   }
 

@@ -1,15 +1,16 @@
-import { ProfilesRepository } from '@mp/api/profiles/data-access';
-import { ContactDetailsUpdatedEvent } from '@mp/api/profiles/util';
+import { ChatRepository } from '@mp/api/chat/data-access';
+import { MessageSentEvent } from '@mp/api/chat/util';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-@EventsHandler(ContactDetailsUpdatedEvent)
-export class ContactDetailsUpdatedHandler
-  implements IEventHandler<ContactDetailsUpdatedEvent>
+@EventsHandler(MessageSentEvent)
+export class MessageSentHandler
+  implements IEventHandler<MessageSentEvent>
 {
-  constructor(private readonly repository: ProfilesRepository) {}
+  constructor(private readonly repository: ChatRepository) {}
 
-  async handle(event: ContactDetailsUpdatedEvent) {
-    console.log(`${ContactDetailsUpdatedHandler.name}`);
-    await this.repository.updateProfile(event.profile);
+  async handle(event: MessageSentEvent) {
+    console.log("AHHHH in handler");
+    console.log(`${MessageSentHandler.name}`);
+    await this.repository.sendMessage(event.message,event.conversationID);
   }
 }

@@ -15,16 +15,16 @@ import { ConversationCreatedEvent } from '../../util/src/events';
 
 @Injectable()
 export class ChatSagas {
-  @Saga()
-  onConversationCreated = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(ConversationCreatedEvent),
-      map(
-        (event: ConversationCreatedEvent) =>
-          new CreateConversationCommand({ conversation: event.conversation })
-      )
-    );
-  };
+  // @Saga()
+  // onConversationCreated = (events$: Observable<any>): Observable<ICommand> => {
+  //   return events$.pipe(
+  //     ofType(ConversationCreatedEvent),
+  //     map(
+  //       (event: ConversationCreatedEvent) =>
+  //         new CreateConversationCommand({ conversation: event.conversation })
+  //     )
+  //   );
+  // };
 
   // @Saga()
   // onAccountDetailsUpdated = (

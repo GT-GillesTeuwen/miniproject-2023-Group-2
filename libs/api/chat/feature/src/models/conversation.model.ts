@@ -36,6 +36,7 @@ export class Conversation extends AggregateRoot implements IConversation {
   }
 
   create() {
+    console.log("here3")
     this.apply(new ConversationCreatedEvent(this.toJSON()));
   }
 

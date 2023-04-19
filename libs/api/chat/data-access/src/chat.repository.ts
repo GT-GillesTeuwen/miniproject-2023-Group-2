@@ -1,13 +1,15 @@
 import { IProfile } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
-import { IConversation } from '@mp/api/chat/util';
+import { IConversation, IMessage } from '@mp/api/chat/util';
 import * as admin from 'firebase-admin';
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+
 
 @Injectable()
 export class ChatRepository {
-  
+
   async findOne(conversation: IConversation) {
-    if(conversation.ConversationID==null){
+    if (conversation.ConversationID == null) {
       throw new Error("Conversation ID is null in findOne() in chat.repository.ts");
     }
     return await admin
@@ -23,16 +25,53 @@ export class ChatRepository {
       .get();
   }
 
-  async createConversation(conversation: IConversation) {
-    // Remove password field if present
-    if(conversation.ConversationID==null){
-      throw new Error("Conversation ID is null in createConversation() in chat.repository.ts");
+  async findOneByID(conversationID: string) {
+    if (conversationID == null) {
+      throw new Error("Conversation ID is null in findOne() in chat.repository.ts");
     }
+    return await admin
+      .firestore()
+      .collection('conversations')
+      .withConverter<IConversation>({
+        fromFirestore: (snapshot) => {
+          return snapshot.data() as IConversation;
+        },
+        toFirestore: (it: IConversation) => it,
+      })
+      .doc(conversationID)
+      .get();
+  }
+
+  async createConversation1(conversation: IConversation) {
+    // Remove password field if present
+    if (conversation.ConversationID == null) {
+      throw new Error("Conversation ID is null in createConversation1() in chat.repository.ts");
+    }
+    console.log("here5");
     return await admin
       .firestore()
       .collection('conversations')
       .doc(conversation.ConversationID)
       .create(conversation);
+  }
+
+  async sendMessage(message: IMessage, conversationID: string) {
+    // Remove password field if present
+    if (conversationID == null) {
+      throw new Error("Conversation ID is null in sendMessage() in chat.repository.ts");
+    }
+    const convoData = (await this.findOneByID(conversationID)).data() as IConversation;
+
+
+
+    convoData?.Messages?.push(message);
+    return await admin
+      .firestore()
+      .collection('conversations')
+      .doc(conversationID)
+      .set(convoData, { merge: true });
+    
+    
   }
 
   // async updateProfile(profile: IProfile) {

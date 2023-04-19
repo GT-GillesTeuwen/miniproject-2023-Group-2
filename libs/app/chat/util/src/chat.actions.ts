@@ -1,4 +1,4 @@
-import { IConversation } from '@mp/api/chat/util';
+import { IConversation, IMessage } from '@mp/api/chat/util';
 
 
 export class SubscribeToConversation {
@@ -14,7 +14,15 @@ export class CreateConversation{
   static readonly type = '[Chat] CreateConversation';
   constructor(
     public readonly conversation: IConversation,
-  ) {alert("At actions");}
+  ) {}
+}
+
+export class SendMessage{
+  static readonly type = '[Chat] SendMessage';
+  constructor(
+    public readonly conversationID: string,
+    public readonly message: IMessage,
+  ) {}
 }
 
 

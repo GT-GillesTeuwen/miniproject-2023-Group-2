@@ -6,7 +6,7 @@ import { ChatState } from './chat.state';
 import { ChatApi } from './chat.api';
 
 @NgModule({
-  imports: [CommonModule, NgxsModule.forFeature([ChatState]), AuthModule],
+  imports: [CommonModule, NgxsModule.forFeature([ChatState])],
   providers: [ChatApi],
 })
 export class ChatModule {}

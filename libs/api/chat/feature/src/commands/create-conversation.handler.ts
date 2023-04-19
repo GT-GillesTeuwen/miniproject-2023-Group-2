@@ -16,7 +16,6 @@ export class CreateConversationHandler
 
   async execute(command: CreateConversationCommand) {
     console.log(`${CreateConversationHandler.name}`);
-
     const request = command.request;
     const conversationID = request.conversation.ConversationID;
     const user1ID = request.conversation.User1ID;
@@ -30,7 +29,7 @@ export class CreateConversationHandler
       Messages : message,
     };
     const conversation = this.publisher.mergeObjectContext(Conversation.fromData(data));
-
+    console.log("here2");
     conversation.create();
     conversation.commit();
   }
