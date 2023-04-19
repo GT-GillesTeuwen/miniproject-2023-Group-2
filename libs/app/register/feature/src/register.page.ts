@@ -13,7 +13,11 @@ import { Observable } from 'rxjs';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
+
 export class RegisterPage {
+
+  
   @Select(actionsExecuting([Register])) busy$!: Observable<ActionsExecuting>;
   registerForm = this.fb.group({
     firstName: [ '', [ Validators.maxLength(64)],],
@@ -22,9 +26,11 @@ export class RegisterPage {
     age: [ '', [ Validators.minLength(1), Validators.maxLength(3)],],
     email: [ '', [Validators.email, Validators.minLength(6), Validators.maxLength(64)],],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
-    confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64)]],
+    confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64) ]],
   });
   showPassword = false;
+
+  
 
   //add firstname lastname gender
   get email() {
@@ -55,14 +61,13 @@ export class RegisterPage {
     return this.registerForm.get('confirmPassword');
   }
 
-  get confirmError(): string {
+  get confirmError(): string | boolean {
     console.log(this.password?.value);
     if (this.confirmPassword?.errors?.['required']) 
       return 'Confirm your password';
     if(this.confirmPassword?.value != this.password?.value)
-      return 'Passwords does not match';
-    return 'Invalid';
-    
+      return 'Passwords does not match'; 
+    return false
   }
 
   get ageError(): string {
@@ -99,6 +104,7 @@ export class RegisterPage {
 
     return 'Email is invalid';
   }
+  
 
   get passwordError(): string {
     if (this.password?.errors?.['required']) return 'Password is required';
@@ -106,7 +112,6 @@ export class RegisterPage {
       return 'Password should be longer than 6 characters';
     if (this.password?.errors?.['maxlength'])
       return 'Password should be shorter than 64 characters';
-
     return 'Password is invalid';
   }
 
@@ -116,9 +121,9 @@ export class RegisterPage {
   ) {}
 
   register() {
-      if (this.registerForm.valid) {
-        this.store.dispatch(new Register())
-      }
+      // if (this.registerForm.valid) {
+      //   this.store.dispatch(new Register())
+      // }
   }
 
   toggleShowPassword() {
