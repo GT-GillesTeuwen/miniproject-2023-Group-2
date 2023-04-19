@@ -57,7 +57,11 @@ export class UpdateProfilePhoto{
   constructor(
     public readonly profilePhoto: string,
   ) {}
+  
 }
-
-
-
+export class UpdateTime{
+  static readonly type = '[Profile] UpdateTime';
+  constructor(
+    public readonly TimeRemaining: number,
+  ) {}
+}

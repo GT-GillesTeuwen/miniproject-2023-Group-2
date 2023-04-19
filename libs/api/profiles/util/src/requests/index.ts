@@ -6,5 +6,6 @@ export * from './update-occupation-details.request';
 export * from './update-personal-details.request';
 export * from './update-profile.request';
 export * from './get-user-profile.request';
+export * from './update-time.request';
 export * from './'
 

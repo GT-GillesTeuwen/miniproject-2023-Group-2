@@ -27,6 +27,7 @@ import {
     //UpdateOccupationDetails,
     UpdatePersonalDetails,
     UpdateProfilePhoto,
+    UpdateTime
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -47,7 +48,8 @@ export interface ProfileStateModel {
     status: string;
     errors: object;
   };
-  matches: IProfile[] | null
+  matches: IProfile[] | null;
+  TimeRemaining: number;
 }
 
 export interface SaveProfileChangesModel{
@@ -75,7 +77,8 @@ export interface SaveProfileChangesModel{
       status: '',
       errors: {},
     },
-    matches : null
+    matches : null,
+    TimeRemaining : 0
   },
 })
 
@@ -319,6 +322,32 @@ export class ProfileState {
       const response = responseRef.data;
       return response;
       // return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateTime)
+  async updateTime(ctx: StateContext<ProfileStateModel>,{TimeRemaining}: UpdateTime) {
+    try {
+     
+      //alert("this is in updata photo state "+TimeRemaining);
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const timeRemaining = TimeRemaining;
+      //alert("UID at saveProfileChanges is "+UID);
+
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:UID,
+          TimeRemaining:timeRemaining,
+        },
+      };
+
+      const responseRef =await this.profileApi.updateTime(request);
+      const response = responseRef.data;
+      return response;
+      //return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
