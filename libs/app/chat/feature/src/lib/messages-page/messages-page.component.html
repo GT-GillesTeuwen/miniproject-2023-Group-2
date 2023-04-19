@@ -1,0 +1,185 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home/chat"></ion-back-button>
+        </ion-buttons>
+    
+      <ion-title class="ion-text-center">
+        <div class="time-remaining-outer-wrapper">
+          <div class="time-remaining-inner-wrapper"  *ngIf="(profile$ | async) as profile;">
+            ${{profile?.TimeRemaining}} <!--REPLACE WITH TimeRemaining-->
+          </div>
+        </div>
+      </ion-title>
+  
+      <div class="search-bar-wrapper">
+        <ion-searchbar animated="true" placeholder="Search for user..." *ngIf="isSearchBarOpened" show-cancel-button="always" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
+      </div>
+  
+      <ion-buttons slot="end" class="meeting-button">  
+        <ion-button id="open-modal" expand="block">
+          <ion-icon name="calendar-number-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+
+      <ion-buttons slot="end" class="search-button">  
+        <ion-button *ngIf="!isSearchBarOpened" (click)="isSearchBarOpened=true">
+          <ion-icon name="search-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+  
+      <ion-buttons slot="end" class="notification-button">  
+        <ion-icon name="notifications-outline" size="small" aria-hidden="true"></ion-icon>
+      </ion-buttons>
+  
+    </ion-toolbar>
+</ion-header>
+
+<ng-container>
+    <ion-content class="header-content">  
+
+      <div class="time-remaining-inner-wrapper" *ngIf="(chat$ | async) as chat;">
+        {{chat?.User1ID}}
+      </div>
+      
+        <div class="user-header">
+            <div class="img-outer-wrapper">
+                <div class="user-status-icon"></div>
+                <div class="img-holder">
+                    <img src="https://docs-demo.ionic.io/assets/madison.jpg" alt="The Wisconsin State Capitol building in Madison, WI at night">
+                </div>
+            </div>
+            <div class="name-holder">
+                <h1>Obi Wan Kenobi</h1>
+            </div>
+            <div class="time-outer-wrapper">
+                <div class="time-holder" id="click-trigger">
+                    $
+                </div>
+                <!-- MONEY POPOVER -->
+                <ion-popover trigger="click-trigger" triggerAction="click" mode="ios">
+                    <ng-template>
+                        <ion-content class="ion-padding" class="popover-content">
+                            <div class="text-wrapper">
+                                <h2>Time Invested</h2>
+                                <p>You have invested</p>
+                                <h1 *ngIf="(profile$ | async) as profile;">${{profile?.TimeRemaining}}</h1>
+                                <p>in this meeting. Don't let it go to waste. Confirm and verify a meeting with <span>Obi Wan Kenobi</span> to get rewarded more time!</p>
+                            </div>
+                        </ion-content>
+                    </ng-template>
+                </ion-popover>
+            </div>
+        </div>
+
+        <div class="message-content-area">
+            <div class="date-chip-outer-wrapper">
+                <div class="date-chip">28 March 2023</div>
+            </div>
+
+            <!-- FROM THEM -->
+            <mp-received-bubble-ui></mp-received-bubble-ui>
+
+            <!-- FROM THEM -->
+            <mp-received-bubble-ui></mp-received-bubble-ui>
+
+            <!-- FROM THEM -->
+            <mp-received-bubble-ui></mp-received-bubble-ui>
+
+            <!-- FROM THEM -->
+            <mp-received-bubble-ui></mp-received-bubble-ui>
+
+            <!-- FROM ME -->
+            <mp-sent-bubble-ui  *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
+
+            <!-- FROM THEM -->
+            <mp-received-emoji-ui></mp-received-emoji-ui>
+
+            <!-- FROM ME -->
+            <mp-sent-bubble-ui *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
+
+            <!-- FROM ME -->
+            <mp-sent-emoji-ui></mp-sent-emoji-ui>
+
+        </div>
+
+        <p>{{ message }}</p>
+
+        <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>Meeting Details</ion-title>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="openVerifyPage()">Verify</ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="cancel()">Done</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding modal-content">
+
+                <p class="error-msg" style="margin-top: 0.5em;" *ngIf="!verifyPass && showVerifyError">You need to first confirm your meeting</p>
+
+                <ion-label position="stacked">Select a date for the meeting<sup>*</sup></ion-label>
+                <div class="meeting-input">
+                    <ion-input label="Input with placeholder" type="date" [(ngModel)]="dateSelected"></ion-input>
+                </div>
+                <p class="error-msg" *ngIf="!datePass && showErrors">Date is a required field</p>
+
+                <ion-label position="stacked">Select a time for the meeting<sup>*</sup></ion-label>
+                <div class="meeting-input">
+                    <ion-input label="Input with placeholder" type="time" [(ngModel)]="timeSelected"></ion-input>
+                </div>
+                <p class="error-msg" *ngIf="!timePass && showErrors">Time is a required field</p>
+
+                <ion-label position="stacked">Select a location for the meeting<sup>*</sup></ion-label>
+                <div class="meeting-input">
+                    <ion-input label="Input with placeholder" placeholder="Enter Location" type="text" [(ngModel)]="locationSelected"></ion-input>
+                </div>
+                <p class="error-msg" *ngIf="!locationPass && showErrors">Location is a required field</p>
+
+                <ion-label position="stacked">Select a food preference if any</ion-label>
+                <ion-list>
+                    <ion-select aria-label="food" placeholder="Select Food Preference" [(ngModel)]="foodSelected">
+                        <ion-select-option value="none" default>None</ion-select-option>
+                        <ion-select-option value="vegan">Vegan</ion-select-option>
+                        <ion-select-option value="pescatarian">Pescatarian</ion-select-option>
+                        <ion-select-option value="halaal">Halaal</ion-select-option>
+                        <ion-select-option value="lactose_intolerent">Lactose Intolerent</ion-select-option>
+                    </ion-select>
+                </ion-list>
+
+                <ion-label position="stacked">Select a dress code if any</ion-label>
+                <ion-list>
+                    <ion-select aria-label="dress" placeholder="Select Dress Code" [(ngModel)]="dressSelected">
+                        <ion-select-option value="none">None</ion-select-option>
+                        <ion-select-option value="casual">Casual</ion-select-option>
+                        <ion-select-option value="black_tie">Black-tie</ion-select-option>
+                        <ion-select-option value="semi_formal">Semi-formal</ion-select-option>
+                        <ion-select-option value="smart">Smart</ion-select-option>
+                        <ion-select-option value="swim">Swim</ion-select-option>
+                    </ion-select>
+                </ion-list>
+
+                <div class="button-flex-wrapper">
+                    <ion-button class="verifyButton" (click)="confirm()" [strong]="true" expand="block" shape="round">Confirm</ion-button>
+                </div>
+
+              </ion-content>
+            </ng-template>
+        </ion-modal>
+
+        <div class="messege-send-area">
+            <ion-input label="Input with placeholder" placeholder="Enter message" class="message-send-input" [(ngModel)]="messageToSend"></ion-input>
+            <div class="send-button-wrapper">
+                <ion-buttons>  
+                    <ion-button (click)="sendMessage()">
+                      <ion-icon name="send-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </div>
+        </div>
+    </ion-content>  
+</ng-container>

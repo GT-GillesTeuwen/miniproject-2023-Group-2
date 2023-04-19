@@ -7,15 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Reset Password</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="iContent">
 
-  <form [formGroup]="forgotForm" ngxsForm="login.loginForm" (submit)="login()">
-    <ion-list class="ion-padding-vertical">
+  <form [formGroup]="forgotForm" ngxsForm="login.loginForm" (submit)="sendEmail()">
+    <ion-text>
+      <h1 class="ion-text-center" style="margin-top: 50px;"><b>Find Your Account</b></h1>
+    </ion-text>
+    <ion-list style="margin: 10px">
       <ion-item>
         <ion-label position="floating" class="required">Email</ion-label>
         <ion-input
@@ -39,6 +37,7 @@
       <ion-row>
         <ion-col>
           <ion-button
+            style="--background:coral"
             expand="block"
             [disabled]="!this.forgotForm.valid || (busy$ | async)"
             type="submit">

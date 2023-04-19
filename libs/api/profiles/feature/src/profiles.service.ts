@@ -9,7 +9,6 @@ import {
     IUpdateOccupationDetailsResponse,
     IUpdatePersonalDetailsRequest,
     IUpdatePersonalDetailsResponse,
-    UpdateAccountDetailsCommand,
     UpdateAddressDetailsCommand,
     UpdateContactDetailsCommand,
     UpdateOccupationDetailsCommand,
@@ -22,14 +21,14 @@ import { CommandBus } from '@nestjs/cqrs';
 export class ProfilesService {
   constructor(private readonly commandBus: CommandBus) {}
 
-  async updateAccountDetails(
-    request: IUpdateAccountDetailsRequest
-  ): Promise<IUpdateAccountDetailsResponse> {
-    return await this.commandBus.execute<
-      UpdateAccountDetailsCommand,
-      IUpdateAccountDetailsResponse
-    >(new UpdateAccountDetailsCommand(request));
-  }
+  // async updateAccountDetails(
+  //   request: IUpdateAccountDetailsRequest
+  // ): Promise<IUpdateAccountDetailsResponse> {
+  //   return await this.commandBus.execute<
+  //     UpdateAccountDetailsCommand,
+  //     IUpdateAccountDetailsResponse
+  //   >(new UpdateAccountDetailsCommand(request));
+  // }
 
   async updateAddressDetails(
     request: IUpdateAddressDetailsRequest

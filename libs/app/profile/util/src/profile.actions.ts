@@ -32,3 +32,23 @@ export class UpdateOccupationDetails {
 export class UpdatePersonalDetails {
   static readonly type = '[Profile] UpdatePersonalDetails';
 }
+
+export class SaveProfileChanges{
+  static readonly type = '[Profile] SaveProfileChanges';
+  constructor(
+    public readonly bio: string,
+    public readonly major: string,
+    public readonly cell: string,
+    public readonly hobbies: string[],
+  ) {}
+}
+
+export class UpdateProfilePhotos{
+  static readonly type = '[Profile] UpdateProfilePhotos';
+  constructor(
+    public readonly profilePhotos: string[],
+  ) {alert("at profile actions")}
+}
+
+
+

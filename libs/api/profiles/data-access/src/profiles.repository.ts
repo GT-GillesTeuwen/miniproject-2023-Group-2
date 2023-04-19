@@ -5,6 +5,9 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ProfilesRepository {
   async findOne(profile: IProfile) {
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')
@@ -14,27 +17,30 @@ export class ProfilesRepository {
         },
         toFirestore: (it: IProfile) => it,
       })
-      .doc(profile.userId)
+      .doc(profile.UID)
       .get();
   }
 
   async createProfile(profile: IProfile) {
     // Remove password field if present
-    delete profile.accountDetails?.password;
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')
-      .doc(profile.userId)
+      .doc(profile.UID)
       .create(profile);
   }
 
   async updateProfile(profile: IProfile) {
-    // Remove password field if present
-    delete profile.accountDetails?.password;
+    if(profile.UID==null){
+      throw new Error();
+    }
     return await admin
       .firestore()
       .collection('profiles')
-      .doc(profile.userId)
+      .doc(profile.UID)
       .set(profile, { merge: true });
   }
 }

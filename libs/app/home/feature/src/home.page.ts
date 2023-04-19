@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 export class HomePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-
+  public isSearchBarOpened = false;
   constructor(private readonly store: Store) {}
 
   ionViewWillEnter() {

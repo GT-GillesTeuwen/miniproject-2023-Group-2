@@ -8,17 +8,77 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Register</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <form
-    [formGroup]="registerForm"
-    ngxsForm="register.registerForm"
-    (submit)="register()">
-    <ion-list class="ion-padding-vertical">
+  <form [formGroup]="registerForm" ngxsForm="register.registerForm" (submit)="register()">
+    <img src="https://docs-demo.ionic.io/assets/madison.jpg" class="logo">
+    <ion-text>
+      <h1 class="ion-text-center"><b>Create an account</b></h1>
+    </ion-text>
+    <ion-list style="margin-left: 20px; margin-right: 20px; margin-top: 20px;">
+      <ion-item>
+        <ion-label position="floating" class="required">First Name</ion-label>
+        <ion-input
+          minlength="1"
+          maxlength="64"
+          placeholder="Enter full name"
+          required="true"
+          autocomplete="firstName"
+          formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-text
+        *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ displayFirstNameError }}</small>
+      </ion-text>
+      <ion-item>
+        <ion-label position="floating" class="required">Last Name</ion-label>
+        <ion-input
+          minlength="1"
+          maxlength="64"
+          placeholder="Enter full name"
+          required="true"
+          autocomplete="lastName"
+          formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-text
+        *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ displayLastNameError }}</small>
+      </ion-text>
+      <ion-item>
+        <ion-label position="floating" class="required">Age</ion-label>
+        <ion-input
+          type="number"
+          pattern="[0-9]+"
+          placeholder="Enter age"
+          required="true"
+          autocomplete="age"
+          formControlName="age"></ion-input>
+      </ion-item>
+      <ion-text
+        *ngIf="age?.invalid && (age?.dirty || age?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ ageError }}</small>
+      </ion-text>
+      <ion-item>
+        <ion-label position="floating" class="required">Gender</ion-label>
+        <ion-select 
+          aria-label="Gender" 
+          placeholder="Select Gender"
+          formControlName="gender">
+          <ion-select-option value="male">Male</ion-select-option>
+          <ion-select-option value="female">Female</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-text
+        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ emailError }}</small>
+      </ion-text>
       <ion-item>
         <ion-label position="floating" class="required">Email</ion-label>
         <ion-input
@@ -49,7 +109,7 @@
         <ion-icon
           [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
           slot="end"
-          class="ion-align-self-center"
+          class="ion-align-self-center ion-ig"
           (click)="toggleShowPassword()"></ion-icon>
       </ion-item>
       <ion-text
@@ -58,12 +118,30 @@
         color="danger">
         <small>{{ passwordError }}</small>
       </ion-text>
+      <ion-item>
+        <ion-label position="floating" class="required">Confirm Password</ion-label>
+        <ion-input
+          type="password"
+          minlength="6"
+          maxlength="64"
+          placeholder="Confirm your password"
+          required="true"
+          autocomplete="confirmPassword"
+          formControlName="confirmPassword"></ion-input>
+      </ion-item>
+      <ion-text
+        *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ confirmError }}</small>
+      </ion-text>
     </ion-list>
 
     <ion-grid class="ion-padding">
       <ion-row>
         <ion-col>
           <ion-button
+            style="--background:coral"
             expand="block"
             [disabled]="!this.registerForm.valid || (busy$ | async)"
             type="submit">
@@ -82,8 +160,9 @@
       </ion-row>
     </ion-grid>
   </form>
+
 </ion-content>
 
-<ion-footer collapse="condense" class="ion-padding ion-text-center">
+<ion-footer style="background-color: white;" collapse="fade" class="ion-padding ion-text-center">
   <ms-copyright-component></ms-copyright-component>
 </ion-footer>

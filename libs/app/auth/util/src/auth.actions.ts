@@ -20,6 +20,10 @@ export class Login {
 export class Register {
   static readonly type = '[Auth] Register';
   constructor(
+    public readonly gender: string,
+    public readonly age: string,
+    public readonly firstname: string,
+    public readonly lastname: string,
     public readonly email: string,
     public readonly password: string
   ) {}

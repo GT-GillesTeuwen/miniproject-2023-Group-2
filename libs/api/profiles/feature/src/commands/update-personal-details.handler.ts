@@ -32,9 +32,9 @@ export class UpdatePersonalDetailsHandler
       Profile.fromData(profileData)
     );
 
-    if (!request.profile.personalDetails)
+    if (!request.profile.Name)
       throw new Error('Profile personal details not found');
-    profile.updatePersonalDetails(request.profile.personalDetails);
+    profile.updatePersonalDetails(request.profile.Name);
     profile.commit();
 
     const response: IUpdatePersonalDetailsResponse = { profile };

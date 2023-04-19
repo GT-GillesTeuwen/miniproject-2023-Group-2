@@ -20,52 +20,53 @@ export class PersonalDetailsComponent {
   @Select(actionsExecuting([UpdatePersonalDetails]))
   busy$!: Observable<ActionsExecuting>;
   personalDetailsForm = this.fb.group({
-    age: ['', [Validators.minLength(4), Validators.maxLength(64)]],
-    gender: ['', [Validators.minLength(4), Validators.maxLength(64)]],
-    ethnicity: ['', [Validators.minLength(4), Validators.maxLength(64)]],
+    Hobby: ['', [Validators.minLength(4), Validators.maxLength(64)]],
+    Cell: ['', [Validators.minLength(10), Validators.maxLength(64)]],
+    Major: ['', [Validators.minLength(4), Validators.maxLength(64)]],
   });
   showPassword = false;
 
-  get age() {
+  get hobby() {
     return this.personalDetailsForm.get('age');
   }
 
-  get gender() {
+  get major() {
     return this.personalDetailsForm.get('gender');
   }
 
-  get ethnicity() {
-    return this.personalDetailsForm.get('ethnicity');
+  get cell() {
+    return this.personalDetailsForm.get('Cell');
   }
 
-  get ageError(): string {
-    if (this.age?.errors?.['required']) return 'Age is required';
-    if (this.age?.errors?.['minlength'])
+
+  get majorError(): string {
+    if (this.major?.errors?.['required']) return 'Age is required';
+    if (this.major?.errors?.['minlength'])
       return 'Age should be longer than 4 characters';
-    if (this.age?.errors?.['maxlength'])
+    if (this.major?.errors?.['maxlength'])
       return 'Age should be shorter than 64 characters';
 
     return 'Age is invalid';
   }
 
-  get genderError(): string {
-    if (this.gender?.errors?.['required']) return 'Gender is required';
-    if (this.gender?.errors?.['minlength'])
-      return 'Gender should be longer than 4 characters';
-    if (this.gender?.errors?.['maxlength'])
-      return 'Gender should be shorter than 64 characters';
+  get hobbyError(): string {
+    if (this.hobby?.errors?.['required']) return 'Age is required';
+    if (this.hobby?.errors?.['minlength'])
+      return 'Age should be longer than 4 characters';
+    if (this.hobby?.errors?.['maxlength'])
+      return 'Age should be shorter than 64 characters';
 
-    return 'Gender is invalid';
+    return 'Age is invalid';
   }
 
-  get ethnicityError(): string {
-    if (this.ethnicity?.errors?.['required']) return 'Ethnicity is required';
-    if (this.ethnicity?.errors?.['minlength'])
-      return 'Ethnicity should be longer than 4 characters';
-    if (this.ethnicity?.errors?.['maxlength'])
-      return 'Ethnicity should be shorter than 64 characters';
+  get cellError(): string {
+    if (this.cell?.errors?.['required']) return 'Age is required';
+    if (this.cell?.errors?.['minlength'])
+      return 'Age should be longer than 4 characters';
+    if (this.cell?.errors?.['maxlength'])
+      return 'Age should be shorter than 64 characters';
 
-    return 'Ethnicity is invalid';
+    return 'Age is invalid';
   }
 
   constructor(

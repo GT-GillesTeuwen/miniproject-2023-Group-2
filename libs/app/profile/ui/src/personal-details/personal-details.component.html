@@ -1,4 +1,6 @@
-<ng-container *ngIf="profile$ | async as profile; else loading">
+
+<!-- <ng-container *ngIf="profile$ | async as profile; else loading">
+
   <form
     [formGroup]="personalDetailsForm"
     ngxsForm="profile.personalDetailsForm"
@@ -7,7 +9,6 @@
       <ion-card-header>
         <ion-card-title class="ion-align-items-center">
           Personal Details
-          <ion-icon
             *ngIf="personalDetails.status == 'Incomplete'"
             color="danger"
             name="alert-circle-outline"></ion-icon>
@@ -82,6 +83,7 @@
     </ion-card>
   </form>
 </ng-container>
+    -->
 <ng-template #loading>
   <ion-grid>
     <ion-row>
@@ -93,4 +95,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-</ng-template>
+</ng-template> -->

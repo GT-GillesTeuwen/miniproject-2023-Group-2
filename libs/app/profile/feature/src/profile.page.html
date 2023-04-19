@@ -2,17 +2,17 @@
   <ion-toolbar>
     <ion-title class="ion-align-items-center">
       Profile
-      <ng-container *ngIf="(profile$ | async) as profile;">
+      <!-- <ng-container *ngIf="(profile$ | async) as profile;">
         <ion-icon
-          *ngIf="profile.status == 'Incomplete'"
+           *ngIf="profile.status == 'Incomplete'"
           color="danger"
           name="alert-circle-outline"></ion-icon>
         <ion-icon
           *ngIf="profile.status == 'Complete'"
           color="success"
           name="checkmark-circle-outline"></ion-icon>
-      </ng-container>
-    </ion-title>
+      </ng-container> -->
+    <!-- </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
@@ -20,7 +20,7 @@
     <ion-toolbar>
       <ion-title size="large" class="ion-align-items-center">
         Profile
-        <ng-container *ngIf="(profile$ | async) as profile;">
+       <ng-container *ngIf="(profile$ | async) as profile;">
           <ion-icon
             *ngIf="profile.status == 'Incomplete'"
             color="danger"
@@ -29,18 +29,260 @@
             *ngIf="profile.status == 'Complete'"
             color="success"
             name="checkmark-circle-outline"></ion-icon>
-        </ng-container>
+        </ng-container> -->
+
       </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ng-container *ngIf="(profile$ | async) as profile; else noProfile">
+  <!-- HIDDEN FIELDS -->
+  <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentAboutMe>{{profile?.Bio}}</div>
+  <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentPhone>{{profile?.ContactDetails?.Cell}}</div>
+  <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentMajor>{{profile?.Major}}</div>
+  <div style="display: none;" *ngIf="(profile$ | async) as profile;" #profilePhotos>{{profile?.ProfilePhotos}}</div>
+
+  <ng-container>
+    <ion-content>      
+      <ion-segment value="matches">  
+        <ion-segment-button value="matches">  
+          <ion-label>Edit</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="friends">  
+          <ion-label>Preview</ion-label>
+        </ion-segment-button>  
+      </ion-segment>  
+
+      <div class="backdrop"></div>
+   
+      <div class="profile-information-header" *ngIf="(profile$ | async) as profile;">
+        <h1>{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}, <span id="age">{{profile?.Age}}</span></h1>
+        <div class="progress-loader-wrapper">
+          <div class="progress-loader">
+            <img src={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}} alt="img-10">
+          </div>
+          <ion-buttons>  
+            <ion-button class="add-images-btn" id="open-modal" expand="block">
+              <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <ion-badge>{{profileCompleteText}}%</ion-badge>
+
+        <h2>Time Remaining</h2>
+        <h1 class="time-remaining">${{profile?.TimeRemaining}}</h1>
+      </div>
+
+      <div class="profile-content">
+        <div class="profile-content-inner-wrapper">
+
+          <ion-label class="item-label">About Me</ion-label>
+          <ion-input maxlength="300" placeholder="I love sushi!" [(ngModel)]="aboutMeText" (ionChange)="onAboutMeChange($event)"></ion-input>
+          <p>{{remainingAboutMeChars}}</p>
+
+
+          <ion-label class="item-label">Interests</ion-label>
+          <div class="interests-div">
+            <ion-chip (click)="showGamesTick ? (changeMade=true) && (showGamesTick=false): (showGamesTick=true) && (changeMade=true)">
+              <ion-icon name="game-controller-outline" size="large"></ion-icon>
+              <ion-label>Video Games</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showGamesTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showFootballTick ? (changeMade=true) && (showFootballTick=false): (showFootballTick=true) && (changeMade=true)">
+              <ion-icon name="football-outline" size="large"></ion-icon>
+              <ion-label>Football</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showFootballTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showReadingTick ? (changeMade=true) && (showReadingTick=false): (showReadingTick=true) && (changeMade=true)">
+              <ion-icon name="library-outline" size="large"></ion-icon>
+              <ion-label>Reading</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showReadingTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showMusicTick ? (changeMade=true) && (showMusicTick=false): (showMusicTick=true) && (changeMade=true)">
+              <ion-icon name="musical-notes-outline" size="large"></ion-icon>
+              <ion-label>Music</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showMusicTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showWritingTick ? (changeMade=true) && (showWritingTick=false): (showWritingTick=true) && (changeMade=true)">
+              <ion-icon name="pencil-outline" size="large"></ion-icon>
+              <ion-label>Writing</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showWritingTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showBasketballTick ? (changeMade=true) && (showBasketballTick=false): (showBasketballTick=true) && (changeMade=true)">
+              <ion-icon name="basketball-outline" size="large"></ion-icon>
+              <ion-label>Basketball</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showBasketballTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showGymTick ? (changeMade=true) && (showGymTick=false): (showGymTick=true) && (changeMade=true)">
+              <ion-icon name="barbell-outline" size="large"></ion-icon>
+              <ion-label>Gym</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showGymTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showArtTick ? (changeMade=true) && (showArtTick=false): (showArtTick=true) && (changeMade=true)">
+              <ion-icon name="color-palette-outline" size="large"></ion-icon>
+              <ion-label>Art</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showArtTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showPhotographyTick ? (changeMade=true) && (showPhotographyTick=false): (showPhotographyTick=true) && (changeMade=true)">
+              <ion-icon name="camera-outline" size="large"></ion-icon>
+              <ion-label>Photography</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showPhotographyTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showTravelTick ? (changeMade=true) && (showTravelTick=false): (showTravelTick=true) && (changeMade=true)">
+              <ion-icon name="airplane-outline" size="large"></ion-icon>
+              <ion-label>Travel</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showTravelTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showTakeOutTick ? (changeMade=true) && (showTakeOutTick=false): (showTakeOutTick=true) && (changeMade=true)">
+              <ion-icon name="pizza-outline" size="large"></ion-icon>
+              <ion-label>Take-out</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showTakeOutTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showWineTick ? (changeMade=true) && (showWineTick=false): (showWineTick=true) && (changeMade=true)">
+              <ion-icon name="wine-outline" size="large"></ion-icon>
+              <ion-label>Wine</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showWineTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showFishingTick ? (changeMade=true) && (showFishingTick=false): (showFishingTick=true) && (changeMade=true)">
+              <ion-icon name="fish-outline" size="large"></ion-icon>
+              <ion-label>Fishing</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showFishingTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showIceCreamTick ? (changeMade=true) && (showIceCreamTick=false): (showIceCreamTick=true) && (changeMade=true)">
+              <ion-icon name="ice-cream-outline" size="large"></ion-icon>
+              <ion-label>Ice-cream</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showIceCreamTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showPetsTick ? (changeMade=true) && (showPetsTick=false): (showPetsTick=true) && (changeMade=true)">
+              <ion-icon name="paw-outline" size="large"></ion-icon>
+              <ion-label>Pets</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showPetsTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+
+            <ion-chip (click)="showSpaceTick ? (changeMade=true) && (showSpaceTick=false): (showSpaceTick=true) && (changeMade=true)">
+              <ion-icon name="telescope-outline" size="large"></ion-icon>
+              <ion-label>Space</ion-label>
+              <ion-icon name="checkmark-outline" [class]="showSpaceTick ? 'show-tick' : 'hide-tick'"></ion-icon>
+            </ion-chip>
+          </div>
+
+          <ion-label class="item-label">Major/Education</ion-label>
+          <ion-input placeholder="Computer Science" maxlength="50" [(ngModel)]="majorText" (ionChange)="onMajorChange($event)"></ion-input>
+          <p>{{remainingMajorChars}}</p>
+
+          <ion-label class="item-label">Phone number</ion-label>
+          <ion-input placeholder="0123456789" maxlength="10" [(ngModel)]="phoneText" type="tel" class="margin-bottom-half" (ionChange)="onPhoneChange($event)"></ion-input>
+
+
+          <ion-button class="verifyButton" (click)="saveChanges()" [strong]="true" expand="block" shape="round" [disabled]="!changeMade">Save Changes</ion-button>
+
+          <ion-button class="verifyButton" (click)="logout()" [strong]="true" expand="block" shape="round">Logout</ion-button>
+
+        </div>
+      </div>
+      
+    </ion-content>  
+  </ng-container>
+
+
+
+  <input type="file" (change)="onFileSelected($event)" #fileInput style="display: none" accept="image/*">
+
+
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel()">Done</ion-button>
+          </ion-buttons>
+          <ion-title>Update images</ion-title>
+          <ion-progress-bar [value]="progress"></ion-progress-bar>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding modal-content">
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <img src="https://picsum.photos/200/400?random=10" alt="img-1">
+              <ion-buttons class="delete-image-btns">  
+                <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+              <ion-col><img src="https://picsum.photos/200/400?random=11" alt="img-1">
+              <ion-buttons class="delete-image-btns">  
+                <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+            <ion-col>
+              <img src="https://picsum.photos/200/400?random=12" alt="img-1">
+              <ion-buttons class="delete-image-btns">  
+                <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <img src="https://picsum.photos/200/400?random=13" alt="img-1">
+              <ion-buttons class="delete-image-btns">  
+                <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+            <ion-col class="empty-photo">
+              <ion-buttons class="plus-image-btns">  
+
+                <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+
+                  <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+            <ion-col class="empty-photo">
+              <ion-buttons class="plus-image-btns">  
+
+                <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+
+                  <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-content>
+    </ng-template>
+</ion-modal>
+
+
+  <!-- <ng-container *ngIf="(profile$ | async) as profile; else noProfile">
     <ms-profile-account-details-component></ms-profile-account-details-component>
     <ms-profile-personal-details-component></ms-profile-personal-details-component>
     <ms-profile-contact-details-component></ms-profile-contact-details-component>
     <ms-profile-address-details-component></ms-profile-address-details-component>
     <ms-profile-occupation-details-component></ms-profile-occupation-details-component>
-  </ng-container>
+  </ng-container> -->
   <ng-template #noProfile>
     <ion-grid>
       <ion-row>
@@ -53,4 +295,3 @@
       </ion-row>
     </ion-grid>
   </ng-template>
-</ion-content>

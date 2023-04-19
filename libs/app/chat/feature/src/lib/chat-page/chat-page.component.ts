@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './chat-page.component.html',
   styleUrls: ['./chat-page.component.scss'],
 })
-export class ChatPageComponent {}
+export class ChatPageComponent {
+  segment = 'matches';
+}

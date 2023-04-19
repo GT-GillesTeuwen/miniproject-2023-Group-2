@@ -1,0 +1,19 @@
+<ion-content>
+    <div class="whitespace"></div>
+    <div class="backdrop">
+        <div class="text-holder">
+            <h1>Meeting Verification</h1>
+            <p>Verify your meeting with <span>Obi Wan Kenobi</span> by entering the 4-digit code that appears on their screen.</p>
+            
+            <ion-input #input0 style="display:none"></ion-input>
+
+            <div class="code-input-wrapper">
+                <ion-input #input1 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input1, input2, input0)" (ionChange)="checkInput($event, input1)"></ion-input>
+                <ion-input #input2 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input2, input3, input1)" (ionChange)="checkInput($event, input2)"></ion-input>
+                <ion-input #input3 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input3, input4, input2)" (ionChange)="checkInput($event, input3)"></ion-input>
+                <ion-input #input4 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input4, input0, input3)" (ionChange)="checkInput($event, input4)"></ion-input>
+            </div>
+        </div>
+    </div>
+    <div class="img-holder"></div>
+</ion-content>

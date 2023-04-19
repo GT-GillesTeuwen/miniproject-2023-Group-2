@@ -23,16 +23,11 @@ export class ForgotPageComponent {
       '',
       [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
     ],
-    password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
   });
   showPassword = false;
 
   get email() {
     return this.forgotForm.get('email');
-  }
-
-  get password() {
-    return this.forgotForm.get('password');
   }
 
   get emailError(): string {
@@ -46,31 +41,17 @@ export class ForgotPageComponent {
     return 'Email is invalid';
   }
 
-  get passwordError(): string {
-    if (this.password?.errors?.['required']) return 'Password is required';
-    if (this.password?.errors?.['minlength'])
-      return 'Password should be longer than 6 characters';
-    if (this.password?.errors?.['maxlength'])
-      return 'Password should be shorter than 64 characters';
-
-    return 'Password is invalid';
-  }
-
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store,
     private readonly router : Router,
   ) {}
 
-  login() {
+  sendEmail() {
     if (this.forgotForm.valid) {
-      //this.store.dispatch(new Forgot());
-      this.router.navigate(['/login']);
+      this.store.dispatch(new Forgot());
+      //this.router.navigate(['/login']);
 
     }
-  }
-
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
   }
 }
