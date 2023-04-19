@@ -17,13 +17,12 @@ export class SendMessageHandler
   constructor(private publisher: EventPublisher) {}
 
   async execute(command: MessageSendCommand) {
-    console.log("Ahhhh in send handler");
     console.log(`${SendMessageHandler.name}`);
     const request = command.request;
     const conversationID = request.conversation;
     const toUser=request.message.ToUserID;
     const fromUser=request.message.FromUserID;
-    const timestamp=request.message.DateSent;
+    const timestamp=Timestamp.fromDate(new Date());
     const content=request.message.Content;
 
     const data: IMessage = {

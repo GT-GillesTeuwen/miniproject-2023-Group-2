@@ -38,7 +38,8 @@ export class MessagesPageComponent {
         Time: null,
         Location:null,
         FoodPreference: null,
-        DressCode: null
+        DressCode: null,
+        TimeInvested:0,
       }
     }
     //this.store.dispatch(new )
@@ -112,7 +113,8 @@ export class MessagesPageComponent {
         Time:this.timeSelected,
         Location:this.locationSelected,
         FoodPreference:this.foodSelected,
-        DressCode:this.dressSelected
+        DressCode:this.dressSelected,
+        TimeInvested:0 //Replace with time invested
       }
       this.store.dispatch(new UpdateMeetingDetails("1",meetingDetails));
       

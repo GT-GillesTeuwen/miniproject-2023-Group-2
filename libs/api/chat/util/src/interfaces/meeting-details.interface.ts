@@ -7,4 +7,5 @@ export interface IMeetingDetails {
   Location?: string | null | undefined;
   FoodPreference?: string|null |undefined;
   DressCode?: string |null | undefined;
+  TimeInvested?: number |null|undefined;
 }

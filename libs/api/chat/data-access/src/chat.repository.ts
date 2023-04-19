@@ -85,7 +85,7 @@ export class ChatRepository {
       .collection('conversations')
       .doc(conversationID)
       .update({
-        "Meeting": meeting
+        "MeetingDetails": meeting
       });
     
     

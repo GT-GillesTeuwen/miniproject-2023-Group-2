@@ -13,7 +13,8 @@ import { Timestamp } from "firebase-admin/firestore";
       public Time?: string | null | undefined,
       public Location?: string | null | undefined,
       public FoodPreference?: string | null | undefined,
-      public DressCode?: string | null | undefined
+      public DressCode?: string | null | undefined,
+      public TimeInveted?: number|null|undefined,
     ) {
       super();
     }
@@ -24,7 +25,8 @@ import { Timestamp } from "firebase-admin/firestore";
         meeting.Time,
         meeting.Location,
         meeting.FoodPreference,
-        meeting.DressCode
+        meeting.DressCode,
+        meeting.TimeInvested,
       );
       return instance;
     }
@@ -64,6 +66,7 @@ import { Timestamp } from "firebase-admin/firestore";
         Location: this.Location,
         FoodPreference: this.FoodPreference,
         DressCode:this.DressCode,
+        TimeInvested:this.TimeInveted,
       };
     }
   

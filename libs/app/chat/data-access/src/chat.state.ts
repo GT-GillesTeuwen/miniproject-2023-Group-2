@@ -128,6 +128,7 @@ export class ChatState {
                Location:meeting.Location,
                FoodPreference:meeting.FoodPreference,
                DressCode:meeting.DressCode,
+               TimeInvested:meeting.TimeInvested
              },
            };
       const userCredential=await this.chatApi.updateMeeting(request);

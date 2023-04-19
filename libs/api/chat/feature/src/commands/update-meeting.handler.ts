@@ -27,13 +27,17 @@ export class UpdateMeetinHandler
     const location=request.meeting.Location;
     const foodPreference=request.meeting.FoodPreference;
     const dressCode=request.meeting.DressCode;
+    const timeInvested=request.meeting.TimeInvested;
 
+    
+    
     const data: IMeetingDetails = {
       Date:date,
       Time : time,
       Location: location,
       FoodPreference : foodPreference,
-      DressCode:dressCode
+      DressCode:dressCode,
+      TimeInvested:timeInvested,
     };
     const message = this.publisher.mergeObjectContext(MeetingDetails.fromData(data));
     message.updateMeeting(conversationID);
