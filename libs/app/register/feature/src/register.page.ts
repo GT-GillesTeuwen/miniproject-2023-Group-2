@@ -62,7 +62,7 @@ export class RegisterPage {
   }
 
   get confirmError(): string | boolean {
-    console.log(this.password?.value);
+    //console.log(this.password?.value);
     if (this.confirmPassword?.errors?.['required']) 
       return 'Confirm your password';
     if(this.confirmPassword?.value != this.password?.value)
@@ -121,9 +121,9 @@ export class RegisterPage {
   ) {}
 
   register() {
-      // if (this.registerForm.valid) {
-      //   this.store.dispatch(new Register())
-      // }
+      if (this.registerForm.valid) {
+        this.store.dispatch(new Register())
+      }
   }
 
   toggleShowPassword() {
