@@ -96,7 +96,7 @@ export class ProfileState {
   }
 
   @Selector()
-  static match(state: ProfileStateModel) {
+  static matches(state: ProfileStateModel) {
     return state.matches;
   }
 
