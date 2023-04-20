@@ -18,7 +18,6 @@ export class UpdateDetailsHandler
 
   async execute(command: UpdateDetailsCommand) {
     console.log(`${UpdateDetailsHandler.name}`);
-
     const request = command.request;
     console.log(request.profile.UID);
     console.log("logged UID");
@@ -29,6 +28,7 @@ export class UpdateDetailsHandler
     const profileData = profileDoc.data(); 
 
     if (!profileData) throw ("Profile not found 54")
+
 
     const profile = this.publisher.mergeObjectContext(
       Profile.fromData(profileData)

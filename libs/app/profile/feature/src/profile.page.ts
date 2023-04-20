@@ -7,7 +7,9 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
-import { SaveProfileChanges, UpdateProfilePhoto } from '@mp/app/profile/util';
+
+import { SaveProfileChanges, SubscribeToProfile, UpdateProfilePhotos } from '../../util/src/profile.actions';
+
 import { Logout } from '@mp/app/auth/util'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -19,7 +21,10 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 })
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+
   @Select(ProfileState.match) matches$!: Observable<IProfile[] | null>;
+
+  @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
 
   @Select(actionsExecuting([SaveProfileChanges])) busy$!: Observable<ActionsExecuting>;
   profileChangesForm = this.fb.group({
@@ -34,7 +39,7 @@ export class ProfilePage {
   majorText!: string;
   phoneText!: string;
   hobbiesText!: string[];
-
+  profilePhotosArr: string[]=[];
   profileCompleteText = 0;
   
   changeMade = false;
@@ -150,6 +155,19 @@ export class ProfilePage {
         }
       }
     });
+
+    this.store.select(ProfileState.profilePhotos).subscribe((array) => {
+      this.profilePhotosArr=[];
+      if(array!=undefined){
+        for (let index = 0; index < array.length; index++) {
+          this.profilePhotosArr.push(array[index]);
+        }
+      }else{
+        alert("Array undefined subscribing again");
+        this.store.dispatch(new SubscribeToProfile());
+      }
+      
+    });
   }
 
   //IMAGES MODAL
@@ -214,7 +232,9 @@ export class ProfilePage {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
-            this.store.dispatch(new UpdateProfilePhoto(downloadURL));
+            this.profilePhotosArr.push(downloadURL);
+            console.log(this.profilePhotosArr);
+            this.store.dispatch(new UpdateProfilePhotos(this.profilePhotosArr));
           });
         }
       );
@@ -242,6 +262,14 @@ export class ProfilePage {
   //Save changes
   currentCell!: string;
   async saveChanges() {
+    
+
+    for (let index = 0; index < this.profilePhotosArr!.length; index++) {
+      alert(this.profilePhotosArr[index]);
+    }
+    
+    
+   
     if (this.changeMade) {
 
       if((this.aboutMeText == "" || this.aboutMeText == undefined) && this.getAboutMeValue() != ""){
@@ -299,6 +327,7 @@ export class ProfilePage {
   @ViewChild('currentAboutMe') currentAboutMe?: ElementRef;
   @ViewChild('currentPhone') currentPhone?: ElementRef;
   @ViewChild('currentMajor') currentMajor?: ElementRef;
+  @ViewChild('profilePhotos') profilePhotos?: ElementRef;
 
   getAboutMeValue() {
     return this.currentAboutMe?.nativeElement.innerText;
@@ -310,6 +339,11 @@ export class ProfilePage {
 
   getMajorValue() {
     return this.currentMajor?.nativeElement.innerText;
+  }
+
+  getProfilePhotos() {
+    
+    return this.profilePhotos?.nativeElement.innerText;
   }
 
   //Logout

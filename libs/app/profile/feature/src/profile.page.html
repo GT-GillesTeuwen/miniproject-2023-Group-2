@@ -12,7 +12,7 @@
           color="success"
           name="checkmark-circle-outline"></ion-icon>
       </ng-container> -->
-    </ion-title>
+    <!-- </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
@@ -20,8 +20,7 @@
     <ion-toolbar>
       <ion-title size="large" class="ion-align-items-center">
         Profile
-        <!-- <ng-container *ngIf="(profile$ | async) as profile;">
-
+       <ng-container *ngIf="(profile$ | async) as profile;">
           <ion-icon
             *ngIf="profile.status == 'Incomplete'"
             color="danger"
@@ -30,7 +29,6 @@
             *ngIf="profile.status == 'Complete'"
             color="success"
             name="checkmark-circle-outline"></ion-icon>
-
         </ng-container> -->
 
       </ion-title>
@@ -41,6 +39,7 @@
   <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentAboutMe>{{profile?.Bio}}</div>
   <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentPhone>{{profile?.ContactDetails?.Cell}}</div>
   <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentMajor>{{profile?.Major}}</div>
+  <div style="display: none;" *ngIf="(profile$ | async) as profile;" #profilePhotos>{{profile?.ProfilePhotos}}</div>
 
   <ng-container>
     <ion-content>      
@@ -59,7 +58,7 @@
         <h1>{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}, <span id="age">{{profile?.Age}}</span></h1>
         <div class="progress-loader-wrapper">
           <div class="progress-loader">
-            <img src={{profile?.ProfilePhoto}} alt="img-10">
+            <img src={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}} alt="img-10">
           </div>
           <ion-buttons>  
             <ion-button class="add-images-btn" id="open-modal" expand="block">
@@ -302,4 +301,3 @@
       </ion-row>
     </ion-grid>
   </ng-template>
-</ion-content>

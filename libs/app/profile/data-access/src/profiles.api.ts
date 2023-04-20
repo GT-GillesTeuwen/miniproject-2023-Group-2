@@ -17,16 +17,19 @@ import {
   IUpdateProfileRequest,
   IUpdateProfileResponse
 } from '@mp/api/profiles/util';
+
 import { all } from 'axios';
 import { QuerySnapshot } from 'firebase-admin/firestore';
 import { getDocs } from 'firebase/firestore';
+import { IUpdateSettingsRequest } from '@mp/api/settings/util';
+
 
 @Injectable()
 export class ProfilesApi {
   constructor(
     private readonly firestore: Firestore,
     private readonly functions: Functions
-  ) {}
+  ) { }
 
   profile$(id: string) {
     console.log
@@ -60,6 +63,7 @@ export class ProfilesApi {
   }
 
   async updateProfileDetails(request: IUpdateProfileRequest) {
+    console.log(request)
     return await httpsCallable<
       IUpdateProfileRequest,
       IUpdateProfileResponse
@@ -70,29 +74,32 @@ export class ProfilesApi {
   }
 
 
-  async saveProfileChanges(request: IUpdatePersonalDetailsRequest){
-      
-      const profile: IProfile = {
-        UID:request.profile.UID, 
-        Bio: request.profile.Bio,
-        Hobby: request.profile.Hobby,
-        Major: request.profile.Major,
-        ContactDetails: {
-          Cell : request.profile.ContactDetails?.Cell
-        },
-      };
+  async saveProfileChanges(request: IUpdatePersonalDetailsRequest) {
 
-      return await this.updateProfileDetails( {profile});
-  }
 
-  async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
-      alert("this is in update photo api")
     const profile: IProfile = {
-      UID:request.profile.UID, 
-      ProfilePhoto: request.profile.ProfilePhoto,
+      UID: request.profile.UID,
+      Bio: request.profile.Bio,
+      Hobby: request.profile.Hobby,
+      Major: request.profile.Major,
+      ContactDetails: {
+        Cell: request.profile.ContactDetails?.Cell
+      },
     };
 
-    return await this.updateProfileDetails( {profile});
+    return await this.updateProfileDetails({ profile });
+
+  }
+
+  async updateProfilePhotos(request: IUpdatePersonalDetailsRequest) {
+
+    const profile: IProfile = {
+      UID: request.profile.UID,
+      ProfilePhotos: request.profile.ProfilePhotos,
+    };
+
+    return await this.updateProfileDetails({ profile });
+
 
 }
   async updateTime(request: IUpdatePersonalDetailsRequest){
@@ -116,6 +123,17 @@ async getUserProfileDetails(request: IGetUserProfileRequest) {
     'getUserProfile'
   )(request);
 }
+
+  async updateSettings(request: IUpdateSettingsRequest) {
+
+    const profile: IProfile = {
+      UID: request.UID,
+      Settings: request.settings,
+    };
+    console.log(profile);
+    return await this.updateProfileDetails({ profile });
+
+  }
 
   async updateAccountDetails(request: IUpdateAccountDetailsRequest) {
     return await httpsCallable<

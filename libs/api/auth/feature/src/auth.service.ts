@@ -18,6 +18,8 @@ export class AuthService {
   async updateProfile(
     request: IUpdateProfileRequest
   ): Promise<IUpdateProfileResponse> {
+    console.log("At service");
+    console.log(request.profile.Settings?.AgeRange);
     return await this.commandBus.execute<
       UpdateDetailsCommand,
       IUpdateProfileResponse

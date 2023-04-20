@@ -39,6 +39,7 @@ export class CardStackContainerComponent {
     else{
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }
-    console.log('Users Matched!:'+!match)
+    console.log('Users Matched!:'+match)
+
   }
 }

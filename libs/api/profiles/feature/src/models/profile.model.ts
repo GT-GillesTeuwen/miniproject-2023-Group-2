@@ -5,7 +5,8 @@ import {
     IProfile,
     PersonalDetailsUpdatedEvent,
     ProfileCreatedEvent,
-    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ProfileMatchesUpdatedEvent
+    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ProfileMatchesUpdatedEvent,ISettings
+
 } from '@mp/api/profiles/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -15,9 +16,11 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Profile extends AggregateRoot implements IProfile {
   constructor(
 
-    public UID: string | undefined,
+
+    public UID: string | null |undefined ,
+
     public Bio?: string | null | undefined,
-    public ProfilePhoto?: string | null | undefined,
+    public ProfilePhotos?: string[] |null | undefined,
     public TimeRemaining?: number | null | undefined,
     public RecentlyActive?: boolean | null | undefined,
     public Gender?: string | null | undefined,
@@ -27,7 +30,8 @@ export class Profile extends AggregateRoot implements IProfile {
     public Name?: IPersonalDetails | null | undefined,
     public ContactDetails?: IContactDetails | null | undefined,
     public Matches?: IMatchDetails[] | null | undefined,
-    public Created?: FirebaseFirestore.Timestamp | null | undefined
+    public Created?: FirebaseFirestore.Timestamp | null | undefined,
+    public Settings?: ISettings | null | undefined,
   ) {
     super();
   }
@@ -36,7 +40,7 @@ export class Profile extends AggregateRoot implements IProfile {
     const instance = new Profile(
       profile.UID,
       profile.Bio,
-      profile.ProfilePhoto,
+      profile.ProfilePhotos,
       profile.TimeRemaining,
       profile.RecentlyActive,
       profile.Gender,
@@ -46,7 +50,8 @@ export class Profile extends AggregateRoot implements IProfile {
       profile.Name,
       profile.ContactDetails,
       profile.Matches,
-      profile.Created
+      profile.Created,
+      profile.Settings
     );
     return instance;
   }
@@ -70,7 +75,7 @@ export class Profile extends AggregateRoot implements IProfile {
   updateDetails(profile : IProfile) {
     this.UID = profile.UID;
     this.Bio=profile.Bio;
-    this.ProfilePhoto=profile.ProfilePhoto;
+    this.ProfilePhotos=profile.ProfilePhotos;
     this.TimeRemaining = profile.TimeRemaining;
     this.RecentlyActive = profile.RecentlyActive;
     this.Gender = profile.Gender;
@@ -80,6 +85,7 @@ export class Profile extends AggregateRoot implements IProfile {
     this.Major = profile.Major;
     this.Matches = profile.Matches;
     this.ContactDetails = profile.ContactDetails;
+    this.Settings=profile.Settings;
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
   }
 
@@ -119,7 +125,7 @@ export class Profile extends AggregateRoot implements IProfile {
     return {
       UID: this.UID,
       Bio: this.Bio,
-      ProfilePhoto: this.ProfilePhoto,
+      ProfilePhotos: this.ProfilePhotos,
       TimeRemaining: this.TimeRemaining,
       RecentlyActive: this.RecentlyActive,
       Gender: this.Gender,
@@ -130,6 +136,7 @@ export class Profile extends AggregateRoot implements IProfile {
       ContactDetails : this.ContactDetails,
       Matches: this.Matches,
       Created: this.Created,
+      Settings: this.Settings,
     };
   }
 
