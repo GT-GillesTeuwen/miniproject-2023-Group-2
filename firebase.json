@@ -19,7 +19,7 @@
     "runtime": "nodejs16"
   },
   "hosting": {
-    "public": "public",
+    "public": "dist/apps/app",
     "ignore": [
       "firebase.json",
       "**/.*",
