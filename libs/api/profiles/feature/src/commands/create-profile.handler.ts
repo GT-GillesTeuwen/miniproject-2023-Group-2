@@ -54,7 +54,7 @@ export class CreateProfileHandler
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
 
-    profile.create();
+    await profile.create();
     profile.commit();
   }
 }

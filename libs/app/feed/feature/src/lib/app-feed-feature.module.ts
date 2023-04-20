@@ -6,11 +6,11 @@ import { appFeedFeatureRoutes } from './lib.routes';
 import { FeedPageComponent } from './feed-page/feed-page.component';
 import { CardStackContainerComponent } from './card-stack-container/card-stack-container.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { register } from 'swiper/element/bundle';
+// import { register } from 'swiper/element/bundle';
 import { CardItemComponent } from './card-item/card-item.component';
 import {AppFeedDataAccessModule} from "@mp/app/feed/data-access";
 
-register();
+// register();
 @NgModule({
   imports: [
     CommonModule,

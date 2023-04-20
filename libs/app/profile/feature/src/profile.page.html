@@ -80,6 +80,13 @@
           <p>{{remainingAboutMeChars}}</p>
 
 
+          <div *ngIf="(matches$ | async) as matches;">
+            <div *ngFor="let match of matches">
+              <p>{{match.Name?.Firstname}}</p>
+            </div>
+          </div>
+          <div *ngIf="(matches$ | async) as matches;" #hiii>{{matches}}</div>
+
           <ion-label class="item-label">Interests</ion-label>
           <div class="interests-div">
             <ion-chip (click)="showGamesTick ? (changeMade=true) && (showGamesTick=false): (showGamesTick=true) && (changeMade=true)">
@@ -193,7 +200,6 @@
 
         </div>
       </div>
-      
     </ion-content>  
   </ng-container>
 

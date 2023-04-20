@@ -48,7 +48,7 @@ export class AuthState {
   @Action(SetUser)
   async setUser(ctx: StateContext<AuthStateModel>, { user }: SetUser) {
     ctx.setState(
-      produce((draft) => {
+      await produce((draft) => {
         draft.user = user;
       })
     );
@@ -61,7 +61,7 @@ export class AuthState {
       
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
+      return ctx.dispatch(new SetError("Incorrect Email or Password"));
     }
   }
 
@@ -76,7 +76,7 @@ export class AuthState {
       
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
+      return ctx.dispatch(new SetError("This email already exists!"));
     }
   }
 
@@ -90,7 +90,7 @@ export class AuthState {
       await this.authApi.resetPassword(email, password,newPassword);
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
+      return ctx.dispatch(new SetError("Incorrect email"));
     }
   }
 
@@ -103,7 +103,7 @@ export class AuthState {
       await this.authApi.forgotPassword(email);
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
+      return ctx.dispatch(new SetError("A user with that email doesnt exists"));
     }
   }
 

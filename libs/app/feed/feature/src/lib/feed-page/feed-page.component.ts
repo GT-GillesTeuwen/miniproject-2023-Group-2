@@ -13,7 +13,7 @@ export class FeedPageComponent {
   userFeed$: Observable<IProfile[]> | undefined;
 
   constructor(private feedApi: FeedApi) {
-    //this.userFeed$ = feedApi.getProfileSuggestions();
+    this.userFeed$ = feedApi.getProfileSuggestions();
     feedApi.getProfileSuggestions()
       .pipe( switchMap( value=> {
         console.log('Returned data', value);

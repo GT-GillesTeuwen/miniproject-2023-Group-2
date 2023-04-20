@@ -5,7 +5,8 @@ import {
     IProfile,
     PersonalDetailsUpdatedEvent,
     ProfileCreatedEvent,
-    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ISettings
+    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ProfileMatchesUpdatedEvent,ISettings
+
 } from '@mp/api/profiles/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -15,7 +16,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Profile extends AggregateRoot implements IProfile {
   constructor(
 
+
     public UID: string | null |undefined ,
+
     public Bio?: string | null | undefined,
     public ProfilePhotos?: string[] |null | undefined,
     public TimeRemaining?: number | null | undefined,
@@ -53,7 +56,7 @@ export class Profile extends AggregateRoot implements IProfile {
     return instance;
   }
 
-  create() {
+  async create() {
     this.apply(new ProfileCreatedEvent(this.toJSON()));
   }
 
@@ -85,6 +88,24 @@ export class Profile extends AggregateRoot implements IProfile {
     this.Settings=profile.Settings;
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
   }
+
+  updateMatch(profile : IProfile) {
+    this.UID = profile.UID;
+    this.Bio=profile.Bio;
+    this.ProfilePhotos=profile.ProfilePhotos;
+    this.TimeRemaining = profile.TimeRemaining;
+    this.RecentlyActive = profile.RecentlyActive;
+    this.Gender = profile.Gender;
+    this.Age = profile.Age;
+    this.Hobby = profile.Hobby;
+    this.Name = profile.Name;
+    this.Major = profile.Major;
+    this.Matches = profile.Matches;
+    this.ContactDetails = profile.ContactDetails;
+    this.apply(new ProfileMatchesUpdatedEvent(this.toJSON())); 
+  }
+
+  
 
   updateContactDetails(ContactDetails: IContactDetails) {
     if (!this.ContactDetails) this.ContactDetails = {};

@@ -1,3 +1,2 @@
-export * from './lib/app-forgot-data-access.module';
-
-export * from './lib/lib.routes';
+export * from './forgot.module';
+export * from './forgot.state';

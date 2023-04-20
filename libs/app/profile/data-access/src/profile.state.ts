@@ -10,20 +10,45 @@ import {
     SaveProfileChanges,
     SetProfile,
     SubscribeToProfile,
+    SetMatches,
+    SubscribeToMatches,
+    //UpdateAccountDetails,
+    //UpdateAddressDetails,
+    UpdateContactDetails,
+    //UpdateOccupationDetails,
+    
+    
+    UpdateTime,
     UpdatePersonalDetails,
     UpdateProfilePhotos,
     UpdateSettings,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
-import { tap } from 'rxjs';
+import { tap, from } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
-import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
+
+import { AuthApi } from '@mp/app/auth/data-access';
 import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
+
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
+
+  personalDetailsForm: {
+    model: {
+      Hobby: string[] | null;
+      Major: string | null;
+      Cell: string | null
+    };
+    dirty: false;
+    status: string;
+    errors: object;
+  };
+  matches: IProfile[] | null;
+  TimeRemaining: number;
+
 }
 
 export interface SaveProfileChangesModel{
@@ -41,8 +66,22 @@ export interface SaveProfileChangesModel{
   name: 'profile',
   defaults: {
     profile: null,
+    personalDetailsForm: {
+      model: {
+        Hobby: null,
+        Major: null,
+        Cell: null,
+      },
+      dirty: false,
+      status: '',
+      errors: {},
+    },
+    matches : null,
+    TimeRemaining : 0
+
   },
 })
+
 @Injectable()
 export class ProfileState {
   constructor(
@@ -69,6 +108,7 @@ export class ProfileState {
   @Selector()
   static settings(state: ProfileStateModel) {
     return state.profile?.Settings;
+
   }
 
   @Action(Logout)
@@ -91,6 +131,25 @@ export class ProfileState {
     return ctx.setState(
       produce((draft) => {
         draft.profile = profile;
+      })
+    );
+  }
+
+  @Action(SubscribeToMatches)
+  subscribeToMatches(ctx: StateContext<ProfileStateModel>) {
+    const user = this.store.selectSnapshot(AuthState.user);
+    if (!user) return ctx.dispatch(new SetError('User not set'));
+
+    return from( this.profileApi
+      .matches$(user.uid))
+      .pipe(tap((matches: IProfile[]) => ctx.dispatch(new SetMatches(matches))));
+  }
+
+  @Action(SetMatches)
+  setMatches(ctx: StateContext<ProfileStateModel>, { matches }: SetMatches) {
+    return ctx.setState(
+      produce((draft) => {
+        draft.matches = matches;
       })
     );
   }
@@ -298,13 +357,36 @@ export class ProfileState {
       console.log(request);
       const responseRef =await this.profileApi.updateSettings(request);
       const response = responseRef.data;
-      return ctx.dispatch(new SetProfile(response.profile));
+      return response;
+      // return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
   }
 
-  
+  @Action(UpdateTime)
+  async updateTime(ctx: StateContext<ProfileStateModel>,{TimeRemaining}: UpdateTime) {
+    try {
+     
+      //alert("this is in updata photo state "+TimeRemaining);
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const timeRemaining = TimeRemaining;
+      //alert("UID at saveProfileChanges is "+UID);
 
- 
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:UID,
+          TimeRemaining:timeRemaining,
+        },
+      };
+
+      const responseRef =await this.profileApi.updateTime(request);
+      const response = responseRef.data;
+      return response;
+      //return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
 }

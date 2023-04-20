@@ -130,7 +130,7 @@
           formControlName="confirmPassword"></ion-input>
       </ion-item>
       <ion-text
-        *ngIf="confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)"
+        *ngIf="(confirmPassword?.invalid && (confirmPassword?.dirty || confirmPassword?.touched)) || confirmError"
         class="ion-padding-start"
         color="danger">
         <small>{{ confirmError }}</small>
