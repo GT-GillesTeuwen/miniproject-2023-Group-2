@@ -10,6 +10,7 @@ export class ProfileDetailsUpdatedHandler
 
   async handle(event: ProfileDetailsUpdatedEvent) {
     console.log(`${ProfileDetailsUpdatedHandler.name}`);
+    console.log(event.profile.Settings?.AgeRange);
     await this.repository.updateProfile(event.profile);
   }
 }

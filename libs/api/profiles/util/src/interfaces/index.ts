@@ -5,3 +5,4 @@ export * from './occupation-details.interface';
 export * from './personal-details.interface';
 export * from './match-details.interface';
 export * from './profile.interface';
+export * from './settings.interface';

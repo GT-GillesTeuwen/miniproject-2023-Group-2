@@ -7,6 +7,11 @@ import {
   h,
 } from '@stencil/core';
 
+import {ProfileState} from '@mp/app/profile/data-access'
+import { Observable } from 'rxjs';
+import { IProfile } from '@mp/api/profiles/util';
+import { Select, Store } from '@ngxs/store';
+
 import { Gesture, GestureConfig, createGesture } from '@ionic/core';
 import {window} from "rxjs";
 
@@ -17,7 +22,7 @@ import {window} from "rxjs";
   styleUrls: ['./card-item.component.scss'],
 })
 export class CardItemComponent implements AfterViewInit{
-
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   gestureHostElement: HTMLElement | undefined;
   @Output() matchUsers = new EventEmitter;
 

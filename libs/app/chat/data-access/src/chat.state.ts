@@ -58,7 +58,7 @@ export class ChatState {
   @Action(SubscribeToConversation)
   subscribeToConversation(ctx: StateContext<ConversationStateModel>) {
     const matches = this.store.selectSnapshot(ProfileState.matches);
-    if (!matches) return ctx.dispatch(new SetError('User not set'));
+    if (!matches) return ctx.dispatch(new SetError('matches not set'));
 
     return this.chatApi
       .conversation$(matches[0].ConversationID)
