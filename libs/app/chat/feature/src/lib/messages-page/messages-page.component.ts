@@ -29,7 +29,9 @@ export class MessagesPageComponent {
 
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
+    constructor(private navCtrl: NavController, private readonly store: Store) {
+      const curUID=this.getCurrentUserID();
+      const conversation: IConversation ={
       ConversationID:"1",
       User1ID:"u1",
       User2ID:"u2",
@@ -158,9 +160,10 @@ export class MessagesPageComponent {
   messageToSend!: string;
 
   sendMessage(){
+    const curUID=this.getCurrentUserID();
     const message: IMessage ={
       ToUserID:"u1",
-      FromUserID:"u2",
+      FromUserID:curUID,
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);
@@ -193,6 +196,7 @@ export class MessagesPageComponent {
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
   @ViewChild('currentConversationID') currentConversationID?: ElementRef;
+  @ViewChild('currentUserID') currentUserID?: ElementRef;
 
   getCurrentDateSelected() {
     return this.currentDateSelected?.nativeElement.innerText;
@@ -212,6 +216,10 @@ export class MessagesPageComponent {
   getCurrentConversationID() {
     return this.currentConversationID?.nativeElement.innerText;
   }
+  getCurrentUserID() {
+    return this.currentUserID?.nativeElement.innerText;
+  }
+
 
   //GETTING DATE
   getDateFromTimestamp(timestampSeconds: number | undefined): string {
