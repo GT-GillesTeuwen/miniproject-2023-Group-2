@@ -10,16 +10,19 @@ export const onAuthCreate = functions.auth
   .onCreate(async (user: UserRecord) => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(AuthService);
-    service.onAuthCreate(user);
+    await service.onAuthCreate(user);
   });
 
-  export const updateProfile = functions.https.onCall(
+  export const updateProfile = functions
+
+  .
+  https.onCall(
     async (
       request: IUpdateProfileRequest
     ): Promise<IUpdateProfileResponse> => {
-      console.log(request);
       const app = await NestFactory.createApplicationContext(CoreModule);
-      const service = app.get(AuthService);
+      const service = app.get(AuthService);      
       return service.updateProfile(request);
     }
   );
+

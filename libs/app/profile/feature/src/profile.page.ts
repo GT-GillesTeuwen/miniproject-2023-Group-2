@@ -7,7 +7,9 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
+
 import { SaveProfileChanges, SubscribeToProfile, UpdateProfilePhotos } from '../../util/src/profile.actions';
+
 import { Logout } from '@mp/app/auth/util'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
@@ -19,7 +21,11 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 })
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+
+  @Select(ProfileState.match) matches$!: Observable<IProfile[] | null>;
+
   @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
+
   @Select(actionsExecuting([SaveProfileChanges])) busy$!: Observable<ActionsExecuting>;
   profileChangesForm = this.fb.group({
     aboutMe: [ '', [ Validators.maxLength(300)],],
@@ -279,7 +285,7 @@ export class ProfilePage {
       }
       
 
-      let hobbies: string[] = [];
+      const hobbies: string[] = [];
       if (this.showGamesTick)
         hobbies.push("games");
       if (this.showFootballTick)

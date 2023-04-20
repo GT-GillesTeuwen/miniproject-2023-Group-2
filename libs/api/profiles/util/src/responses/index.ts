@@ -6,3 +6,5 @@ export * from './update-occupation-details.response';
 export * from './update-personal-details.response';
 export * from './update-profile.response';
 export * from './i-get-user-profile.response';
+export * from './update-time.response';
+export * from './';

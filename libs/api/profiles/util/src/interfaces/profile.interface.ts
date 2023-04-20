@@ -19,5 +19,7 @@ export interface IProfile {
   ContactDetails?: IContactDetails | null | undefined;
   Matches?: IMatchDetails[] | null |undefined;
   Created?: Timestamp | null | undefined;
+
   Settings?: ISettings | null | undefined;
+
 }

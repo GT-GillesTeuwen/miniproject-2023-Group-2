@@ -27,6 +27,8 @@ export class AuthApi {
     return authState(this.auth);
   }
 
+  
+
   async login(email: string, password: string) {
     const userCredential= await signInWithEmailAndPassword(this.auth, email, password);
     return userCredential;
@@ -43,13 +45,11 @@ export class AuthApi {
   }
 
   async register(gender : string,age : string,firstname : string, lastname : string,email: string, password: string) {
-    
 
-    try {
       const userCredential =  await createUserWithEmailAndPassword(this.auth, email, password);
 
       const id = userCredential.user.uid;
-
+      console.log("MEKHAIL-> UID = " + id)
       const profile: IProfile = {
         UID: id, 
         Bio: null,
@@ -71,20 +71,12 @@ export class AuthApi {
         Matches : null,
         Created: null,
       };
-
-       this.updateProfileDetails( {profile});
+      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+      await sleep(2000)
+       await this.updateProfileDetails( {profile});
        
-       //alert("auth.api Id is: "+this.auth.currentUser?.uid);
+      //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
-
-    }
-    catch(error)  { // invalid password
-      console.error(error);
-      console.log("meep")
-      return null;
-    };
-
-
   }
 
   
@@ -109,7 +101,6 @@ export class AuthApi {
     }
     catch(error)  { // invalid password
       console.error(error);
-      console.log("meep")
     };
   }
 

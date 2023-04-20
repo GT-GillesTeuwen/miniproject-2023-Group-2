@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Forgot } from '@mp/app/forgot/util';
-import {
-    ActionsExecuting,
-    actionsExecuting
-} from '@ngxs-labs/actions-executing';
+import { ForgotPassword } from '@mp/app/auth/util';
+import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router'
+//import { Router } from '@angular/router'
+import { Forgot } from '@mp/app/forgot/util';
 
 @Component({
   selector: 'mp-forgot-page',
@@ -17,14 +15,10 @@ import { Router } from '@angular/router'
 export class ForgotPageComponent {
 
 
-  @Select(actionsExecuting([Forgot])) busy$!: Observable<ActionsExecuting>;
+  @Select(actionsExecuting([ForgotPassword])) busy$!: Observable<ActionsExecuting>;
   forgotForm = this.fb.group({
-    email: [
-      '',
-      [Validators.email, Validators.minLength(6), Validators.maxLength(64)],
-    ],
+    email: [ '', [Validators.email, Validators.minLength(6), Validators.maxLength(64)],],
   });
-  showPassword = false;
 
   get email() {
     return this.forgotForm.get('email');
@@ -44,7 +38,6 @@ export class ForgotPageComponent {
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store,
-    private readonly router : Router,
   ) {}
 
   sendEmail() {

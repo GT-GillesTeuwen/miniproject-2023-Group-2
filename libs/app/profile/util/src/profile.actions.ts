@@ -13,6 +13,15 @@ export class SetProfile {
   constructor(public readonly profile: IProfile | null) {}
 }
 
+export class SubscribeToMatches {
+  static readonly type = '[Profile] SubscribeToMatches';
+}
+
+export class SetMatches {
+  static readonly type = '[Profile] SetMatches';
+  constructor(public readonly matches: IProfile[] | null) {}
+}
+
 export class UpdateAccountDetails {
   static readonly type = '[Profile] UpdateAccountDetails';
 }
@@ -45,10 +54,16 @@ export class SaveProfileChanges{
 
 export class UpdateProfilePhotos{
   static readonly type = '[Profile] UpdateProfilePhotos';
-  constructor(
-    public readonly profilePhotos: string[],
+  constructor(public readonly profilePhotos: string[],
   ) {alert("at profile actions")}
 }
+    
+export class UpdateTime{
+  static readonly type = '[Profile] UpdateTime';
+  constructor(
+    public readonly TimeRemaining: number,
+  ) {}
+    
 
 export class UpdateSettings{
   static readonly type = '[Profile] UpdateSettings';
@@ -56,6 +71,3 @@ export class UpdateSettings{
     public readonly settings: ISettings,
   ) {alert("at profile actions")}
 }
-
-
-
