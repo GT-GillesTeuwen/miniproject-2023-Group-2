@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-import { IConversation, ICreateConversationRequest, ICreateConversationResponse } from '@mp/api/chat/util';
+import { IConversation, ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest, IMessageSendResponse, IUpdateMeetingRequest, IUpdateMeetingResponse } from '@mp/api/chat/util';
 import {
   IGetUserProfileRequest, IGetUserProfileResponse,
   IProfile,
@@ -34,7 +34,7 @@ export class ChatApi {
     console.log
     const docRef = doc(
       this.firestore,
-      `collections/${id}`
+      `conversations/${id}`
     ).withConverter<IConversation>({
       fromFirestore: (snapshot) => {
         return snapshot.data() as IConversation;
@@ -72,23 +72,42 @@ export class ChatApi {
   }
 
   async updateProfilePhoto(request: IUpdatePersonalDetailsRequest){
-      alert("this is in update photo api")
     const profile: IProfile = {
       UID:request.profile.UID, 
-      ProfilePhoto: request.profile.ProfilePhoto,
+      ProfilePhotos: request.profile.ProfilePhotos,
     };
 
     return await this.updateProfileDetails( {profile});
 
 }
 
-async createConversation(request: ICreateConversationRequest) {
+  async createConversation3(request: ICreateConversationRequest) {
     return await httpsCallable<
       ICreateConversationRequest,
       ICreateConversationResponse
     >(
       this.functions,
-      'create'
+      'createConversation'
+    )(request);
+  }
+
+  async sendMessage(request: IMessageSendRequest) {
+    return await httpsCallable<
+      IMessageSendRequest,
+      IMessageSendResponse
+    >(
+      this.functions,
+      'sendMessage'
+    )(request);
+  }
+
+  async updateMeeting(request: IUpdateMeetingRequest) {
+    return await httpsCallable<
+      IUpdateMeetingRequest,
+      IUpdateMeetingResponse
+    >(
+      this.functions,
+      'updateMeeting'
     )(request);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-    IProfile, IUpdatePersonalDetailsRequest,
+    IProfile, ISettings, IUpdatePersonalDetailsRequest,
 } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
@@ -11,13 +11,15 @@ import {
     SetProfile,
     SubscribeToProfile,
     UpdatePersonalDetails,
-    UpdateProfilePhoto,
+    UpdateProfilePhotos,
+    UpdateSettings,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
 import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
+import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
@@ -57,6 +59,16 @@ export class ProfileState {
   @Selector()
   static matches(state: ProfileStateModel) {
     return state.profile?.Matches;
+  }
+
+  @Selector()
+  static profilePhotos(state: ProfileStateModel) {
+    return state.profile?.ProfilePhotos;
+  }
+
+  @Selector()
+  static settings(state: ProfileStateModel) {
+    return state.profile?.Settings;
   }
 
   @Action(Logout)
@@ -241,25 +253,50 @@ export class ProfileState {
     }
   }
 
-  @Action(UpdateProfilePhoto)
-  async updateProfilePhoto(ctx: StateContext<ProfileStateModel>,{profilePhoto}: UpdateProfilePhoto) {
+  @Action(UpdateProfilePhotos)
+  async updateProfilePhotos(ctx: StateContext<ProfileStateModel>,{profilePhotos}: UpdateProfilePhotos) {
     alert("at profile state")
     try {
      
-      alert("this is in updata photo state "+profilePhoto);
+      alert("this is in updata photo state "+profilePhotos);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
-      const ProfilePhoto = profilePhoto;
+      const ProfilePhotos = profilePhotos;
       //alert("UID at saveProfileChanges is "+UID);
 
       const request: IUpdatePersonalDetailsRequest = {
         profile: {
           UID:UID,
-          ProfilePhoto:ProfilePhoto,
+          ProfilePhotos:ProfilePhotos,
         },
       };
 
-      const responseRef =await this.profileApi.updateProfilePhoto(request);
+      const responseRef =await this.profileApi.updateProfilePhotos(request);
+      const response = responseRef.data;
+      return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateSettings)
+  async updateSettings(ctx: StateContext<ProfileStateModel>,{settings}: UpdateSettings) {
+    
+    try {
+     
+      const state = ctx.getState();
+      const UID= this.authApi.auth.currentUser?.uid;
+      const uSettings:ISettings=settings;
+     
+
+      const request: IUpdateSettingsRequest = {
+        
+          UID:UID,
+          settings:uSettings,
+        
+      };
+      console.log(request);
+      const responseRef =await this.profileApi.updateSettings(request);
       const response = responseRef.data;
       return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {

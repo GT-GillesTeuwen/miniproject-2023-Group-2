@@ -1,5 +1,7 @@
 import { IMessage } from '../interfaces';
 
-export class ContactDetailsUpdatedEvent {
-  constructor(public readonly message: IMessage) {}
+export class MessageSentEvent {
+  constructor(
+    public readonly conversationID:string,
+    public readonly message: IMessage) {console.log("made message sent event")}
 }

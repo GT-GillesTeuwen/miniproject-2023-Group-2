@@ -11,7 +11,7 @@ import {
     IUpdatePersonalDetailsRequest,
     IUpdatePersonalDetailsResponse
 } from '@mp/api/profiles/util';
-import { ICreateConversationRequest, ICreateConversationResponse} from '@mp/api/chat/util'
+import { ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest,IMessageSendResponse, IUpdateMeetingRequest, IUpdateMeetingResponse} from '@mp/api/chat/util'
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
 import { CoreModule } from '../core.module';
@@ -32,7 +32,27 @@ export const createConversation = functions.https.onCall(
   ): Promise<ICreateConversationResponse> => {
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(ChatService);
-    return service.createConversation(request);
+    return service.createConversation2(request);
+  }
+);
+
+export const sendMessage = functions.https.onCall(
+  async (
+    request: IMessageSendRequest
+  ): Promise<IMessageSendResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(ChatService);
+    return service.sendMessage(request);
+  }
+);
+
+export const updateMeeting = functions.https.onCall(
+  async (
+    request: IUpdateMeetingRequest
+  ): Promise<IUpdateMeetingResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(ChatService);
+    return service.updateMeeting(request);
   }
 );
 

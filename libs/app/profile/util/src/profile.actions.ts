@@ -1,4 +1,4 @@
-import { IProfile } from '@mp/api/profiles/util';
+import { IProfile, ISettings } from '@mp/api/profiles/util';
 
 export class Logout {
   static readonly type = '[Profile] Logout';
@@ -43,10 +43,17 @@ export class SaveProfileChanges{
   ) {}
 }
 
-export class UpdateProfilePhoto{
-  static readonly type = '[Profile] UpdateProfilePhoto';
+export class UpdateProfilePhotos{
+  static readonly type = '[Profile] UpdateProfilePhotos';
   constructor(
-    public readonly profilePhoto: string,
+    public readonly profilePhotos: string[],
+  ) {alert("at profile actions")}
+}
+
+export class UpdateSettings{
+  static readonly type = '[Profile] UpdateSettings';
+  constructor(
+    public readonly settings: ISettings,
   ) {alert("at profile actions")}
 }
 

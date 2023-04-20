@@ -1,3 +1,3 @@
 export * from './lib/app-settings-feature.module';
 
-export * from './lib/lib.routes';
+export * from './lib/settings-page/lib.routes';

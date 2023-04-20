@@ -7,7 +7,7 @@ import {
   ProfileCreatedEvent,
   AgeGroup, Gender, ProfileDetailsUpdatedEvent, IMatchDetails
 } from '@mp/api/profiles/util';
-import { ConversationCreatedEvent, IConversation, IMessage } from "@mp/api/chat/util";
+import { ConversationCreatedEvent, IConversation, IMessage, IMeetingDetails } from "@mp/api/chat/util";
 
 import { AggregateRoot } from '@nestjs/cqrs';
 
@@ -20,7 +20,8 @@ export class Conversation extends AggregateRoot implements IConversation {
     public ConversationID?: string | null | undefined,
     public User1ID?: string | null | undefined,
     public User2ID?: string | null | undefined,
-    public Messages?: IMessage[] | null | undefined
+    public Messages?: IMessage[] | null | undefined,
+    public MeetingDetails?: IMeetingDetails | null |undefined
   ) {
     super();
   }
@@ -30,12 +31,14 @@ export class Conversation extends AggregateRoot implements IConversation {
       conversation.ConversationID,
       conversation.User1ID,
       conversation.User2ID,
-      conversation.Messages
+      conversation.Messages,
+      conversation.MeetingDetails
     );
     return instance;
   }
 
   create() {
+    console.log("here3")
     this.apply(new ConversationCreatedEvent(this.toJSON()));
   }
 
@@ -51,11 +54,12 @@ export class Conversation extends AggregateRoot implements IConversation {
   //   this.apply(new AddressDetailsUpdatedEvent(this.toJSON()));
   // }
 
-  updateDetails(conversation: IConversation) {
+  updateMeeting(conversation: IConversation) {
     this.ConversationID = conversation.ConversationID;
     this.User1ID = conversation.User1ID;
     this.User2ID = conversation.User2ID;
     this.Messages = conversation.Messages;
+    this.MeetingDetails=conversation.MeetingDetails
     //this.apply(new ProfileDetailsUpdatedEvent(this.toJSON()));
   }
 
@@ -68,6 +72,7 @@ export class Conversation extends AggregateRoot implements IConversation {
       User1ID: this.User1ID,
       User2ID: this.User2ID,
       Messages: this.Messages,
+      MeetingDetails: this.MeetingDetails,
     };
   }
 

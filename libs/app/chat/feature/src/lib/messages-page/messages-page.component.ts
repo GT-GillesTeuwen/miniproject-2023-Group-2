@@ -6,12 +6,12 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
-import { CreateConversation } from '@mp/app/chat/util';
+import { CreateConversation, SendMessage,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
-import { IConversation } from '@mp/api/chat/util';
+import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -28,7 +28,23 @@ export class MessagesPageComponent {
 
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store) {}
+    constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
+      ConversationID:"1",
+      User1ID:"u1",
+      User2ID:"u2",
+      Messages:[],
+      MeetingDetails:{
+        Date: null,
+        Time: null,
+        Location:null,
+        FoodPreference: null,
+        DressCode: null,
+        TimeInvested:0,
+      }
+    }
+    //this.store.dispatch(new )
+    this.store.dispatch(new CreateConversation(conversation));
+  }
 
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   dateSelected!: string;
@@ -91,6 +107,16 @@ export class MessagesPageComponent {
       this.showVerifyError = false;
       alert("date selected: " + this.dateSelected + "\ntime selected: " + this.timeSelected + "\nlocation selected: " + this.locationSelected + "\nfood selected: " + this.foodSelected + "\ndress selected: " + this.dressSelected );
       this.modal.dismiss(this.locationSelected, 'confirm');
+      const meetingDetails: IMeetingDetails ={
+        Date:this.dateSelected,
+        Time:this.timeSelected,
+        Location:this.locationSelected,
+        FoodPreference:this.foodSelected,
+        DressCode:this.dressSelected,
+        TimeInvested:0 //Replace with time invested
+      }
+      this.store.dispatch(new UpdateMeetingDetails("1",meetingDetails));
+      
     }else{
       this.verifyPass = false;
     }
@@ -109,14 +135,13 @@ export class MessagesPageComponent {
 
   sendMessage(){
     alert("Message to send is: " + this.messageToSend);
-    const conversation: IConversation ={
-      ConversationID:"1",
-      User1ID:"u1",
-      User2ID:"u2",
-      Messages:[]
+    const message: IMessage ={
+      ToUserID:"u1",
+      FromUserID:"u2",
+      Content:this.messageToSend
     }
     //this.store.dispatch(new )
-    this.store.dispatch(new CreateConversation(conversation));
+    this.store.dispatch(new SendMessage("1",message));
     alert("dispatch done");
   }
 

@@ -57,3 +57,6 @@ pubsub-debug.log
 # Env
 .env
 .env.prod
+
+.firebaserc
+.firebase.json
