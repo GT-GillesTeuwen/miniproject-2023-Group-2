@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class SentBubbleUiComponent {
   @Input() imgSrc!: string;
+  @Input() messageContent!: string;
 }
