@@ -17,7 +17,7 @@
       </div>
   
       <ion-buttons slot="end" class="meeting-button">  
-        <ion-button id="open-modal" expand="block">
+        <ion-button id="open-modal" expand="block" (click)="checkFormValues()">
           <ion-icon name="calendar-number-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-buttons>
@@ -37,10 +37,6 @@
 
 <ng-container>
     <ion-content class="header-content">  
-
-      <div class="time-remaining-inner-wrapper" *ngIf="(chat$ | async) as chat;">
-        {{chat?.User1ID}}
-      </div>
       
         <div class="user-header">
             <div class="img-outer-wrapper">
@@ -72,38 +68,58 @@
             </div>
         </div>
 
-        <div class="message-content-area">
+        <div class="message-content-area" *ngIf="(chat$ | async) as chat;" style="padding-bottom: 3em">
             <div class="date-chip-outer-wrapper">
-                <div class="date-chip">28 March 2023</div>
+                <div class="date-chip">{{getDateFromTimestamp(chat?.Messages![0].DateSent?.seconds)}}</div>
             </div>
 
-            <!-- FROM THEM -->
-            <mp-received-bubble-ui></mp-received-bubble-ui>
+            <div *ngFor="let message of chat?.Messages">
+              <div *ngIf="(profile$ | async) as profile;">
+                <mp-received-bubble-ui *ngIf="message.FromUserID != profile.UID" messageContent="{{message.Content}}"></mp-received-bubble-ui>
+                <mp-sent-bubble-ui *ngIf="message.FromUserID == profile.UID" imgSrc="{{profile?.ProfilePhoto}}" messageContent="{{message.Content}}"></mp-sent-bubble-ui>
+              </div>
+            </div>
+
+            <div #scrollToMe></div>
 
             <!-- FROM THEM -->
-            <mp-received-bubble-ui></mp-received-bubble-ui>
+            <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->
 
             <!-- FROM THEM -->
-            <mp-received-bubble-ui></mp-received-bubble-ui>
+            <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->
 
             <!-- FROM THEM -->
-            <mp-received-bubble-ui></mp-received-bubble-ui>
+            <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->
+
+            <!-- FROM THEM -->
+            <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->
 
             <!-- FROM ME -->
+
             <mp-sent-bubble-ui  *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
 
+
             <!-- FROM THEM -->
-            <mp-received-emoji-ui></mp-received-emoji-ui>
+            <!-- <mp-received-emoji-ui></mp-received-emoji-ui> -->
 
             <!-- FROM ME -->
+
             <mp-sent-bubble-ui *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
 
+
             <!-- FROM ME -->
-            <mp-sent-emoji-ui></mp-sent-emoji-ui>
+            <!-- <mp-sent-emoji-ui></mp-sent-emoji-ui> -->
 
         </div>
 
-        <p>{{ message }}</p>
+        <!-- HIDDEN DATA -->
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentDateSelected>{{chat?.MeetingDetails?.Date}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentTimeSelected>{{chat?.MeetingDetails?.Time}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentLocationSelected>{{chat?.MeetingDetails?.Location}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentFoodSelected>{{chat?.MeetingDetails?.FoodPreference}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentDressSelected>{{chat?.MeetingDetails?.DressCode}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentConversationID>{{chat?.ConversationID}}</div>
+        <!--  -->
 
         <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">
             <ng-template>
@@ -143,7 +159,7 @@
                 <ion-label position="stacked">Select a food preference if any</ion-label>
                 <ion-list>
                     <ion-select aria-label="food" placeholder="Select Food Preference" [(ngModel)]="foodSelected">
-                        <ion-select-option value="none" default>None</ion-select-option>
+                        <ion-select-option value="none">None</ion-select-option>
                         <ion-select-option value="vegan">Vegan</ion-select-option>
                         <ion-select-option value="pescatarian">Pescatarian</ion-select-option>
                         <ion-select-option value="halaal">Halaal</ion-select-option>
@@ -172,7 +188,7 @@
         </ion-modal>
 
         <div class="messege-send-area">
-            <ion-input label="Input with placeholder" placeholder="Enter message" class="message-send-input" [(ngModel)]="messageToSend"></ion-input>
+            <ion-input label="Input with placeholder" placeholder="Enter message" class="message-send-input" [(ngModel)]="messageToSend" (keydown)="checkEnterKey($event)" #messageSendInput></ion-input>
             <div class="send-button-wrapper">
                 <ion-buttons>  
                     <ion-button (click)="sendMessage()">
