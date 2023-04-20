@@ -63,6 +63,7 @@ export class UpdateTime{
   constructor(
     public readonly TimeRemaining: number,
   ) {}
+}
     
 
 export class UpdateSettings{
