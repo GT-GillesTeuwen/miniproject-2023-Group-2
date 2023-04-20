@@ -160,10 +160,14 @@ export class MessagesPageComponent {
   messageToSend!: string;
 
   sendMessage(){
-    const curUID=this.getCurrentUserID();
+    var profileUID:string|undefined|null;
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      profileUID=profile?.UID;
+      
+    });
     const message: IMessage ={
       ToUserID:"u1",
-      FromUserID:curUID,
+      FromUserID:profileUID,
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);

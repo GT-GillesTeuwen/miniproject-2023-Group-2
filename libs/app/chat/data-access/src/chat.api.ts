@@ -114,7 +114,6 @@ export class ChatApi {
     this.store.select(ProfileState.timeRemaining).subscribe((time) => {
       if (time != undefined) {
         uTimeRem = time;
-        alert(uTimeRem+" is the time rem");
       }
     });
 
@@ -146,7 +145,6 @@ export class ChatApi {
     this.store.select(ProfileState.timeRemaining).subscribe((time) => {
       if (time != undefined) {
         uTimeRem = time;
-        alert(uTimeRem+" is the time rem");
       }
     });
 
@@ -162,7 +160,6 @@ export class ChatApi {
           meetTime=conversation.MeetingDetails.Time;
           meetLocation=conversation.MeetingDetails.Location;
        
-        alert(meetTimeInvested+" is the time invested");
       }
     });
 
@@ -186,9 +183,7 @@ export class ChatApi {
       changed=true;
       request.meeting.TimeInvested = request.meeting.TimeInvested! + 10;
     }
-    alert(uTimeRem+" is the time rem");
     if(changed){
-      alert("Dispatched");
       this.store.dispatch(new UpdateTime(uTimeRem));
     }
     
