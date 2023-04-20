@@ -119,7 +119,7 @@
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentFoodSelected>{{chat?.MeetingDetails?.FoodPreference}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentDressSelected>{{chat?.MeetingDetails?.DressCode}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentConversationID>{{chat?.ConversationID}}</div>
-        
+        <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentTime>{{profile?.TimeRemaining}}</div>
         <!--  -->
 
         <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">

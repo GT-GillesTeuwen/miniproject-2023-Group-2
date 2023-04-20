@@ -12,6 +12,7 @@ import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
+import { UpdateTime } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -30,7 +31,6 @@ export class MessagesPageComponent {
 
     //ROUTING TO VERIFICATION PAGE
     constructor(private navCtrl: NavController, private readonly store: Store) {
-      const curUID=this.getCurrentUserID();
       const conversation: IConversation ={
       ConversationID:"1",
       User1ID:"u1",
@@ -160,17 +160,21 @@ export class MessagesPageComponent {
   messageToSend!: string;
 
   sendMessage(){
+    
     var profileUID:string|undefined|null;
     this.store.select(ProfileState.profile).subscribe((profile) => {
       profileUID=profile?.UID;
       
     });
+   
     const message: IMessage ={
       ToUserID:"u1",
       FromUserID:profileUID,
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);
+    
+    this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     this.store.dispatch(new SendMessage("1",message));
     this.messageSendInput.value = "";
   }
@@ -200,7 +204,7 @@ export class MessagesPageComponent {
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
   @ViewChild('currentConversationID') currentConversationID?: ElementRef;
-  @ViewChild('currentUserID') currentUserID?: ElementRef;
+  @ViewChild('currentTime') currentTime?: ElementRef;
 
   getCurrentDateSelected() {
     return this.currentDateSelected?.nativeElement.innerText;
@@ -219,9 +223,6 @@ export class MessagesPageComponent {
   }
   getCurrentConversationID() {
     return this.currentConversationID?.nativeElement.innerText;
-  }
-  getCurrentUserID() {
-    return this.currentUserID?.nativeElement.innerText;
   }
 
 

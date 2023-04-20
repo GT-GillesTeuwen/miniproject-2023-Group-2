@@ -109,14 +109,6 @@ export class ChatApi {
 
   async sendMessage(request: IMessageSendRequest) {
 
-    var uTimeRem=0;
-    
-    this.store.select(ProfileState.timeRemaining).subscribe((time) => {
-      if (time != undefined) {
-        uTimeRem = time;
-      }
-    });
-
     var meetTimeInvested:number|null|undefined;
     this.store.select(ChatState.conversation).subscribe((conversation) => {
       if (conversation != undefined && conversation.MeetingDetails!=undefined) {     
@@ -132,7 +124,6 @@ export class ChatApi {
       }
     }
     this.updateMeetingBack(updateTimeInvestedReq);
-    this.store.dispatch(new UpdateTime(uTimeRem-1));
     
     return await this.sendMessageBack(request);
   }
