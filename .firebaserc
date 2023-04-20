@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "<REPLACE_ME>",
+    "default": "cos301miniprojectg2",
     "production": "<REPLACE_ME>",
     "development": "<REPLACE_ME>"
   }

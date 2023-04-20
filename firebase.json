@@ -19,21 +19,11 @@
     "runtime": "nodejs16"
   },
   "hosting": {
-    "public": "dist/apps/app",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
-        "source": "/createLike           ---> THESE ARE JUST EXAMPLES",
-        "function": "createLike"
-      },
-      {
-        "source": "/createExample           ---> THESE ARE JUST EXAMPLES",
-        "function": "createExample"
-      }
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
     ]
   },
   "storage": {
