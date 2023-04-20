@@ -38,7 +38,7 @@ export interface SaveProfileChangesModel{
   },
 })
 @Injectable()
-export class ProfileState {
+export class FeedState {
   constructor(
     private readonly feedApi: FeedApi,
     private readonly authApi: AuthApi,
@@ -67,8 +67,8 @@ export class ProfileState {
 
       const matches : IMatchDetails ={
         MatchUserID:MatchUserID,
-        ConversationID: CID,
-        MeetingID : MEID
+        PairID: CID,
+        State : MEID
       };
 
       const request: IUpdateProfileRequest = {

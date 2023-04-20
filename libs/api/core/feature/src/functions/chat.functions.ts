@@ -1,16 +1,4 @@
 import { ChatService } from '@mp/api/chat/feature';
-import {
-    IUpdateAccountDetailsRequest,
-    IUpdateAccountDetailsResponse,
-    IUpdateAddressDetailsRequest,
-    IUpdateAddressDetailsResponse,
-    IUpdateContactDetailsRequest,
-    IUpdateContactDetailsResponse,
-    IUpdateOccupationDetailsRequest,
-    IUpdateOccupationDetailsResponse,
-    IUpdatePersonalDetailsRequest,
-    IUpdatePersonalDetailsResponse
-} from '@mp/api/profiles/util';
 import { ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest,IMessageSendResponse, IUpdateMeetingRequest, IUpdateMeetingResponse} from '@mp/api/chat/util'
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
