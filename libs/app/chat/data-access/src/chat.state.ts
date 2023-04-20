@@ -51,6 +51,26 @@ export class ChatState {
   }
 
   @Selector()
+  static meetingDate(state: ConversationStateModel) {
+    return state.conversation?.MeetingDetails?.Date;
+  }
+
+  @Selector()
+  static meetingTime(state: ConversationStateModel) {
+    return state.conversation?.MeetingDetails?.Time;
+  }
+
+  @Selector()
+  static meetingLocation(state: ConversationStateModel) {
+    return state.conversation?.MeetingDetails?.Location;
+  }
+
+  @Selector()
+  static timeInvested(state: ConversationStateModel) {
+    return state.conversation?.MeetingDetails?.TimeInvested;
+  }
+
+  @Selector()
   static message(state: MessageStateModel) {
     return state.message;
   }

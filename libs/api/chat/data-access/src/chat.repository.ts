@@ -80,13 +80,25 @@ export class ChatRepository {
       throw new Error("Conversation ID is null in sendMessage() in chat.repository.ts");
     }
     
-    return await admin
+    if(meeting.Date!=undefined && meeting.Date!=null){
+      return await admin
       .firestore()
       .collection('conversations')
       .doc(conversationID)
       .update({
         "MeetingDetails": meeting
       });
+    }else{
+      return await admin
+      .firestore()
+      .collection('conversations')
+      .doc(conversationID)
+      .update({
+        "MeetingDetails.TimeInvested": meeting.TimeInvested
+      });
+    }
+
+    
     
     
   }

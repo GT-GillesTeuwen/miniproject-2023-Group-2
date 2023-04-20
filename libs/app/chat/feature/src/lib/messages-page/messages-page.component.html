@@ -59,7 +59,7 @@
                             <div class="text-wrapper">
                                 <h2>Time Invested</h2>
                                 <p>You have invested</p>
-                                <h1 *ngIf="(profile$ | async) as profile;">${{profile?.TimeRemaining}}</h1>
+                                <h1 *ngIf="(chat$ | async) as chat;">${{chat?.MeetingDetails?.TimeInvested}}</h1>
                                 <p>in this meeting. Don't let it go to waste. Confirm and verify a meeting with <span>Obi Wan Kenobi</span> to get rewarded more time!</p>
                             </div>
                         </ion-content>
