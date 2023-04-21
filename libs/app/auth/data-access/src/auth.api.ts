@@ -13,7 +13,6 @@ import {
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Functions, httpsCallable } from '@angular/fire/functions';
-
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
 
