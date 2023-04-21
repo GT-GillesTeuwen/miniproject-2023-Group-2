@@ -27,6 +27,7 @@ export class MessagesPageComponent {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
+  currentUserID!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
     constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
@@ -43,8 +44,18 @@ export class MessagesPageComponent {
         TimeInvested:0,
       }
     }
+    this.setCurrentUserDetails();
     //this.store.dispatch(new )
     this.store.dispatch(new CreateConversation(conversation));
+  }
+
+  setCurrentUserDetails(){
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentUserID=profile.UID;
+      }else{
+      }
+    });
   }
 
   //message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
@@ -160,7 +171,7 @@ export class MessagesPageComponent {
   sendMessage(){
     const message: IMessage ={
       ToUserID:"u1",
-      FromUserID:"u2",
+      FromUserID:this.currentUserID,
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);

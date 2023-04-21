@@ -137,12 +137,17 @@ export class ProfileState {
 
   @Action(SubscribeToMatches)
   subscribeToMatches(ctx: StateContext<ProfileStateModel>) {
-    const user = this.store.selectSnapshot(AuthState.user);
-    if (!user) return ctx.dispatch(new SetError('User not set'));
-
-    return from( this.profileApi
-      .matches$(user.uid))
+    // const user = this.store.selectSnapshot(AuthState.user);
+    // console.log("BAHHHHH");
+    // console.log(user);
+    // if (!user) return ctx.dispatch(new SetError('User not set'));
+    
+    const thing= from( this.profileApi
+      .matches$())
       .pipe(tap((matches: IProfile[]) => ctx.dispatch(new SetMatches(matches))));
+       console.log("BAHHHHH");
+    console.log(thing);
+      return thing;
   }
 
   @Action(SetMatches)

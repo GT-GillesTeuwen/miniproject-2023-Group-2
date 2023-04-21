@@ -28,7 +28,6 @@ export class CardStackContainerComponent {
   constructor(
     private readonly store: Store
   ) {
-    console.log("AHHHHH!!!");
     this.setCurrentUserDetails();
     this.populateProfilesToShow();};
  

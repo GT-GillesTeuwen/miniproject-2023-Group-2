@@ -23,7 +23,7 @@ import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.inter
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
-  @Select(ProfileState.matches) matches$!: Observable<IProfile[] | null>;
+  @Select(ProfileState.allProfiles) matches$!: Observable<IProfile[] | null>;
 
   @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
 
@@ -82,6 +82,16 @@ export class ProfilePage {
     private readonly fb: FormBuilder,
     private readonly store: Store
   ) {
+    
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+      alert("clear");
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
     let doOnceBio = true;
     let doOnceMajor = true;
     let doOnceCell = true;
@@ -170,7 +180,6 @@ export class ProfilePage {
       }
       
     });
-
     
     
   }

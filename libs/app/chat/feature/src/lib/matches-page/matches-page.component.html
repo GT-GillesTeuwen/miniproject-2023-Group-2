@@ -1,8 +1,15 @@
-<div class="matches-page-content">
-    <mp-profile-card-page 
-        personName="Obi Wan Kenobi"
-        lastMessage="Death Star at 12?"
-        unreadMessages="11"
-        imgSrc="https://docs-demo.ionic.io/assets/madison.jpg"
-    ></mp-profile-card-page>
+<div class="matches-page-content" *ngIf="(matches$ | async) as allProfiles;">
+    <div *ngFor="let profile of allProfiles">
+        <div *ngFor="let match of profile.Matches">
+            <div *ngIf="(profile$ | async) as currentProfile;">
+                <mp-profile-card-page  *ngIf="match.MatchUserID==currentProfile.UID && match.MatchStatus=='PAIRED'" 
+                personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
+                lastMessage="Death Star at 12?"
+                    unreadMessages=">=0" 
+                    imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}>
+                </mp-profile-card-page>
+            </div>
+        </div>
+    </div>
+
 </div>
