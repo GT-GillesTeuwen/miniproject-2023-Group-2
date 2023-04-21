@@ -12,6 +12,7 @@ import { SaveProfileChanges, SubscribeToProfile, UpdateProfilePhotos } from '../
 
 import { Logout } from '@mp/app/auth/util'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
-  @Select(ProfileState.allProfiles) matches$!: Observable<IProfile[] | null>;
+  @Select(ProfileState.matches) matches$!: Observable<IProfile[] | null>;
 
   @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
 
@@ -41,6 +42,7 @@ export class ProfilePage {
   hobbiesText!: string[];
   profilePhotosArr: string[]=[];
   profileCompleteText = 0;
+
   
   changeMade = false;
 
@@ -155,7 +157,7 @@ export class ProfilePage {
         }
       }
     });
-
+    console.log("AHH");
     this.store.select(ProfileState.profilePhotos).subscribe((array) => {
       this.profilePhotosArr=[];
       if(array!=undefined){
@@ -168,7 +170,12 @@ export class ProfilePage {
       }
       
     });
+
+    
+    
   }
+
+  
 
   //IMAGES MODAL
   @ViewChild(IonModal) modal!: IonModal;
