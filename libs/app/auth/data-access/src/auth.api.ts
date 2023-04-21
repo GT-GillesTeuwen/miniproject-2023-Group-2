@@ -7,10 +7,11 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   updatePassword,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  
 } from '@angular/fire/auth';
 
-
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { signOut } from '@firebase/auth';
@@ -20,7 +21,8 @@ import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/
 export class AuthApi {
   constructor(
     public readonly auth: Auth,
-    private readonly functions: Functions
+    private readonly functions: Functions,
+    private readonly fireAuth: AngularFireAuth
     ) {}
 
   auth$() {
@@ -104,7 +106,13 @@ export class AuthApi {
     };
   }
 
-
+  GoogleSignIn(){
+    return this.fireAuth.signInWithPopup(new GoogleAuthProvider).then(response => {
+        
+    }, err => {
+      alert("Error: " + err.message);
+    });
+  }
 
 
 
