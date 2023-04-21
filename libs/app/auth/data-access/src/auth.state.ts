@@ -110,7 +110,7 @@ export class AuthState {
   @Action(ContinueWithGoogle)
   async continueWithGoogle(ctx: StateContext<AuthStateModel>) {
     try {
-      await this.authApi.continueWithGoogle();
+      await this.authApi.GoogleSignIn();
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));

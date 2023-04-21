@@ -108,7 +108,7 @@ export class AuthApi {
 
   GoogleSignIn(){
     return this.fireAuth.signInWithPopup(new GoogleAuthProvider).then(response => {
-        
+                      
     }, err => {
       alert("Error: " + err.message);
     });
