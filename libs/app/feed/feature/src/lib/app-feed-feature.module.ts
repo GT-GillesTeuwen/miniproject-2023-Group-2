@@ -9,7 +9,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 // import { register } from 'swiper/element/bundle';
 import { CardItemComponent } from './card-item/card-item.component';
 import {AppFeedDataAccessModule} from "@mp/app/feed/data-access";
-import { feedModule } from '@mp/api/feed/feature';
 
 // register();
 @NgModule({
@@ -17,8 +16,7 @@ import { feedModule } from '@mp/api/feed/feature';
     CommonModule,
     RouterModule.forChild(appFeedFeatureRoutes),
     IonicModule,
-    AppFeedDataAccessModule,
-    feedModule
+    AppFeedDataAccessModule
   ],
   declarations: [
     FeedPageComponent,

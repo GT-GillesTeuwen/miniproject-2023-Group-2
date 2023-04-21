@@ -7,7 +7,7 @@ import { UpdateThemeSettingsCommand } from '@mp/api/settings/util';
 export class UpdateThemeSettings implements ICommandHandler<UpdateThemeSettingsCommand> {
   constructor() {console.log}
 
-  async execute(command: UpdateThemeSettingsCommand): Promise<NotImplementedException> {
-    return  new NotImplementedException;
+  async execute(command: UpdateThemeSettingsCommand): Promise<void> {
+    throw new NotImplementedException
   }
 }

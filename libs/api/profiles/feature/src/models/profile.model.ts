@@ -92,7 +92,7 @@ export class Profile extends AggregateRoot implements IProfile {
   updateMatch(profile : IProfile) {
     this.UID = profile.UID;
     this.Bio=profile.Bio;
-    this.ProfilePhotos=profile.ProfilePhotos;
+    this.ProfilePhoto=profile.ProfilePhoto;
     this.TimeRemaining = profile.TimeRemaining;
     this.RecentlyActive = profile.RecentlyActive;
     this.Gender = profile.Gender;

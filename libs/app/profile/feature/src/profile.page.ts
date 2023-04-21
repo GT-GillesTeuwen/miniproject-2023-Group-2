@@ -22,7 +22,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
-  @Select(ProfileState.matches) matches$!: Observable<IProfile[] | null>;
+  @Select(ProfileState.match) matches$!: Observable<IProfile[] | null>;
 
   @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
 

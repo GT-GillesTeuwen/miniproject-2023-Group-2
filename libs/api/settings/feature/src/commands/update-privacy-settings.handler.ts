@@ -7,7 +7,7 @@ import { UpdatePrivacySettingsCommand } from '@mp/api/settings/util';
 export class UpdatePrivacySettings implements ICommandHandler<UpdatePrivacySettingsCommand> {
   constructor() {console.log}
 
-  async execute(command: UpdatePrivacySettingsCommand): Promise<NotImplementedException> {
-    return new NotImplementedException;
+  async execute(command: UpdatePrivacySettingsCommand): Promise<void> {
+    throw new NotImplementedException
   }
 }

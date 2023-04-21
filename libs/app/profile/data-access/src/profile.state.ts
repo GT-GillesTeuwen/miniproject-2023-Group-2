@@ -96,8 +96,8 @@ export class ProfileState {
   }
 
   @Selector()
-  static matches(state: ProfileStateModel) {
-    return state.profile?.Matches;
+  static match(state: ProfileStateModel) {
+    return state.matches;
   }
 
   @Selector()
