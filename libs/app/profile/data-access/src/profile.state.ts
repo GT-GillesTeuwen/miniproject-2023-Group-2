@@ -30,6 +30,7 @@ import { ProfilesApi } from './profiles.api';
 
 import { AuthApi } from '@mp/app/auth/data-access';
 import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
+import { Profile } from 'libs/api/profiles/feature/src/models';
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -98,6 +99,11 @@ export class ProfileState {
   @Selector()
   static matches(state: ProfileStateModel) {
     return state.profile?.Matches;
+  }
+
+  @Selector()
+  static allProfiles(state: ProfileStateModel) {
+    return state.matches;
   }
 
   @Selector()
