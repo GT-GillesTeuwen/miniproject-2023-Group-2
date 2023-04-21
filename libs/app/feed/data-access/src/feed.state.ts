@@ -54,31 +54,17 @@ export class ProfileState {
   
 
   @Action(updateMatches)
-  async updateMatches(ctx: StateContext<ProfileStateModel>,{MatchUserID}: updateMatches) {
+  async updateMatches(ctx: StateContext<ProfileStateModel>,{MatchUserID,MatchTargetID,type}: updateMatches) {
     try {
      
       //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
       const state = ctx.getState();
-      const UID= this.authApi.auth.currentUser?.uid;
-      const MID = MatchUserID;
-      const CID = null;
-      const MEID =null;
-      //alert("UID at saveProfileChanges is "+UID);
+      const UID= MatchUserID;
+      const MID = MatchTargetID;
+      const Type = type;
 
-      const matches : IMatchDetails ={
-        MatchUserID:MatchUserID,
-        ConversationID: CID,
-        MeetingID : MEID
-      };
-
-      const request: IUpdateProfileRequest = {
-        profile: {
-          UID:UID,
-          Matches: [matches],
-        },
-      };
-
-      const responseRef =await this.feedApi.updateMatches(request);
+      
+      const responseRef =await this.feedApi.Handle(UID,MID,Type);
       const response = responseRef.data;
       return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {

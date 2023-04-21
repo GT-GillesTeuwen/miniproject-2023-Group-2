@@ -11,13 +11,7 @@ import {
     SetProfile,
     SubscribeToProfile,
     SetMatches,
-    SubscribeToMatches,
-    //UpdateAccountDetails,
-    //UpdateAddressDetails,
-    UpdateContactDetails,
-    //UpdateOccupationDetails,
-    
-    
+    SubscribeToMatches,    
     UpdateTime,
     UpdatePersonalDetails,
     UpdateProfilePhotos,
@@ -29,7 +23,7 @@ import { tap, from } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
 
 import { AuthApi } from '@mp/app/auth/data-access';
-import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
+import {IUpdateSettingsRequest} from '@mp/api/settings/util'
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
