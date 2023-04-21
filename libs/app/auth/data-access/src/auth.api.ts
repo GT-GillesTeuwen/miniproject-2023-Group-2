@@ -72,7 +72,7 @@ export class AuthApi {
         Created: null,
       };
 
-       this.updateProfileDetails( {profile});
+       this.updateProfileDetails({profile});
        
        //alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
@@ -117,7 +117,16 @@ export class AuthApi {
 
   async continueWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return await signInWithPopup(this.auth, provider);
+    return (await signInWithPopup(this.auth, provider)).user.uid;
+  }
+
+  async fillProfileWithGoogle(){
+    
+  }
+
+  async findProfile(uid: string) {
+   
+    return false
   }
 
   async logout() {
