@@ -106,7 +106,10 @@ export class AuthApi {
 
 
 
-  
+  async continueWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    return await signInWithPopup(this.auth, provider);
+  }
 
   async logout() {
     return await signOut(this.auth);
