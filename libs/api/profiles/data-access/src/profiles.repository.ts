@@ -5,7 +5,7 @@ import * as admin from 'firebase-admin';
 @Injectable()
 export class ProfilesRepository {
   async findOne(profile: IProfile) {
-\
+
     if( profile.UID)
     {
     return await admin
