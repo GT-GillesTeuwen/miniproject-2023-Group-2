@@ -11,13 +11,7 @@ import {
     SetProfile,
     SubscribeToProfile,
     SetMatches,
-    SubscribeToMatches,
-    //UpdateAccountDetails,
-    //UpdateAddressDetails,
-    UpdateContactDetails,
-    //UpdateOccupationDetails,
-    
-    
+    SubscribeToMatches,    
     UpdateTime,
     UpdatePersonalDetails,
     UpdateProfilePhotos,

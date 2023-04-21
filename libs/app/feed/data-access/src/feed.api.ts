@@ -5,6 +5,8 @@ import {IProfile, IUpdateTimeRequest, IUpdateTimeResponse} from "@mp/api/profile
 import {Observable} from "rxjs";
 import { register } from 'swiper/element/bundle';
 import {IUpdateMatchRequest, IUpdateMatchResponse} from '@mp/api/feed/util'
+import { IUpdateProfileRequest } from '@mp/api/profiles/util';
+import { IMatchDetails } from '@mp/api/profiles/util';
 
 
 register();
@@ -18,6 +20,58 @@ export class FeedApi {
   getProfileSuggestions(){
     const profileCollectionReference = collection(this.firestore, 'Profiles/');
     return collectionData(profileCollectionReference) as Observable<IProfile[]>;
+  }
+
+  async Handle(UID : string,MID : string,type :string){
+    let response;
+
+    if(type=="SEND"){
+
+      //Current user
+
+      let matches : IMatchDetails ={
+        MatchUserID:MID,
+        PairID: null,
+        MatchStatus : "SENT"
+      };
+
+      let request: IUpdateProfileRequest = {
+        profile: {
+          UID:UID,
+          Matches: [matches],
+        },
+      };
+
+       response = await this.updateMatches(request);
+
+      if(response==null){
+        throw "UpdateMatch failed User";
+      }
+
+      
+      //Matched user
+       matches  = {
+        MatchUserID:UID,
+        PairID: null,
+        MatchStatus : "RECEIVED"
+      };
+
+      request = {
+        profile: {
+          UID:MID,
+          Matches: [matches],
+        },
+      }
+
+       response = await this.updateMatches(request);
+       if(response==null){
+        throw "UpdateMatch failed User";
+      }
+
+    }
+
+
+    return response;
   }
 
 
