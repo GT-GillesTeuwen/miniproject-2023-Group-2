@@ -89,7 +89,7 @@ export class Profile extends AggregateRoot implements IProfile {
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
   }
 
-  updateMatch(profile : IProfile) {
+  updateMatch(profile : IProfile,type : string) {
     this.UID = profile.UID;
     this.Bio=profile.Bio;
     this.ProfilePhotos=profile.ProfilePhotos;

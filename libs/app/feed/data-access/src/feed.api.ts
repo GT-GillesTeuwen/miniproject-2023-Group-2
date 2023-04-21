@@ -35,11 +35,12 @@ export class FeedApi {
         MatchStatus : "SENT"
       };
 
-      let request: IUpdateProfileRequest = {
+      let request: IUpdateMatchRequest = {
         profile: {
           UID:UID,
           Matches: [matches],
         },
+        type : "SEND"
       };
 
        response = await this.updateMatches(request);
@@ -61,13 +62,104 @@ export class FeedApi {
           UID:MID,
           Matches: [matches],
         },
+        type : "SEND"
       }
 
        response = await this.updateMatches(request);
        if(response==null){
-        throw "UpdateMatch failed User";
+        throw "UpdateMatch failed Target";
       }
 
+    }
+    else
+    if(type == "PAIR"){
+      //Current user
+
+      let matches : IMatchDetails ={
+        MatchUserID:MID,
+        PairID: MID+UID,
+        MatchStatus : "PAIRED"
+      };
+
+      let request: IUpdateMatchRequest = {
+        profile: {
+          UID:UID,
+          Matches: [matches],
+        },
+        type : "PAIR"
+      };
+
+       response = await this.updateMatches(request);
+
+      if(response==null){
+        throw "Pair failed User";
+      }
+
+      
+      //Matched user
+       matches  = {
+        MatchUserID:UID,
+        PairID: MID+UID,
+        MatchStatus : "PAIRED"
+      };
+
+      request = {
+        profile: {
+          UID:MID,
+          Matches: [matches],
+        },
+        type : "PAIR"
+      }
+
+       response = await this.updateMatches(request);
+       if(response==null){
+        throw "Pair failed Target";
+      }
+    }
+    else
+    if(type == "REMOVE"){
+      //Current user
+
+      let matches : IMatchDetails ={
+        MatchUserID:null,
+        PairID: null,
+        MatchStatus : null
+      };
+
+      let request: IUpdateMatchRequest = {
+        profile: {
+          UID:UID,
+          Matches: [matches],
+        },
+        type : "REMOVE"
+      };
+
+       response = await this.updateMatches(request);
+
+      if(response==null){
+        throw "Remove failed User";
+      }
+
+      
+      //Matched user
+       matches  = {
+        MatchUserID:null,
+        PairID: null,
+        MatchStatus : null
+      };
+
+      request = {
+        profile: {
+          UID:MID,
+          Matches: [matches],
+        },
+        type : "REMOVE"
+      }
+
+       response = await this.updateMatches(request);
+       if(response==null){
+        throw "Remove failed Target";
+      }
     }
 
 
@@ -85,6 +177,9 @@ export class FeedApi {
       'updateMatch'
     )(request);
   }
+
+
+
   async updateTime(request: IUpdateTimeRequest) {
     return await httpsCallable<
       IUpdateTimeRequest,
