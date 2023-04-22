@@ -15,6 +15,7 @@ export class FeedService {
   async updateMatch(
     request: IUpdateMatchRequest
   ): Promise<IUpdateMatchResponse> {
+    console.log("I am in service");
     return await this.commandBus.execute<
       updateMatchCommand,
       IUpdateMatchResponse

@@ -25,6 +25,7 @@ export class FeedApi {
   async Handle(UID : string,MID : string,type :string){
     let response;
 
+    console.log("UID : "+ UID + "\n" + "MID : " + MID + "\n" + "type : " + type);
     if(type=="SEND"){
 
       //Current user
