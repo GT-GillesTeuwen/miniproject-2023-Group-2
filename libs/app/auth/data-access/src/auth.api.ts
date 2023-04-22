@@ -108,7 +108,16 @@ export class AuthApi {
 
   async continueWithGoogle() {
     const provider = new GoogleAuthProvider();
-    return await signInWithPopup(this.auth, provider);
+    return (await signInWithPopup(this.auth, provider)).user.uid;
+  }
+
+  async fillProfileWithGoogle(){
+    
+  }
+
+  async findProfile(uid: string) {
+   
+    return false
   }
 
   async logout() {
