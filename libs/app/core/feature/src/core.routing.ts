@@ -77,6 +77,14 @@ const routes: Routes = [
       import('@mp/app/register/feature').then((m) => m.RegisterModule),
   },
   {
+    path: 'register/complete',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/google-register/feature').then((m) => m.GoogleRegisterModule),
+  },
+  {
     path: 'login',
     pathMatch: 'full',
     canActivate: [AuthGuard],
