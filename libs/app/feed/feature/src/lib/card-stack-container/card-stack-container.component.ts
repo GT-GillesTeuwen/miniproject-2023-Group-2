@@ -7,6 +7,7 @@ import { ProfileState } from '@mp/app/profile/data-access';
 //import {CardItemComponent} from "../card-item/card-item.component";
 import { SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
 import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
+import { updateMatches } from '@mp/app/feed/util';
 
 @Component({
   selector: 'mp-card-stack-container',
@@ -35,6 +36,8 @@ export class CardStackContainerComponent {
   prevChoice = true;
   counter = 0;
 
+  currentIndex = 0; //currentIndexCounterForProfilesToShow 
+
   matchUsers(match: boolean){
     if(match == this.prevChoice){
       this.counter++;
@@ -49,8 +52,34 @@ export class CardStackContainerComponent {
     else{
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }
-    console.log('Users Matched!:'+match)
 
+    console.log('Users Matched!:'+match)
+    //CHECK IF USER SWIPED LEFT OR RIGHT AND CALL FUNCTIONS ACCORDINGLY
+    if(match){
+      alert("this is their ID: " + this.profilesToShow[this.currentIndex].UID + "\nthis is my id: " + this.currentUserID);
+      let didTheyLikeMe = false;
+      this.profilesToShow[this.currentIndex].Matches?.forEach((match) => {
+        if(match.MatchUserID == this.currentUserID){
+          didTheyLikeMe = true;
+        }
+      });
+
+      if(!didTheyLikeMe){
+        if(this.currentUserID != null && this.currentUserID != undefined){
+          alert("went in");
+          this.store.dispatch(new updateMatches(this.currentUserID, this.profilesToShow[this.currentIndex]!.UID!, "SEND"));
+          alert("came out of dispatch");
+        }
+      }else{
+        if(this.currentUserID != null && this.currentUserID != undefined){
+          this.store.dispatch(new updateMatches(this.currentUserID, this.profilesToShow[this.currentIndex]!.UID!, "PAIR"));
+        }
+      }
+
+      this.currentIndex++;
+    }else{
+      this.currentIndex++;
+    }
   }
 
   setCurrentUserDetails(){

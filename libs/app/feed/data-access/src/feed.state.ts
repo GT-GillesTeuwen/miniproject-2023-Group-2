@@ -65,8 +65,7 @@ export class ProfileState {
 
       
       const responseRef =await this.feedApi.Handle(UID,MID,Type);
-      const response = responseRef.data;
-      return ctx.dispatch(new SetProfile(response.profile));
+      const response = responseRef?.data;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
