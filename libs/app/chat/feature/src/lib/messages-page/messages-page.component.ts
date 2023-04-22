@@ -32,7 +32,7 @@ export class MessagesPageComponent {
     //ROUTING TO VERIFICATION PAGE
     constructor(private navCtrl: NavController, private readonly store: Store) {
       const conversation: IConversation ={
-      ConversationID:"1",
+        PairID:"1",
       User1ID:"u1",
       User2ID:"u2",
       Messages:[],
@@ -119,7 +119,7 @@ export class MessagesPageComponent {
         TimeInvested:0 //Replace with time invested
       }
       this.store.dispatch(new SubscribeToConversation);
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
       
     }else{
       this.verifyPass = false;
@@ -203,7 +203,7 @@ export class MessagesPageComponent {
   @ViewChild('currentLocationSelected') currentLocationSelected?: ElementRef;
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
-  @ViewChild('currentConversationID') currentConversationID?: ElementRef;
+  @ViewChild('currentPairID') currentPairID?: ElementRef;
   @ViewChild('currentTime') currentTime?: ElementRef;
 
   getCurrentDateSelected() {
@@ -221,8 +221,8 @@ export class MessagesPageComponent {
   getCurrentDressSelected() {
     return this.currentDressSelected?.nativeElement.innerText;
   }
-  getCurrentConversationID() {
-    return this.currentConversationID?.nativeElement.innerText;
+  getCurrentPairID() {
+    return this.currentPairID?.nativeElement.innerText;
   }
 
 

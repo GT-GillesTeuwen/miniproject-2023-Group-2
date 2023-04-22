@@ -17,7 +17,7 @@ import { AggregateRoot } from '@nestjs/cqrs';
 export class Conversation extends AggregateRoot implements IConversation {
   constructor(
 
-    public ConversationID?: string | null | undefined,
+    public PairID?: string | null | undefined,
     public User1ID?: string | null | undefined,
     public User2ID?: string | null | undefined,
     public Messages?: IMessage[] | null | undefined,
@@ -28,7 +28,7 @@ export class Conversation extends AggregateRoot implements IConversation {
 
   static fromData(conversation: IConversation): Conversation {
     const instance = new Conversation(
-      conversation.ConversationID,
+      conversation.PairID,
       conversation.User1ID,
       conversation.User2ID,
       conversation.Messages,
@@ -55,7 +55,7 @@ export class Conversation extends AggregateRoot implements IConversation {
   // }
 
   updateMeeting(conversation: IConversation) {
-    this.ConversationID = conversation.ConversationID;
+    this.PairID = conversation.PairID;
     this.User1ID = conversation.User1ID;
     this.User2ID = conversation.User2ID;
     this.Messages = conversation.Messages;
@@ -68,7 +68,7 @@ export class Conversation extends AggregateRoot implements IConversation {
 
   toJSON(): IConversation {
     return {
-      ConversationID: this.ConversationID,
+      PairID: this.PairID,
       User1ID: this.User1ID,
       User2ID: this.User2ID,
       Messages: this.Messages,

@@ -67,8 +67,8 @@ export class ProfileState {
 
       const matches : IMatchDetails ={
         MatchUserID:MatchUserID,
-        ConversationID: CID,
-        MeetingID : MEID
+        PairID: CID,
+        MatchStatus : MEID
       };
 
       const request: IUpdateProfileRequest = {

@@ -11,6 +11,6 @@ export class MessageSentHandler
   async handle(event: MessageSentEvent) {
     console.log("AHHHH in handler");
     console.log(`${MessageSentHandler.name}`);
-    await this.repository.sendMessage(event.message,event.conversationID);
+    await this.repository.sendMessage(event.message,event.pairID);
   }
 }

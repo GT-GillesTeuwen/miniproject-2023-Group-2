@@ -81,7 +81,7 @@ export class ChatState {
     if (!matches) return ctx.dispatch(new SetError('matches not set'));
 
     return this.chatApi
-      .conversation$(matches[0].ConversationID)
+      .conversation$(matches[0].PairID)
       .pipe(tap((conversation: IConversation) => ctx.dispatch(new SetConversation(conversation))));
   }
 
@@ -99,7 +99,7 @@ export class ChatState {
     try {
       const request: ICreateConversationRequest = {
              conversation: {
-               ConversationID:conversation.ConversationID,
+               PairID:conversation.PairID,
                User1ID:conversation.User1ID,
                 User2ID:conversation.User2ID,
                 Messages:conversation.Messages,
@@ -115,11 +115,11 @@ export class ChatState {
   }
 
   @Action(SendMessage)
-  async sendMessage(ctx: StateContext<ConversationStateModel>, { conversationID,message }: SendMessage) {
+  async sendMessage(ctx: StateContext<ConversationStateModel>, { pairID,message }: SendMessage) {
     
     try {
       const request: IMessageSendRequest = {
-              conversation:conversationID,
+              pairID:pairID,
               message: {
                ToUserID: message.ToUserID,
                FromUserID: message.FromUserID,
@@ -136,11 +136,11 @@ export class ChatState {
   }
 
   @Action(UpdateMeetingDetails)
-  async updateMeetingDetails(ctx: StateContext<ConversationStateModel>, { conversationID,meeting }: UpdateMeetingDetails) {
+  async updateMeetingDetails(ctx: StateContext<ConversationStateModel>, { pairID,meeting }: UpdateMeetingDetails) {
     
     try {
       const request: IUpdateMeetingRequest = {
-              conversation:conversationID,
+              pairID:pairID,
               meeting: {
                Date: meeting.Date,
                Time: meeting.Time,

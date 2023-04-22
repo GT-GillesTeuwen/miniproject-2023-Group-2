@@ -31,9 +31,9 @@ import { Timestamp } from "firebase-admin/firestore";
       return instance;
     }
   
-    updateMeeting(conversationID:string) {
+    updateMeeting(pairID:string) {
      
-      this.apply(new MeetingUpdatedEvent(conversationID,this.toJSON()));
+      this.apply(new MeetingUpdatedEvent(pairID,this.toJSON()));
     }
   
   
