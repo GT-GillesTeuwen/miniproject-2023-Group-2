@@ -1,9 +1,8 @@
 
  import { CommandHandler, ICommandHandler,EventPublisher } from '@nestjs/cqrs';
 import { IUpdateMatchResponse, updateMatchCommand } from '@mp/api/feed/util';
-import { Profile } from '@mp/api/profiles/feature/models';
+import { Profile } from '@mp/api/profiles/feature';
 import { ProfilesRepository } from '@mp/api/profiles/data-access';
-import { IMatchDetails } from '@mp/api/profiles/util';
 
 @CommandHandler(updateMatchCommand)
 export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
@@ -41,7 +40,6 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
             }
           }
 
-          profile.fromData(profileData);
           profile.updateDetails(profileData);
           profile.commit();
 
@@ -57,7 +55,6 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
               matches.push(profileData.Matches[i]);
             }
           }
-          profile.fromData(profileData);
           profile.updateDetails(profileData);
           profile.commit();
 
