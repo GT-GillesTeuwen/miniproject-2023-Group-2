@@ -115,7 +115,7 @@ export class ChatState {
   }
 
   @Action(SendMessage)
-  async sendMessage(ctx: StateContext<ConversationStateModel>, { pairID,message }: SendMessage) {
+  async sendMessage(ctx: StateContext<ConversationStateModel>, { pairID,message,newMeetingTime }: SendMessage) {
     
     try {
       const request: IMessageSendRequest = {
@@ -126,6 +126,7 @@ export class ChatState {
                DateSent:message.DateSent,
                Content:message.Content,
              },
+             newMeetingTime:newMeetingTime,
            };
       const userCredential=await this.chatApi.sendMessage(request);
       //alert("id is "+userCredential?.user.uid);

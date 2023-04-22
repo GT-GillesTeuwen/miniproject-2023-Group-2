@@ -45,6 +45,20 @@ export class MessagesPageComponent {
         TimeInvested:0,
       }
     }
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentTimeRem=profile.TimeRemaining!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
+    this.store.select(ChatState.timeInvested).subscribe((time) => {
+      if(time!=undefined){
+        this.meetingTimeInvested=time!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
     //this.store.dispatch(new )
     this.store.dispatch(new CreateConversation(conversation));
   }
@@ -55,6 +69,9 @@ export class MessagesPageComponent {
   locationSelected!: string;
   foodSelected!: string;
   dressSelected!: string;
+
+  currentTimeRem!:number;
+  meetingTimeInvested!:number;
 
   datePass = false;
   timePass = false;
@@ -69,6 +86,7 @@ export class MessagesPageComponent {
   }
 
   confirm() {
+
     if(this.timeSelected != undefined){
       if(this.timeSelected.length != 0){
         this.timePass = true;
@@ -118,8 +136,10 @@ export class MessagesPageComponent {
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
+      this.currentTimeRem-=30;
       this.store.dispatch(new SubscribeToConversation);
       this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
+      
       
     }else{
       this.verifyPass = false;
@@ -173,9 +193,12 @@ export class MessagesPageComponent {
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);
-    
-    this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
-    this.store.dispatch(new SendMessage("1",message));
+    //222
+    //222
+    this.currentTimeRem-=1;
+    this.meetingTimeInvested+=1;
+    this.store.dispatch(new UpdateTime(this.currentTimeRem));
+    this.store.dispatch(new SendMessage("1",message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
   }
 

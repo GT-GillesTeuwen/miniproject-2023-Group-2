@@ -109,14 +109,7 @@ export class ChatApi {
 
   async sendMessage(request: IMessageSendRequest) {
 
-    var meetTimeInvested:number|null|undefined;
-    this.store.select(ChatState.conversation).subscribe((conversation) => {
-      if (conversation != undefined && conversation.MeetingDetails!=undefined) {     
-          meetTimeInvested = conversation.MeetingDetails?.TimeInvested;    
-       
-      }
-    });
-    meetTimeInvested=meetTimeInvested!+1;
+    var meetTimeInvested=request.newMeetingTime;
     const updateTimeInvestedReq:IUpdateMeetingRequest={
       pairID:request.pairID,
       meeting:{

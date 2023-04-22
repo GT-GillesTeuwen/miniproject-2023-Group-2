@@ -22,6 +22,7 @@ export class SendMessage{
   constructor(
     public readonly pairID: string,
     public readonly message: IMessage,
+    public readonly newMeetingTime:number,
   ) {}
 }
 
