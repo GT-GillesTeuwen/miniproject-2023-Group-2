@@ -24,21 +24,21 @@ export interface SaveProfileChangesModel{
  changes: SaveProfileChanges | null;
 }
 
-@State<SaveProfileChangesModel>({
-  name: 'profileChanges',
-  defaults:{
-    changes: null
-  }
-})
+// @State<SaveProfileChangesModel>({
+//   name: 'profileChanges',
+//   defaults:{
+//     changes: null
+//   }
+// })
 
-@State<ProfileStateModel>({
-  name: 'profile',
-  defaults: {
-    profile: null,
-  },
-})
+// @State<ProfileStateModel>({
+//   name: 'profile',
+//   defaults: {
+//     profile: null,
+//   },
+// })
 @Injectable()
-export class ProfileState {
+export class FeedState {
   constructor(
     private readonly feedApi: FeedApi,
     private readonly authApi: AuthApi,
@@ -58,6 +58,7 @@ export class ProfileState {
     try {
      
       //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
+      alert("We are in state")
       const state = ctx.getState();
       const UID= MatchUserID;
       const MID = MatchTargetID;
@@ -66,6 +67,8 @@ export class ProfileState {
       
       const responseRef =await this.feedApi.Handle(UID,MID,Type);
       const response = responseRef?.data;
+      return response;
+
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
