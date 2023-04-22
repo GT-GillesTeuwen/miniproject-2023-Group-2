@@ -31,6 +31,16 @@ export class CardStackContainerComponent {
   ) {
     this.setCurrentUserDetails();
     this.populateProfilesToShow();};
+    
+  ngOnInit() {
+    const isFirstTime = localStorage.getItem('firstTime') === null;
+    if (isFirstTime) {
+      alert("only once you say!??");
+      this.currentIndex = 0;
+      localStorage.setItem('firstTime', 'false');
+    }
+  }
+
  
   userList$ = new Observable<IUser>;  //Convert to state selector next
   prevChoice = true;
@@ -53,12 +63,15 @@ export class CardStackContainerComponent {
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }
 
+    let tempArray = this.profilesToShow.slice().reverse();
     console.log('Users Matched!:'+match)
     //CHECK IF USER SWIPED LEFT OR RIGHT AND CALL FUNCTIONS ACCORDINGLY
     if(match){
-      alert("this is their ID: " + this.profilesToShow[this.currentIndex].UID + "\nthis is my id: " + this.currentUserID);
+      console.log(this.profilesToShow);
+      console.log(tempArray);
+      alert("this is their ID: " + tempArray[this.currentIndex].UID + "\nthis is my id: " + this.currentUserID + "\nthis is the currentIndex: "  + this.currentIndex);
       let didTheyLikeMe = false;
-      this.profilesToShow[this.currentIndex].Matches?.forEach((match) => {
+      tempArray[this.currentIndex].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
@@ -66,18 +79,27 @@ export class CardStackContainerComponent {
 
       if(!didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
-          alert("went in");
-          this.store.dispatch(new updateMatches(this.currentUserID, this.profilesToShow[this.currentIndex]!.UID!, "SEND"));
-          alert("came out of dispatch");
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "SEND"));
         }
       }else{
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, this.profilesToShow[this.currentIndex]!.UID!, "PAIR"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "PAIR"));
         }
       }
-
       this.currentIndex++;
     }else{
+      let didTheyLikeMe = false;
+      tempArray[this.currentIndex].Matches?.forEach((match) => {
+        if(match.MatchUserID == this.currentUserID){
+          didTheyLikeMe = true;
+        }
+      });
+
+      if(didTheyLikeMe){
+        if(this.currentUserID != null && this.currentUserID != undefined){
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "REMOVE"));
+        }
+      }
       this.currentIndex++;
     }
   }
