@@ -118,7 +118,7 @@ export class ChatApi {
     });
     meetTimeInvested=meetTimeInvested!+1;
     const updateTimeInvestedReq:IUpdateMeetingRequest={
-      conversation:request.conversation,
+      pairID:request.pairID,
       meeting:{
         TimeInvested:meetTimeInvested
       }
