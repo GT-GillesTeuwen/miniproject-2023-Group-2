@@ -5,7 +5,7 @@ import { Profile } from '@mp/api/profiles/feature';
 import { ProfilesRepository } from '@mp/api/profiles/data-access';
 
 @CommandHandler(updateMatchCommand)
-export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
+export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand, IUpdateMatchResponse> {
   constructor(
     private publisher: EventPublisher,
     private readonly repository: ProfilesRepository,
@@ -13,6 +13,8 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
 
   async execute(command: updateMatchCommand) {
     console.log(`${UpdateMatchHandler.name}`);
+
+    console.log("I am in match handler");
 
     const request = command.request;   // prof with one new match
     let num : number;
@@ -63,16 +65,17 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
         }
       }
       
-      {   //Normal  so type = SEND
-
+    //Normal  so type = SEND
+      console.log("SEND : " + request.profile);
+      console.log(request.profile);
     
-        
+        // await this.repository.updateMatches(request.profile);
         profile.updateMatch(request.profile,request.type);
         profile.commit();
     
         const response: IUpdateMatchResponse = { profile };
         return response;
-      }
+      
       
       
 
@@ -80,6 +83,13 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand> {
 
 
     }
+    else
+    {
+
+    let jan : IUpdateMatchResponse;
+    return jan;
+  }
+
 
   }
 }

@@ -90,19 +90,13 @@ export class Profile extends AggregateRoot implements IProfile {
   }
 
   updateMatch(profile : IProfile,type : string) {
+    const request : IProfile =  {
+      UID: profile.UID,
+      Matches : profile.Matches,
+    }
     this.UID = profile.UID;
-    this.Bio=profile.Bio;
-    this.ProfilePhotos=profile.ProfilePhotos;
-    this.TimeRemaining = profile.TimeRemaining;
-    this.RecentlyActive = profile.RecentlyActive;
-    this.Gender = profile.Gender;
-    this.Age = profile.Age;
-    this.Hobby = profile.Hobby;
-    this.Name = profile.Name;
-    this.Major = profile.Major;
     this.Matches = profile.Matches;
-    this.ContactDetails = profile.ContactDetails;
-    this.apply(new ProfileMatchesUpdatedEvent(this.toJSON())); 
+    this.apply(new ProfileMatchesUpdatedEvent(request)); 
   }
 
   

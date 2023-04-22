@@ -5,7 +5,7 @@ import {  ofType, Saga } from '@nestjs/cqrs';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
-export class ExampleSagas {
+export class FeedSagas {
   // @Saga()
   // onUserCreated = (events$: Observable<any>): Observable<IExample> => {
   //   return events$.pipe(

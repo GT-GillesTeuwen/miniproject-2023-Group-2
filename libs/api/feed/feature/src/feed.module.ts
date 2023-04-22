@@ -1,26 +1,25 @@
 
-import { feedModule as feedDataAccessModule } from '@mp/api/feed/data-access'
+import { FeedModule as feedDataAccessModule } from '@mp/api/feed/data-access'
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { ExampleExampleExampleHandler } from './commands';
-import { ExampleExampleExampleHandler } from './events';
-import { feedSagas } from './feed.sagas';
-import { feedService } from './feed.service';
+import { FeedSagas } from './feed.sagas';
+import { FeedService } from './feed.service';
+import { UpdateMatchHandler } from './commands';
 export const CommandHandlers = [
-  ExampleExampleExampleHandler,
+  UpdateMatchHandler,
 ];
-export const EventHandlers = [
-  ExampleExampleExampleHandler,
-];
+// export const EventHandlers = [
+//   ProfileMatchesUpdatedEventhandler,
+// ];
 
 @Module({
   imports: [CqrsModule, feedDataAccessModule],
   providers: [
-    feedService,
+    FeedService,
     ...CommandHandlers,
-    ...EventHandlers,
-    feedSagas,
+    // ...EventHandlers,
+    FeedSagas,
   ],
-  exports: [feedService],
+  exports: [FeedService],
 })
-export class feedModule {}
+export class FeedModule {}
