@@ -110,8 +110,13 @@ export class AuthState {
   @Action(ContinueWithGoogle)
   async continueWithGoogle(ctx: StateContext<AuthStateModel>) {
     try {
-      await this.authApi.continueWithGoogle();
-      return ctx.dispatch(new Navigate(['home']));
+      const uid = await this.authApi.continueWithGoogle()
+      alert(uid)
+      return ctx.dispatch(new Navigate(['register/complete']));
+      // if(await this.authApi.findProfile(uid)){
+      //   return ctx.dispatch(new Navigate(['home']));
+      // }
+      // return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
