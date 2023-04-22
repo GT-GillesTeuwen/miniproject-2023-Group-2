@@ -41,35 +41,35 @@ export class SettingsState {
     private readonly store: Store
   ) {}
 
-  @Action(SetSettings)
-  async settings(ctx: StateContext<SettingsStateModel>) {
-    try {
-      const state = ctx.getState();
-      // const UID = state.profile?.UID;
-      // const Hobby = state.personalDetailsForm.model.Hobby;
-      // const Major = state.personalDetailsForm.model.Major;
-      // const Cell = state.personalDetailsForm.model.Cell;
+  // @Action(SetSettings)
+  // async settings(ctx: StateContext<SettingsStateModel>) {
+  //   try {
+  //     const state = ctx.getState();
+  //     // const UID = state.profile?.UID;
+  //     // const Hobby = state.personalDetailsForm.model.Hobby;
+  //     // const Major = state.personalDetailsForm.model.Major;
+  //     // const Cell = state.personalDetailsForm.model.Cell;
 
-      // if (!UID || !Hobby || !Major || !Cell)
-      //   return ctx.dispatch(
-      //     new SetError('UserId or age or gender or ethnicity not set')
-      //   );
+  //     // if (!UID || !Hobby || !Major || !Cell)
+  //     //   return ctx.dispatch(
+  //     //     new SetError('UserId or age or gender or ethnicity not set')
+  //     //   );
 
-      // const request: IUpdatePersonalDetailsRequest = {
-      //   profile: {
-      //     UID,
-      //     ContactDetails: {
-      //       Cell
-      //     },
-      //     Hobby,
-      //     Major
-      //   },
-      // };
-      const responseRef = await this.SettingsApi.updatePersonalDetails(request);
-      const response = responseRef.data;
-      return ctx.dispatch(new SetProfile(response.profile));
-    } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
-    }
-  }
+  //     // const request: IUpdatePersonalDetailsRequest = {
+  //     //   profile: {
+  //     //     UID,
+  //     //     ContactDetails: {
+  //     //       Cell
+  //     //     },
+  //     //     Hobby,
+  //     //     Major
+  //     //   },
+  //     // };
+  //     const responseRef = await this.SettingsApi.updatePersonalDetails(request);
+  //     const response = responseRef.data;
+  //     return ctx.dispatch(new SetProfile(response.profile));
+  //   } catch (error) {
+  //     return ctx.dispatch(new SetError((error as Error).message));
+  //   }
+  // }
 }
