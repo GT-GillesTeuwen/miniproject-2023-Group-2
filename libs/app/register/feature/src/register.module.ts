@@ -19,5 +19,6 @@ import { RegisterRouting } from './register.routing';
     CopyrightModule,
   ],
   declarations: [RegisterPage],
+  exports: [],
 })
 export class RegisterModule {}
