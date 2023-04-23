@@ -78,7 +78,39 @@ export class AuthApi {
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
       return userCredential;
   }
-
+  
+  async completeRegister(uid:string, gender : string,age : string,firstname : string, lastname : string)
+  {
+    
+      console.log("MEKHAIL-> UID = " + uid)
+      const profile: IProfile = {
+        UID: uid, 
+        Bio: null,
+        ProfilePhotos: ["https://picsum.photos/200/400?random=13"],
+        TimeRemaining: 250,
+        RecentlyActive: null,
+        Gender: gender,
+        Age: age,
+        Hobby: null,
+        Major: null,
+        Name: {
+          Firstname : firstname,
+          Lastname : lastname
+        },
+        ContactDetails: {
+          Email : email,
+          Cell : null
+        },
+        Matches : null,
+        Created: null,
+      };
+      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+      await sleep(2000)
+       await this.updateProfileDetails( {profile});
+       
+      //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
+      return userCredential;
+  }
   
 
 

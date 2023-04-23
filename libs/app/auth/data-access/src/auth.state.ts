@@ -112,11 +112,11 @@ export class AuthState {
     try {
       const uid = await this.authApi.continueWithGoogle()
       alert(uid)
-      return ctx.dispatch(new Navigate(['register/complete']));
-      // if(await this.authApi.findProfile(uid)){
-      //   return ctx.dispatch(new Navigate(['home']));
-      // }
-      // return ctx.dispatch(new Navigate(['home']));
+      
+      if(await this.authApi.findProfile(uid)){
+        return ctx.dispatch(new Navigate(['register/complete']));
+      }
+      return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }

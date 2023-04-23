@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
-import { RegisterState } from './register.state';
+import { GoogleRegisterState } from './register.state';
 
 @NgModule({
-  imports: [CommonModule, NgxsModule.forFeature([RegisterState])],
+  imports: [CommonModule, NgxsModule.forFeature([GoogleRegisterState])],
 })
-export class RegisterModule {}
+export class GoogleRegisterModule {}
