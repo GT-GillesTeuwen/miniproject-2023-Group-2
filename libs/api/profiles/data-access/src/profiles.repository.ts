@@ -48,7 +48,7 @@ export class ProfilesRepository {
         profile, { merge: true }
         );
       }
-  }
+    }
 
   async updateMatches(profile: IProfile) {
     // console.log(profile);

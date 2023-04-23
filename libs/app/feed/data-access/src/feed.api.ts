@@ -122,7 +122,7 @@ export class FeedApi {
       //Current user
 
       let matches : IMatchDetails ={
-        MatchUserID:null,
+        MatchUserID:MID,
         PairID: null,
         MatchStatus : null
       };
@@ -144,7 +144,7 @@ export class FeedApi {
       
       //Matched user
        matches  = {
-        MatchUserID:null,
+        MatchUserID:UID,
         PairID: null,
         MatchStatus : null
       };

@@ -18,7 +18,9 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand, I
 
     const request = command.request;   // prof with one new match
     let num : number;
-
+    console.log("request : ");
+    console.log(request);
+    console.log(request.profile.Matches);
     const profileDoc = await this.repository.findOne(request.profile);
     if(profileDoc){
       const profileData = profileDoc.data();  //current value
@@ -57,6 +59,8 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand, I
               matches.push(profileData.Matches[i]);
             }
           }
+          profileData.Matches = matches;
+          // console.log(request.profile.Matches);
           profile.updateDetails(profileData);
           profile.commit();
 
