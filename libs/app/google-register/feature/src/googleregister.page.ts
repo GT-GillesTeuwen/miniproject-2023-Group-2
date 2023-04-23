@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IProfile } from '@mp/api/profiles/util';
-import { Register } from '@mp/app/register/util';
+import { GoogleRegister } from '@mp/app/google-register/util';
 import {
     ActionsExecuting,
     actionsExecuting
@@ -18,21 +18,20 @@ import { Observable } from 'rxjs';
 
 
 export class GoogleRegisterPage {
-  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+  @Select(ProfileState.profile) profile$!: Observable<IProfile>;
 
   
-  @Select(actionsExecuting([Register])) busy$!: Observable<ActionsExecuting>;
+  @Select(actionsExecuting([GoogleRegister])) busy$!: Observable<ActionsExecuting>;
   registerForm = this.fb.group({
+    uid : '',
     firstName: [ '', [ Validators.maxLength(64)],],
     lastName: [ '', [ Validators.maxLength(64)],],
     gender: [ '', [ Validators.minLength(3), Validators.maxLength(64)],],
     age: [ '', [ Validators.minLength(1), Validators.maxLength(3)],],
-    email: [ '', [Validators.email, Validators.minLength(6), Validators.maxLength(64)],],
-    password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
-    confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64) ]],
+    email: '',
   });
-  showPassword = false;
 
+  
   
 
   //add firstname lastname gender
@@ -121,15 +120,23 @@ export class GoogleRegisterPage {
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store
-  ) {}
+  ) {
+    this.profile$.subscribe((profile: IProfile) => {
+      //alert("UID: " +profile.UID)
+      this.registerForm.patchValue({
+        uid : profile.UID,
+        email : profile.ContactDetails?.Email
+      })
+
+      //alert("subscribe GENDER: "+gender)
+    })
+
+  }
 
   register() {
     if (this.registerForm.valid) {
-      this.store.dispatch(new Register())
+      //alert(this.registerForm.value.email)
+      this.store.dispatch(new GoogleRegister())
     }
-  }
-
-  toggleShowPassword() {
-    this.showPassword = !this.showPassword;
   }
 }
