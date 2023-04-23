@@ -13,7 +13,7 @@ export class FeedApi {
   ) {}
 
   getProfileSuggestions(){
-    const profileCollectionReference = collection(this.firestore, 'Profiles/');
+    const profileCollectionReference = collection(this.firestore, 'profiles');
     return collectionData(profileCollectionReference) as Observable<IProfile[]>;
   }
 }

@@ -1,14 +1,33 @@
-.swipe-card-component {
-  height: 80%;
-  margin-top: 5rem;
+.card-swipe-area {
+  background-color: aqua;
+  grid-row-start: 1;
+  grid-row-end: 13;
+  grid-column-start: 1;
+  grid-column-end: 13;
 
-  .image-swipe-area{
-    height: 25rem;
 
-    img {
+  .swipe-card-component {
+    margin-top: 2rem;
+    height: 90%;
+
+    ion-card-content {
+      display: flex;
+      flex-direction: column;
+      height: 20%;
+      justify-content: space-between;
+    }
+    .image-swipe-area{
       height: 25rem;
-      background-size: contain;
-      background-position: center;
+
+      img {
+        height: 25rem;
+        background-size: contain;
+        background-position: center;
+      }
     }
   }
+
 }
+
+
+

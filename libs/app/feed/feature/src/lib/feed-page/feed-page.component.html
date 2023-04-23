@@ -3,12 +3,23 @@
     <ion-title>Feed</ion-title>
   </ion-toolbar>
 <ion-content>
-  <mp-card-stack-container>
-    <mp-card-item></mp-card-item>
-    <mp-card-item></mp-card-item>
-    <mp-card-item></mp-card-item>
-    <mp-card-item></mp-card-item>
-    <mp-card-item></mp-card-item>
-  </mp-card-stack-container>
+  <ng-container *ngIf="(userFeed$ | async) === null; else pageContent">
+    Loading....
+  </ng-container>
+  <ng-template #pageContent>
+    <mp-card-stack-container *ngIf="(userFeed$ | async) !== null" [userList]="(userFeed$ | async) ?? []">
+    </mp-card-stack-container>
+  </ng-template>
 </ion-content>
 </ion-header>
+
+<!---
+      <ng-container *ngIf="(userFeed$| async)?.length === 0; else cardStack">No profiles found, please refresh the page</ng-container>
+      <ng-template #cardStack>
+        <div *ngIf="(userFeed$ | async)">
+          <mp-card-item *ngFor="let profile of (userFeed$ | async) ?? []"
+                        [profile]="profile"
+          ></mp-card-item>
+        </div>
+      </ng-template>
+-->

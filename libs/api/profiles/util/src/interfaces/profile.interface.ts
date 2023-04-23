@@ -7,7 +7,7 @@ export interface IProfile {
   UID: string | undefined;
   Bio?: string | null | undefined;
   ProfilePhoto?: string | null | undefined;
-  TimeRemaining?: number | null | undefined; 
+  TimeRemaining?: number | null | undefined;
   RecentlyActive?: boolean | null | undefined;
   Gender?: string | null | undefined;
   Age?: string | null | undefined;
@@ -15,7 +15,7 @@ export interface IProfile {
   Major? : string | null | undefined;
   Name?: IPersonalDetails | null | undefined;
   ContactDetails?: IContactDetails | null | undefined;
-  Matches?: IMatchDetails[] | null |undefined;
+  Matches?: IMatchDetails[] | null | undefined;
   Created?: Timestamp | null | undefined;
-  
+
 }

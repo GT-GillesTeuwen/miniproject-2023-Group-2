@@ -1,23 +1,29 @@
 .card-container {
   position: relative;
-
+  background-color: #1c2154;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: grid;
   grid-template-rows: repeat(12, 1fr);
   grid-template-columns: repeat(12, 1fr);
   //background-color: #cb0009;
+  padding-top: 2.2rem;
+
+  .swipe-card-component{
+    grid-row-start: 1;
+    grid-row-end: 11;
+    grid-column-start: 1;
+    grid-column-end: 13;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+    background-color: #cb0009;
+
+  }
 
   mp-card-item{
     top: 0;
     left: 0;
-  }
-
-  .card-swipe-area {
-    grid-row-start: 1;
-    grid-row-end: 12;
-    grid-column-start: 1;
-    grid-column-end: 13;
   }
 
   .card-container-button-area {

@@ -1,20 +1,8 @@
-<div class="card-container">
-
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
+<div class="card-container" *ngIf="userList">
+<!--  <mp-card-item *ngFor="let profile of userList"
+                [profile]="profile"></mp-card-item> -->
+  <mp-card-item class="swipe-card-component" *ngFor="let profile of userList"
+                [profile]="profile" (matchUsers)="matchUsers($event)"></mp-card-item>
   <div class="card-container-button-area">
     <button>
       <svg stroke="currentColor"
@@ -62,5 +50,23 @@
       </svg>
     </button>
   </div>
-
 </div>
+
+<!--
+  <mp-card-item
+    class="card-swipe-area"
+    #cardItem
+    (matchUsers)="matchUsers($event)"
+  ></mp-card-item>
+  <mp-card-item
+    class="card-swipe-area"
+    #cardItem
+    (matchUsers)="matchUsers($event)"
+  ></mp-card-item>
+  <mp-card-item
+    class="card-swipe-area"
+    #cardIte
+    (matchUsers)="matchUsers($event)"
+  >
+  </mp-card-item>
+-->

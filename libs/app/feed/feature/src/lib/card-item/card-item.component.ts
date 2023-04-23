@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter,Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
 import {
   Host,
@@ -9,6 +9,7 @@ import {
 
 import { Gesture, GestureConfig, createGesture } from '@ionic/core';
 import {window} from "rxjs";
+import {IProfile} from "@mp/api/profiles/util";
 
 
 @Component({
@@ -20,6 +21,7 @@ export class CardItemComponent implements AfterViewInit{
 
   gestureHostElement: HTMLElement | undefined;
   @Output() matchUsers = new EventEmitter;
+  @Input() profile: IProfile | undefined;
 
  // @ViewChild('card-item') swipeableCard : HTMLElement;
   gestureSetup(){
