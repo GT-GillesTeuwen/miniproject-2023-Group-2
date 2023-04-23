@@ -28,6 +28,7 @@ export class MessagesPageComponent {
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
   currentUserID!:string|null|undefined;
+  currentPairID!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
     constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
@@ -45,6 +46,8 @@ export class MessagesPageComponent {
       }
     }
     this.setCurrentUserDetails();
+    this.setCurrentConvoDetails();
+    this.store.dispatch(new SubscribeToConversation);
     //this.store.dispatch(new )
     // this.store.dispatch(new CreateConversation(conversation));
   }
@@ -53,6 +56,15 @@ export class MessagesPageComponent {
     this.store.select(ProfileState.profile).subscribe((profile) => {
       if(profile!=undefined){
         this.currentUserID=profile.UID;
+      }else{
+      }
+    });
+  }
+
+  setCurrentConvoDetails(){
+    this.store.select(ChatState.conversation).subscribe((conversation) => {
+      if(conversation!=undefined){
+        this.currentPairID=conversation.ConversationID;
       }else{
       }
     });
@@ -175,7 +187,8 @@ export class MessagesPageComponent {
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation);
-    this.store.dispatch(new SendMessage("1",message));
+    alert(this.currentPairID+" is the current pair id")
+    this.store.dispatch(new SendMessage(this.currentPairID!,message));
     this.messageSendInput.value = "";
   }
 
