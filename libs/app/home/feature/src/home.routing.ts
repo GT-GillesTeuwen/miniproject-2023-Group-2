@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomePage } from './home.page';
 
+
 import {MessagesPageComponent} from '../../../chat/feature/src/lib/messages-page/messages-page.component'
 import { VerifyPageComponent } from 'libs/app/chat/feature/src/lib/verify-page/verify-page.component';
 import { VerifiedPageComponent } from 'libs/app/chat/feature/src/lib/verified-page/verified-page.component';
@@ -62,7 +63,8 @@ const routes: Routes = [
     path: 'chat/verified',
     pathMatch: 'full',
     component: VerifiedPageComponent
-  }
+  },
+
 ];
 
 @NgModule({
