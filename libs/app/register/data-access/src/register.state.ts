@@ -42,6 +42,7 @@ export interface RegisterStateModel {
 export class RegisterState {
   @Action(Register)
   async register(ctx: StateContext<RegisterStateModel>) {
+    //alert("reached Register.state.ts")
     try {
       const state = ctx.getState();
       const email = state.registerForm.model.email;
