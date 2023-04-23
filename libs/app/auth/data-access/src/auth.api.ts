@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { doc, docData, Firestore, collection } from '@angular/fire/firestore';
+import { doc, docData, Firestore, collection, DocumentReference, DocumentSnapshot } from '@angular/fire/firestore';
 import {
   Auth,
   authState,
@@ -16,7 +16,7 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 
 @Injectable()
 export class AuthApi {
@@ -108,8 +108,6 @@ export class AuthApi {
         Matches : null,
         Created: null,
       };
-      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
-      await sleep(2000)
        await this.updateProfileDetails( {profile});
        
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
@@ -148,20 +146,16 @@ export class AuthApi {
   }
 
   async findProfile(uid: string) {
-    let gender :string | null | undefined = ""
+    console.log
     const docRef = doc(
       this.firestore,
       `profiles/${uid}`
     ).withConverter<IProfile>({
       fromFirestore: (snapshot) => {
-        let profile = snapshot.data() as IProfile;
-        gender = profile.Gender
-        return profile
+        return snapshot.data() as IProfile;
       },
       toFirestore: (it: IProfile) => it,
     });
-    alert("api gender " + gender)
-    // return gender
     return docData(docRef, { idField: 'id' });
   }
 
