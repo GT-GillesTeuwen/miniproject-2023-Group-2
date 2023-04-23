@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { IProfile } from '@mp/api/profiles/util';
 import { Register } from '@mp/app/register/util';
 import {
     ActionsExecuting,
     actionsExecuting
 } from '@ngxs-labs/actions-executing';
+import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -16,6 +18,7 @@ import { Observable } from 'rxjs';
 
 
 export class GoogleRegisterPage {
+  @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
   
   @Select(actionsExecuting([Register])) busy$!: Observable<ActionsExecuting>;
