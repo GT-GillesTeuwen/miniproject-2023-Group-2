@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { doc, docData, Firestore, collection } from '@angular/fire/firestore';
 import {
   Auth,
   authState,
@@ -15,12 +16,14 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthApi {
   constructor(
     public readonly auth: Auth,
-    private readonly functions: Functions
+    private readonly functions: Functions,
+    private readonly firestore: Firestore,
     ) {}
 
   auth$() {
@@ -79,9 +82,10 @@ export class AuthApi {
       return userCredential;
   }
   
-  async completeRegister(uid:string, gender : string,age : string,firstname : string, lastname : string)
+  async completeRegister(uid:string, gender : string,age : string,firstname : string, lastname : string, email:string)
   {
     
+      
       console.log("MEKHAIL-> UID = " + uid)
       const profile: IProfile = {
         UID: uid, 
@@ -109,7 +113,7 @@ export class AuthApi {
        await this.updateProfileDetails( {profile});
        
       //  alert("auth.api Id is: "+this.auth.currentUser?.uid);
-      return userCredential;
+      return uid;
   }
   
 
@@ -143,13 +147,22 @@ export class AuthApi {
     return (await signInWithPopup(this.auth, provider)).user.uid;
   }
 
-  async fillProfileWithGoogle(){
-    
-  }
-
   async findProfile(uid: string) {
-   
-    return false
+    let gender :string | null | undefined = ""
+    const docRef = doc(
+      this.firestore,
+      `profiles/${uid}`
+    ).withConverter<IProfile>({
+      fromFirestore: (snapshot) => {
+        let profile = snapshot.data() as IProfile;
+        gender = profile.Gender
+        return profile
+      },
+      toFirestore: (it: IProfile) => it,
+    });
+    alert("api gender " + gender)
+    // return gender
+    return docData(docRef, { idField: 'id' });
   }
 
   async logout() {
