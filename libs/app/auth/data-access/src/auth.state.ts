@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '@angular/fire/auth';
+// import { Observable } from '@firebase/util';
+import { Gender, IProfile } from '@mp/api/profiles/util';
 import {
     ContinueWithGoogle,
     Login,
@@ -14,7 +16,7 @@ import { SetError } from '@mp/app/errors/util';
 import { Navigate } from '@ngxs/router-plugin';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import produce from 'immer';
-import { tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { AuthApi } from './auth.api';
 
 export interface AuthStateModel {
@@ -113,13 +115,53 @@ export class AuthState {
       const uid = await this.authApi.continueWithGoogle()
       alert(uid)
       
-      if(await !this.authApi.findProfile(uid)){
+
+
+      
+      const obsProfile = await this.authApi.findProfile(uid);
+      let profile:IProfile
+      try {
+        profile = await this.subscribeProfile(obsProfile)
+        alert("GENDER: "+ profile.Gender)
+      } catch (error){
+        return ctx.dispatch(new SetError("SubscribePRofile Failed"));
+      }
+      
+      // profile.subscribe((profile: IProfile) => {
+      //   alert("UID: " +profile.UID)
+
+      //   gender = profile.Gender;
+      //   alert("subscribe GENDER: "+gender)
+      // })
+
+      // profile.pipe(
+      //   map((profile: IProfile) => {
+      //     return {
+      //       gender: profile.Gender
+      //     };
+      //   })
+      // ).subscribe((data) => {
+      //   gender = data.gender
+      //   // use name and age as needed
+      // });
+      alert("GENDER: "+ profile.Gender)
+      if(profile.Gender == undefined){
+        alert("redirect")
         return ctx.dispatch(new Navigate(['register/complete']));
       }
+      alert("failed redirect")
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
+  }
+
+  async subscribeProfile(data:(Observable<IProfile>)){
+    let profile!:IProfile 
+    data.subscribe((user: IProfile) => {
+        profile = user
+        return profile
+      })
   }
 
   @Action(Logout)
