@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CopyrightModule } from '@mp/app/copyright/ui';
-// import { GoogleRegisterModule as GoogleRegisterDataAccessModule } from '@mp/app/google-register/data-access';
+import { GoogleRegisterModule as GoogleRegisterDataAccessModule } from '@mp/app/google-register/data-access';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { GoogleRegisterPage } from './googleregister.page';
 import { GoogleRegisterRouting } from './googleregister.routing';
@@ -13,7 +13,7 @@ import { GoogleRegisterRouting } from './googleregister.routing';
     CommonModule,
     ReactiveFormsModule,
     IonicModule,
-    // GoogleRegisterDataAccessModule,
+    GoogleRegisterDataAccessModule,
     NgxsFormPluginModule,
     GoogleRegisterRouting,
     CopyrightModule,
