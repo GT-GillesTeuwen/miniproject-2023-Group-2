@@ -46,7 +46,7 @@ export class MessagesPageComponent {
     }
     this.setCurrentUserDetails();
     //this.store.dispatch(new )
-    this.store.dispatch(new CreateConversation(conversation));
+    // this.store.dispatch(new CreateConversation(conversation));
   }
 
   setCurrentUserDetails(){

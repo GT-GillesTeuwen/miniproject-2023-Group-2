@@ -2,7 +2,7 @@
     <div *ngFor="let profile of allProfiles">
         <div *ngFor="let match of profile.Matches">
             <div *ngIf="(profile$ | async) as currentProfile;">
-                <mp-profile-card-page  *ngIf="match.MatchUserID==currentProfile.UID && match.MatchStatus=='PAIRED'" 
+                <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'" 
                 personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
                 lastMessage="Death Star at 12?"
                     unreadMessages=">=0" 
