@@ -30,6 +30,14 @@ export class AuthApi {
   
 
   async login(email: string, password: string) {
+    alert("init card-stack");
+    const isFirstTime = sessionStorage.getItem('firstTime') === null;
+
+    if (isFirstTime) {
+      alert("only once you say!??");
+      sessionStorage.setItem('currentIndex', '0');
+      sessionStorage.setItem('firstTime', 'false');
+    }
     const userCredential= await signInWithEmailAndPassword(this.auth, email, password);
     return userCredential;
   }
@@ -112,6 +120,9 @@ export class AuthApi {
   }
 
   async logout() {
+    sessionStorage.removeItem('firstTime');
+    sessionStorage.removeItem('currentIndex');
+    alert(sessionStorage.getItem('currentIndex'));
     return await signOut(this.auth);
   }
 }

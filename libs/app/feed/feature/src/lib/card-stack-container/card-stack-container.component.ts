@@ -33,12 +33,7 @@ export class CardStackContainerComponent {
     this.populateProfilesToShow();};
     
   ngOnInit() {
-    const isFirstTime = localStorage.getItem('firstTime') === null;
-    if (isFirstTime) {
-      alert("only once you say!??");
-      this.currentIndex = 0;
-      localStorage.setItem('firstTime', 'false');
-    }
+
   }
 
  
@@ -46,7 +41,8 @@ export class CardStackContainerComponent {
   prevChoice = true;
   counter = 0;
 
-  currentIndex = 0; //currentIndexCounterForProfilesToShow 
+  // currentIndexString = sessionStorage.getItem('currentIndex'); //currentIndexCounterForProfilesToShow 
+  // currentIndex = parseInt(parseInt(sessionStorage.getItem('currentIndex')!, 10)String!, 10);
 
   matchUsers(match: boolean){
     if(match == this.prevChoice){
@@ -69,9 +65,10 @@ export class CardStackContainerComponent {
     if(match){
       console.log(this.profilesToShow);
       console.log(tempArray);
-      alert("this is their ID: " + tempArray[this.currentIndex].UID + "\nthis is my id: " + this.currentUserID + "\nthis is the currentIndex: "  + this.currentIndex);
+      alert("index: " + parseInt(sessionStorage.getItem('currentIndex')!, 10));
+      alert("this is their ID: " + tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].UID + "\nthis is my id: " + this.currentUserID + "\nthis is the currentIndex: "  + parseInt(sessionStorage.getItem('currentIndex')!, 10));
       let didTheyLikeMe = false;
-      tempArray[this.currentIndex].Matches?.forEach((match) => {
+      tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
@@ -79,17 +76,19 @@ export class CardStackContainerComponent {
 
       if(!didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "SEND"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "SEND"));
         }
       }else{
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "PAIR"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "PAIR"));
         }
       }
-      this.currentIndex++;
+      let tempItemIndex = parseInt(sessionStorage.getItem('currentIndex')!, 10);
+      tempItemIndex++;
+      sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }else{
       let didTheyLikeMe = false;
-      tempArray[this.currentIndex].Matches?.forEach((match) => {
+      tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
@@ -97,10 +96,12 @@ export class CardStackContainerComponent {
 
       if(didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[this.currentIndex]!.UID!, "REMOVE"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "REMOVE"));
         }
       }
-      this.currentIndex++;
+      let tempItemIndex = parseInt(sessionStorage.getItem('currentIndex')!, 10);
+      tempItemIndex++;
+      sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }
   }
 
