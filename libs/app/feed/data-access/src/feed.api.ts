@@ -5,7 +5,7 @@ import {IProfile, IUpdateTimeRequest, IUpdateTimeResponse} from "@mp/api/profile
 import {Observable} from "rxjs";
 import { register } from 'swiper/element/bundle';
 import {IUpdateMatchRequest, IUpdateMatchResponse} from '@mp/api/feed/util'
-import { IUpdateProfileRequest } from '@mp/api/profiles/util';
+import { ICreateConversationRequest,ICreateConversationResponse } from '@mp/api/chat/util';
 import { IMatchDetails } from '@mp/api/profiles/util';
 
 
@@ -78,7 +78,7 @@ export class FeedApi {
 
       let matches : IMatchDetails ={
         MatchUserID:MID,
-        PairID: MID+UID,
+        PairID: UID+MID,
         MatchStatus : "PAIRED"
       };
 
@@ -100,7 +100,7 @@ export class FeedApi {
       //Matched user
        matches  = {
         MatchUserID:UID,
-        PairID: MID+UID,
+        PairID: UID+MID,
         MatchStatus : "PAIRED"
       };
 
@@ -116,6 +116,18 @@ export class FeedApi {
        if(response==null){
         throw "Pair failed Target";
       }
+
+      const finalrequest: ICreateConversationRequest = {
+        conversation: {
+          ConversationID:UID+MID,
+          User1ID:UID,
+           User2ID:MID,
+           Messages: [],
+           MeetingDetails: null,
+        },
+      };
+
+      response = await this.createCollection(finalrequest);
     }
     else
     if(type == "REMOVE"){
@@ -179,6 +191,16 @@ export class FeedApi {
     )(request);
   }
 
+  async createCollection(request: ICreateConversationRequest) {
+    return await httpsCallable<
+    ICreateConversationRequest,
+    ICreateConversationResponse
+    >(
+      this.functions,   // chat.functions.ts in api/core/feature
+      'createConversation'
+    )(request);
+  }
+
 
 
   async updateTime(request: IUpdateTimeRequest) {
@@ -186,7 +208,7 @@ export class FeedApi {
       IUpdateTimeRequest,
       IUpdateTimeResponse
     >(
-      this.functions,   // auth.functio,ns.ts in api/core/feature
+      this.functions,   // ?
       'updateTime'
     )(request);
   }
