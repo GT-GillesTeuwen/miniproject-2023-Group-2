@@ -43,6 +43,7 @@
               fill="outline"
               color="dark"
               (click)="continueWithGoogle()">
+              <ion-spinner *ngIf="busy$ | async"></ion-spinner>
               <ion-icon name="logo-google"></ion-icon>
               <ion-text style="padding-left: 5px">
                 Continue with Google
