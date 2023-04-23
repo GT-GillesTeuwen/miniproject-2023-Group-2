@@ -10,7 +10,8 @@ import {
     SetUser,
     SubscribeToAuthState,
     ResetPassword,
-    ForgotPassword
+    ForgotPassword,
+    GoogleRegister
 } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import { Navigate } from '@ngxs/router-plugin';
@@ -113,55 +114,45 @@ export class AuthState {
   async continueWithGoogle(ctx: StateContext<AuthStateModel>) {
     try {
       const uid = await this.authApi.continueWithGoogle()
-      alert(uid)
+      //alert(uid)
       
+      const validProfile$ = await this.authApi.findProfile(uid);
 
+      let gender: string | null | undefined
+      validProfile$.subscribe((profile: IProfile) => {
+        //alert("UID: " +profile.UID)
+        gender = profile.Gender;
+        //alert("subscribe GENDER: "+gender)
+      })
 
-      
-      const obsProfile = await this.authApi.findProfile(uid);
-      let profile:IProfile
-      try {
-        profile = await this.subscribeProfile(obsProfile)
-        alert("GENDER: "+ profile.Gender)
-      } catch (error){
-        return ctx.dispatch(new SetError("SubscribePRofile Failed"));
-      }
-      
-      // profile.subscribe((profile: IProfile) => {
-      //   alert("UID: " +profile.UID)
+      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
+      await sleep(2000)
 
-      //   gender = profile.Gender;
-      //   alert("subscribe GENDER: "+gender)
-      // })
-
-      // profile.pipe(
-      //   map((profile: IProfile) => {
-      //     return {
-      //       gender: profile.Gender
-      //     };
-      //   })
-      // ).subscribe((data) => {
-      //   gender = data.gender
-      //   // use name and age as needed
-      // });
-      alert("GENDER: "+ profile.Gender)
-      if(profile.Gender == undefined){
-        alert("redirect")
+      if(gender == undefined){
+        //alert("redirect")
         return ctx.dispatch(new Navigate(['register/complete']));
       }
-      alert("failed redirect")
+      
+      //alert("failed redirect")
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
   }
 
-  async subscribeProfile(data:(Observable<IProfile>)){
-    let profile!:IProfile 
-    data.subscribe((user: IProfile) => {
-        profile = user
-        return profile
-      })
+  @Action(GoogleRegister)
+  async googleRegister(
+    ctx: StateContext<AuthStateModel>,
+    {uid, gender,age,firstname,lastname, email}: GoogleRegister
+  ) {
+    try {
+      const userCredential=await this.authApi.completeRegister(uid, gender,age,firstname,lastname,email);
+      alert("id is "+userCredential);
+      
+      return ctx.dispatch(new Navigate(['home']));
+    } catch (error) {
+      return ctx.dispatch(new SetError("This email already exists!"));
+    }
   }
 
   @Action(Logout)
