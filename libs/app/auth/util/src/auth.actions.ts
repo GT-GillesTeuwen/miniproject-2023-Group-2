@@ -29,6 +29,18 @@ export class Register {
   ) {}
 }
 
+export class GoogleRegister {
+  static readonly type = '[Auth] GoogleRegister';
+  constructor(
+    public readonly uid: string,
+    public readonly gender: string,
+    public readonly age: string,
+    public readonly firstname: string,
+    public readonly lastname: string,
+    public readonly email: string,
+  ) {}
+}
+
 export class ResetPassword {
   static readonly type = '[Auth] ResetPassword';
   constructor(
