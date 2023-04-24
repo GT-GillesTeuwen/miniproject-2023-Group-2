@@ -47,11 +47,10 @@ export class ProfilesRepository {
         profile, { merge: true }
         );
       }
-  }
-
-  //Hopium
+    }
 
   async updateMatches(profile: IProfile) {
+    // console.log(profile);
     if(profile.Matches && profile.UID)
     {
       const doc = await admin
@@ -68,20 +67,23 @@ export class ProfilesRepository {
   
       const data = doc.data();
       const docMatches = data?.Matches;
+
+      console.log(data);
       if(docMatches)
       {
         const matches = [...docMatches,...profile.Matches]
 
         profile.Matches = matches;
-    
-        return await admin
+        console.log(profile)
+      }
+
+    return await admin
           .firestore()
           .collection('profiles')
           .doc(profile.UID)
           .set(
             profile,{merge: true}
           )
-    }
 
       }
       

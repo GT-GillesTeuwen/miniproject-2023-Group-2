@@ -81,7 +81,8 @@ export class ChatState {
     if (!matches) return ctx.dispatch(new SetError('matches not set'));
 
     return this.chatApi
-      .conversation$(matches[0].PairID)
+      .conversation$(pairID)
+
       .pipe(tap((conversation: IConversation) => ctx.dispatch(new SetConversation(conversation))));
   }
 

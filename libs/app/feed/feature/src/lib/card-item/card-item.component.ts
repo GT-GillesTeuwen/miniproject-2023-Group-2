@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter,Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter,Output, ViewChild,Input} from '@angular/core';
 
 import {
   Host,
@@ -25,6 +25,11 @@ export class CardItemComponent implements AfterViewInit{
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   gestureHostElement: HTMLElement | undefined;
   @Output() matchUsers = new EventEmitter;
+  @Input() photos!: string[]|null|undefined;
+  @Input() firstname!: string;
+  @Input() surname!: string;
+  @Input() age!: string;
+  @Input() bio!: string;
 
  // @ViewChild('card-item') swipeableCard : HTMLElement;
   gestureSetup(){

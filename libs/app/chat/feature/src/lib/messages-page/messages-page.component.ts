@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IonModal, IonInput } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -6,6 +6,7 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateConversation, SendMessage,SubscribeToConversation,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
@@ -19,7 +20,7 @@ import { UpdateTime } from '@mp/app/profile/util';
   templateUrl: './messages-page.component.html',
   styleUrls: ['./messages-page.component.scss'],
 })
-export class MessagesPageComponent {
+export class MessagesPageComponent implements OnInit{
   @Select(ChatState.conversation) chat$!: Observable<IConversation | null>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
@@ -28,8 +29,11 @@ export class MessagesPageComponent {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
+  currentUserID!:string|null|undefined;
+  currentPairID!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
+
     constructor(private navCtrl: NavController, private readonly store: Store) {
       const conversation: IConversation ={
         PairID:"1",
@@ -45,6 +49,9 @@ export class MessagesPageComponent {
         TimeInvested:0,
       }
     }
+    this.setCurrentUserDetails();
+    this.setCurrentConvoDetails();
+
     this.store.select(ProfileState.profile).subscribe((profile) => {
       if(profile!=undefined){
         this.currentTimeRem=profile.TimeRemaining!;
@@ -60,7 +67,25 @@ export class MessagesPageComponent {
       }
     });
     //this.store.dispatch(new )
-    this.store.dispatch(new CreateConversation(conversation));
+    // this.store.dispatch(new CreateConversation(conversation));
+  }
+
+  setCurrentUserDetails(){
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentUserID=profile.UID;
+      }else{
+      }
+    });
+  }
+
+  setCurrentConvoDetails(){
+    this.store.select(ChatState.conversation).subscribe((conversation) => {
+      if(conversation!=undefined){
+        this.currentPairID=conversation.ConversationID;
+      }else{
+      }
+    });
   }
 
   //message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
@@ -136,11 +161,10 @@ export class MessagesPageComponent {
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
-
       this.currentTimeRem-=30;
-      this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
-      
+      this.store.dispatch(new SubscribeToConversation(this.pairId));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+
       
     }else{
       this.verifyPass = false;
@@ -190,17 +214,16 @@ export class MessagesPageComponent {
    
     const message: IMessage ={
       ToUserID:"u1",
+
       FromUserID:profileUID,
       Content:this.messageToSend
     }
 
-this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
-    //222
-    //222
+    this.store.dispatch(new SubscribeToConversation(this.pairId));
     this.currentTimeRem-=1;
     this.meetingTimeInvested+=1;
     this.store.dispatch(new UpdateTime(this.currentTimeRem));
-    this.store.dispatch(new SendMessage("1",message,this.meetingTimeInvested));
+    this.store.dispatch(new SendMessage(this.currentPairID!,message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
   }
 
@@ -263,5 +286,26 @@ this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
     const year = date.getFullYear();
   
     return `${day} ${month} ${year}`;
+  }
+
+  //on init, get values from matches-page.component.ts
+  personName!: string;
+  lastMessage!: string;
+  unreadMessages!: number;
+  imgSrc!: string;
+  pairId!: string;
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+        const state = this.router.getCurrentNavigation()!.extras.state;
+        if (state) {
+          this.personName = state['personName'];
+          this.lastMessage = state['lastMessage'];
+          this.unreadMessages = state['unreadMessages'];
+          this.imgSrc = state['imgSrc'];
+          this.pairId = state['pairId'];
+          this.store.dispatch(new SubscribeToConversation(this.pairId));
+        }
+      })
   }
 }

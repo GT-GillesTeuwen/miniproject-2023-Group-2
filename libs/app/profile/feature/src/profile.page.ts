@@ -12,6 +12,7 @@ import { SaveProfileChanges, SubscribeToProfile, UpdateProfilePhotos } from '../
 
 import { Logout } from '@mp/app/auth/util'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 export class ProfilePage {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
-  @Select(ProfileState.matches) matches$!: Observable<IProfile[] | null>;
+  @Select(ProfileState.allProfiles) matches$!: Observable<IProfile[] | null>;
 
   @Select(ProfileState.profilePhotos) photo$!:Observable<String>;
 
@@ -41,6 +42,7 @@ export class ProfilePage {
   hobbiesText!: string[];
   profilePhotosArr: string[]=[];
   profileCompleteText = 0;
+
   
   changeMade = false;
 
@@ -80,6 +82,16 @@ export class ProfilePage {
     private readonly fb: FormBuilder,
     private readonly store: Store
   ) {
+    
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+      
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
     let doOnceBio = true;
     let doOnceMajor = true;
     let doOnceCell = true;
@@ -155,7 +167,7 @@ export class ProfilePage {
         }
       }
     });
-
+    console.log("AHH");
     this.store.select(ProfileState.profilePhotos).subscribe((array) => {
       this.profilePhotosArr=[];
       if(array!=undefined){
@@ -163,12 +175,15 @@ export class ProfilePage {
           this.profilePhotosArr.push(array[index]);
         }
       }else{
-        alert("Array undefined subscribing again");
         this.store.dispatch(new SubscribeToProfile());
       }
       
     });
+    
+    
   }
+
+  
 
   //IMAGES MODAL
   @ViewChild(IonModal) modal!: IonModal;
@@ -198,7 +213,7 @@ export class ProfilePage {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       // Perform any action you want with the file, such as uploading it to a server
-      alert(file.name);
+      
       const storage = getStorage();
       const storageRef = ref(storage, file.name);
 
@@ -264,9 +279,7 @@ export class ProfilePage {
   async saveChanges() {
     
 
-    for (let index = 0; index < this.profilePhotosArr!.length; index++) {
-      alert(this.profilePhotosArr[index]);
-    }
+    
     
     
    

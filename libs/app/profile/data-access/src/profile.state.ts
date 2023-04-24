@@ -11,13 +11,7 @@ import {
     SetProfile,
     SubscribeToProfile,
     SetMatches,
-    SubscribeToMatches,
-    //UpdateAccountDetails,
-    //UpdateAddressDetails,
-    UpdateContactDetails,
-    //UpdateOccupationDetails,
-    
-    
+    SubscribeToMatches,    
     UpdateTime,
     UpdatePersonalDetails,
     UpdateProfilePhotos,
@@ -30,6 +24,7 @@ import { ProfilesApi } from './profiles.api';
 
 import { AuthApi } from '@mp/app/auth/data-access';
 import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
+import { Profile } from 'libs/api/profiles/feature/src/models';
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -101,6 +96,11 @@ export class ProfileState {
   }
 
   @Selector()
+  static allProfiles(state: ProfileStateModel) {
+    return state.matches;
+  }
+
+  @Selector()
   static profilePhotos(state: ProfileStateModel) {
     return state.profile?.ProfilePhotos;
   }
@@ -151,12 +151,17 @@ export class ProfileState {
 
   @Action(SubscribeToMatches)
   subscribeToMatches(ctx: StateContext<ProfileStateModel>) {
-    const user = this.store.selectSnapshot(AuthState.user);
-    if (!user) return ctx.dispatch(new SetError('User not set'));
-
-    return from( this.profileApi
-      .matches$(user.uid))
+    // const user = this.store.selectSnapshot(AuthState.user);
+    // console.log("BAHHHHH");
+    // console.log(user);
+    // if (!user) return ctx.dispatch(new SetError('User not set'));
+    
+    const thing= from( this.profileApi
+      .matches$())
       .pipe(tap((matches: IProfile[]) => ctx.dispatch(new SetMatches(matches))));
+      
+    console.log(thing);
+      return thing;
   }
 
   @Action(SetMatches)
@@ -328,10 +333,9 @@ export class ProfileState {
 
   @Action(UpdateProfilePhotos)
   async updateProfilePhotos(ctx: StateContext<ProfileStateModel>,{profilePhotos}: UpdateProfilePhotos) {
-    alert("at profile state")
+    
     try {
      
-      alert("this is in updata photo state "+profilePhotos);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const ProfilePhotos = profilePhotos;
