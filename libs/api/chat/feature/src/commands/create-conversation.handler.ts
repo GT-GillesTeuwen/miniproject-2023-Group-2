@@ -17,14 +17,14 @@ export class CreateConversationHandler
   async execute(command: CreateConversationCommand) {
     console.log(`${CreateConversationHandler.name}`);
     const request = command.request;
-    const conversationID = request.conversation.ConversationID;
+    const pairID = request.conversation.PairID;
     const user1ID = request.conversation.User1ID;
     const user2ID = request.conversation.User2ID;
     const messages = request.conversation.Messages;
     const meetingDetails=request.conversation.MeetingDetails;
 
     const data: IConversation = {
-      ConversationID:conversationID,
+      PairID:pairID,
       User1ID : user1ID,
       User2ID: user2ID,
       Messages : messages,
