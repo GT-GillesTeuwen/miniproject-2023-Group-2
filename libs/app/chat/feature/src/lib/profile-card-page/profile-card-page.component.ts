@@ -17,16 +17,18 @@ export class ProfileCardPageComponent {
   @Input() lastMessage!: string;
   @Input() unreadMessages!: string;
   @Input() imgSrc!: string;
+  @Input() pairId!: string;
 
   openMessagesPage() {
     alert("persons name: " + this.personName + "\nlast message: " + this.lastMessage + "\nunreadMessages: " + this.unreadMessages + "\nimg-src: " + this.imgSrc);
-    this.store.dispatch(new SubscribeToConversation);
+    // this.store.dispatch(new SubscribeToConversation);
     this.navCtrl.navigateForward('home/chat/messages', {
       state: {
         personName: this.personName,
         lastMessage: this.lastMessage,
         unreadMessages: this.unreadMessages,
-        imgSrc: this.imgSrc
+        imgSrc: this.imgSrc,
+        pairId: this.pairId
       }
     });
   }

@@ -48,7 +48,6 @@ export class MessagesPageComponent implements OnInit{
     }
     this.setCurrentUserDetails();
     this.setCurrentConvoDetails();
-    this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
     //this.store.dispatch(new )
     // this.store.dispatch(new CreateConversation(conversation));
   }
@@ -140,7 +139,7 @@ export class MessagesPageComponent implements OnInit{
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
-      this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
+      this.store.dispatch(new SubscribeToConversation(this.pairId));
       this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
       
     }else{
@@ -187,7 +186,7 @@ export class MessagesPageComponent implements OnInit{
       FromUserID:this.currentUserID,
       Content:this.messageToSend
     }
-    this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
+    this.store.dispatch(new SubscribeToConversation(this.pairId));
     alert(this.currentPairID+" is the current pair id")
     this.store.dispatch(new SendMessage(this.currentPairID!,message));
     this.messageSendInput.value = "";
@@ -257,6 +256,7 @@ export class MessagesPageComponent implements OnInit{
   lastMessage!: string;
   unreadMessages!: number;
   imgSrc!: string;
+  pairId!: string;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -266,6 +266,8 @@ export class MessagesPageComponent implements OnInit{
           this.lastMessage = state['lastMessage'];
           this.unreadMessages = state['unreadMessages'];
           this.imgSrc = state['imgSrc'];
+          this.pairId = state['pairId'];
+          this.store.dispatch(new SubscribeToConversation(this.pairId));
         }
       })
   }

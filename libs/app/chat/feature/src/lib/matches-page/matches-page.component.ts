@@ -21,6 +21,7 @@ export class MatchesPageComponent {
 
   currentUserID!:string|null|undefined;
   lastMessage = "Start a conversation!";
+  pairId!: string;
 
   setCurrentUserID(){
     this.store.select(ProfileState.profile).subscribe((profile) => {
@@ -37,6 +38,10 @@ export class MatchesPageComponent {
     this.setCurrentUserID();
     for(let i=0; i<theirMatches.length; i++){
       if(theirMatches[i].MatchUserID == this.currentUserID){
+
+        console.log("Pair id: " + theirMatches[i].PairID);
+        this.pairId = theirMatches[i].PairID!;
+
         this.store.select(ChatState.conversation).subscribe((chatHistory) => {
           if(chatHistory && chatHistory.Messages && chatHistory.Messages.length > 0){
             const tempMessageArray = chatHistory?.Messages?.[chatHistory.Messages.length-1];
