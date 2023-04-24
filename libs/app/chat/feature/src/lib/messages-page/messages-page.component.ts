@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IonModal, IonInput } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -6,6 +6,7 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateConversation, SendMessage,SubscribeToConversation,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
@@ -18,7 +19,7 @@ import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
   templateUrl: './messages-page.component.html',
   styleUrls: ['./messages-page.component.scss'],
 })
-export class MessagesPageComponent {
+export class MessagesPageComponent implements OnInit{
   @Select(ChatState.conversation) chat$!: Observable<IConversation | null>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
@@ -31,7 +32,7 @@ export class MessagesPageComponent {
   currentPairID!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
+    constructor(private navCtrl: NavController, private readonly store: Store, private route: ActivatedRoute, private router: Router) {const conversation: IConversation ={
       ConversationID:"1",
       User1ID:"u1",
       User2ID:"u2",
@@ -249,5 +250,23 @@ export class MessagesPageComponent {
     const year = date.getFullYear();
   
     return `${day} ${month} ${year}`;
+  }
+
+  //on init, get values from matches-page.component.ts
+  personName!: string;
+  lastMessage!: string;
+  unreadMessages!: number;
+  imgSrc!: string;
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+        const state = this.router.getCurrentNavigation()!.extras.state;
+        if (state) {
+          this.personName = state['personName'];
+          this.lastMessage = state['lastMessage'];
+          this.unreadMessages = state['unreadMessages'];
+          this.imgSrc = state['imgSrc'];
+        }
+      })
   }
 }
