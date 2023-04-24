@@ -32,7 +32,7 @@ export class MessagesPageComponent {
     //ROUTING TO VERIFICATION PAGE
     constructor(private navCtrl: NavController, private readonly store: Store) {
       const conversation: IConversation ={
-      ConversationID:"1",
+        PairID:"1",
       User1ID:"u1",
       User2ID:"u2",
       Messages:[],
@@ -45,6 +45,20 @@ export class MessagesPageComponent {
         TimeInvested:0,
       }
     }
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentTimeRem=profile.TimeRemaining!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
+    this.store.select(ChatState.timeInvested).subscribe((time) => {
+      if(time!=undefined){
+        this.meetingTimeInvested=time!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
     //this.store.dispatch(new )
     this.store.dispatch(new CreateConversation(conversation));
   }
@@ -55,6 +69,9 @@ export class MessagesPageComponent {
   locationSelected!: string;
   foodSelected!: string;
   dressSelected!: string;
+
+  currentTimeRem!:number;
+  meetingTimeInvested!:number;
 
   datePass = false;
   timePass = false;
@@ -69,6 +86,7 @@ export class MessagesPageComponent {
   }
 
   confirm() {
+
     if(this.timeSelected != undefined){
       if(this.timeSelected.length != 0){
         this.timePass = true;
@@ -118,8 +136,11 @@ export class MessagesPageComponent {
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
+
+      this.currentTimeRem-=30;
       this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
+      
       
     }else{
       this.verifyPass = false;
@@ -172,10 +193,14 @@ export class MessagesPageComponent {
       FromUserID:profileUID,
       Content:this.messageToSend
     }
-    this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
-    
-    this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
-    this.store.dispatch(new SendMessage("1",message));
+
+this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
+    //222
+    //222
+    this.currentTimeRem-=1;
+    this.meetingTimeInvested+=1;
+    this.store.dispatch(new UpdateTime(this.currentTimeRem));
+    this.store.dispatch(new SendMessage("1",message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
   }
 
@@ -203,7 +228,7 @@ export class MessagesPageComponent {
   @ViewChild('currentLocationSelected') currentLocationSelected?: ElementRef;
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
-  @ViewChild('currentConversationID') currentConversationID?: ElementRef;
+  @ViewChild('currentPairID') currentPairID?: ElementRef;
   @ViewChild('currentTime') currentTime?: ElementRef;
 
   getCurrentDateSelected() {
@@ -221,8 +246,8 @@ export class MessagesPageComponent {
   getCurrentDressSelected() {
     return this.currentDressSelected?.nativeElement.innerText;
   }
-  getCurrentConversationID() {
-    return this.currentConversationID?.nativeElement.innerText;
+  getCurrentPairID() {
+    return this.currentPairID?.nativeElement.innerText;
   }
 
 

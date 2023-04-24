@@ -22,15 +22,16 @@ export class CreateConversation{
 export class SendMessage{
   static readonly type = '[Chat] SendMessage';
   constructor(
-    public readonly conversationID: string,
+    public readonly pairID: string,
     public readonly message: IMessage,
+    public readonly newMeetingTime:number,
   ) {}
 }
 
 export class UpdateMeetingDetails{
   static readonly type = '[Chat] UpdateMeeingDetails';
   constructor(
-    public readonly conversationID: string,
+    public readonly pairID: string,
     public readonly meeting: IMeetingDetails,
   ) {}
 }

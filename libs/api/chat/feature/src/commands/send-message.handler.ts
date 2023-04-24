@@ -19,7 +19,7 @@ export class SendMessageHandler
   async execute(command: MessageSendCommand) {
     console.log(`${SendMessageHandler.name}`);
     const request = command.request;
-    const conversationID = request.conversation;
+    const pairID = request.pairID;
     const toUser=request.message.ToUserID;
     const fromUser=request.message.FromUserID;
     const timestamp=Timestamp.fromDate(new Date());
@@ -32,7 +32,7 @@ export class SendMessageHandler
       Content : content,
     };
     const message = this.publisher.mergeObjectContext(Message.fromData(data));
-    message.send1(conversationID);
+    message.send1(pairID);
     message.commit();
   }
 }
