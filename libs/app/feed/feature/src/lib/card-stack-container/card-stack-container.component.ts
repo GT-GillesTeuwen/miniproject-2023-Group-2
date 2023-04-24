@@ -33,7 +33,8 @@ export class CardStackContainerComponent {
     this.populateProfilesToShow();};
     
   ngOnInit() {
-
+    
+    this.store.dispatch(new SubscribeToMatches());
   }
 
  
@@ -104,7 +105,6 @@ export class CardStackContainerComponent {
       tempItemIndex++;
       sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }
-    this.store.dispatch(new SubscribeToMatches());
   }
 
   setCurrentUserDetails(){

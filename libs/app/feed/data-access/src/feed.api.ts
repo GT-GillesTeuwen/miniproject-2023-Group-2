@@ -119,11 +119,18 @@ export class FeedApi {
 
       const finalrequest: ICreateConversationRequest = {
         conversation: {
-          ConversationID:UID+MID,
+          PairID:UID+MID,
           User1ID:UID,
            User2ID:MID,
            Messages: [],
-           MeetingDetails: null,
+           MeetingDetails:{
+            Date: null,
+            Time: null,
+            Location:null,
+            FoodPreference: null,
+            DressCode: null,
+            TimeInvested:0,
+          }
         },
       };
 

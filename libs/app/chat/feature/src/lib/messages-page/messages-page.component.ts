@@ -30,25 +30,12 @@ export class MessagesPageComponent implements OnInit{
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
   currentUserID!:string|null|undefined;
-  currentPairID!:string|null|undefined;
+  currentPairIDVar!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
 
-    constructor(private navCtrl: NavController, private readonly store: Store) {
-      const conversation: IConversation ={
-        PairID:"1",
-      User1ID:"u1",
-      User2ID:"u2",
-      Messages:[],
-      MeetingDetails:{
-        Date: null,
-        Time: null,
-        Location:null,
-        FoodPreference: null,
-        DressCode: null,
-        TimeInvested:0,
-      }
-    }
+    constructor(private navCtrl: NavController, private readonly store: Store,private route:ActivatedRoute,private router:Router) {
+      
     this.setCurrentUserDetails();
     this.setCurrentConvoDetails();
 
@@ -82,7 +69,7 @@ export class MessagesPageComponent implements OnInit{
   setCurrentConvoDetails(){
     this.store.select(ChatState.conversation).subscribe((conversation) => {
       if(conversation!=undefined){
-        this.currentPairID=conversation.ConversationID;
+        this.currentPairIDVar=conversation.PairID;
       }else{
       }
     });
@@ -163,7 +150,7 @@ export class MessagesPageComponent implements OnInit{
       }
       this.currentTimeRem-=30;
       this.store.dispatch(new SubscribeToConversation(this.pairId));
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
 
       
     }else{
@@ -219,11 +206,17 @@ export class MessagesPageComponent implements OnInit{
       Content:this.messageToSend
     }
 
+    console.log("1")
     this.store.dispatch(new SubscribeToConversation(this.pairId));
+    console.log("2")
     this.currentTimeRem-=1;
+    console.log("3")
     this.meetingTimeInvested+=1;
+    console.log("4")
     this.store.dispatch(new UpdateTime(this.currentTimeRem));
-    this.store.dispatch(new SendMessage(this.currentPairID!,message,this.meetingTimeInvested));
+    console.log("5")
+    this.store.dispatch(new SendMessage(this.pairId!,message,this.meetingTimeInvested));
+    console.log("6")
     this.messageSendInput.value = "";
   }
 

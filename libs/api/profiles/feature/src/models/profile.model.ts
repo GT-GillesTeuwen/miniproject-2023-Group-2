@@ -18,7 +18,6 @@ export class Profile extends AggregateRoot implements IProfile {
 
 
     public UID: string | null |undefined ,
-
     public Bio?: string | null | undefined,
     public ProfilePhotos?: string[] |null | undefined,
     public TimeRemaining?: number | null | undefined,
