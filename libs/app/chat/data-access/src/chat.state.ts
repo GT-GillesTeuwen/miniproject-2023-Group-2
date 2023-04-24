@@ -56,12 +56,12 @@ export class ChatState {
   }
 
   @Action(SubscribeToConversation)
-  subscribeToConversation(ctx: StateContext<ConversationStateModel>) {
+  subscribeToConversation(ctx: StateContext<ConversationStateModel>,{pairID}:SubscribeToConversation) {
     const matches = this.store.selectSnapshot(ProfileState.matches);
     if (!matches) return ctx.dispatch(new SetError('matches not set'));
 
     return this.chatApi
-      .conversation$(matches[0].PairID)
+      .conversation$(pairID)
       .pipe(tap((conversation: IConversation) => ctx.dispatch(new SetConversation(conversation))));
   }
 
