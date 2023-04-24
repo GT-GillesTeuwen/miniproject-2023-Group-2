@@ -3,6 +3,8 @@ import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 
 export class SubscribeToConversation {
   static readonly type = '[Chat] SubscribeToConversation';
+  
+  constructor(public readonly pairID: string) {}
 }
 
 export class SetConversation {

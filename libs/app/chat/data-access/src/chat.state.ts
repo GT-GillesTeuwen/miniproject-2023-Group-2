@@ -76,7 +76,7 @@ export class ChatState {
   }
 
   @Action(SubscribeToConversation)
-  subscribeToConversation(ctx: StateContext<ConversationStateModel>) {
+  subscribeToConversation(ctx: StateContext<ConversationStateModel>,{pairID}:SubscribeToConversation) {
     const matches = this.store.selectSnapshot(ProfileState.matches);
     if (!matches) return ctx.dispatch(new SetError('matches not set'));
 

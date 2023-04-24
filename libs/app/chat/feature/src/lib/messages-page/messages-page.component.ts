@@ -118,7 +118,7 @@ export class MessagesPageComponent {
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
-      this.store.dispatch(new SubscribeToConversation);
+      this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
       this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
       
     }else{
@@ -172,7 +172,7 @@ export class MessagesPageComponent {
       FromUserID:profileUID,
       Content:this.messageToSend
     }
-    this.store.dispatch(new SubscribeToConversation);
+    this.store.dispatch(new SubscribeToConversation("PAIR ID HERE"));
     
     this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     this.store.dispatch(new SendMessage("1",message));
