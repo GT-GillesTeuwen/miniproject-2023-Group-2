@@ -5,7 +5,7 @@ import { IProfile } from '@mp/api/profiles/util';
 import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
 //import {CardItemComponent} from "../card-item/card-item.component";
-import { SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
+import { SubscribeToMatches, SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
 import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 import { updateMatches } from '@mp/app/feed/util';
 
@@ -45,6 +45,7 @@ export class CardStackContainerComponent {
   // currentIndex = parseInt(parseInt(sessionStorage.getItem('currentIndex')!, 10)String!, 10);
 
   matchUsers(match: boolean){
+    this.store.dispatch(new SubscribeToMatches());
     if(match == this.prevChoice){
       this.counter++;
     }

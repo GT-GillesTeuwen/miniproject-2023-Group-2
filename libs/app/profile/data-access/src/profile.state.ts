@@ -145,7 +145,7 @@ export class ProfileState {
     const thing= from( this.profileApi
       .matches$())
       .pipe(tap((matches: IProfile[]) => ctx.dispatch(new SetMatches(matches))));
-       console.log("BAHHHHH");
+      
     console.log(thing);
       return thing;
   }

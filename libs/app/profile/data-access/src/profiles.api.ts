@@ -47,7 +47,7 @@ export class ProfilesApi {
     
     const docRef = collection(this.firestore, 'profiles').withConverter<IProfile>({
       fromFirestore: (snapshot) => {
-        console.log("Caaahhh")
+        console.log("In Profile API fetching all profiles")
         console.log(snapshot.data());
         return snapshot.data() as IProfile;
       },
