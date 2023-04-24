@@ -30,11 +30,11 @@ export class MessagesPageComponent implements OnInit{
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
   currentUserID!:string|null|undefined;
-  currentPairID!:string|null|undefined;
+  currentPairIDVar!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
 
-    constructor(private navCtrl: NavController, private readonly store: Store) {
+    constructor(private navCtrl: NavController, private readonly store: Store,private route:ActivatedRoute,private router:Router) {
       const conversation: IConversation ={
         PairID:"1",
       User1ID:"u1",
@@ -82,7 +82,7 @@ export class MessagesPageComponent implements OnInit{
   setCurrentConvoDetails(){
     this.store.select(ChatState.conversation).subscribe((conversation) => {
       if(conversation!=undefined){
-        this.currentPairID=conversation.ConversationID;
+        this.currentPairIDVar=conversation.PairID;
       }else{
       }
     });
@@ -163,7 +163,7 @@ export class MessagesPageComponent implements OnInit{
       }
       this.currentTimeRem-=30;
       this.store.dispatch(new SubscribeToConversation(this.pairId));
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
 
       
     }else{
@@ -223,7 +223,7 @@ export class MessagesPageComponent implements OnInit{
     this.currentTimeRem-=1;
     this.meetingTimeInvested+=1;
     this.store.dispatch(new UpdateTime(this.currentTimeRem));
-    this.store.dispatch(new SendMessage(this.currentPairID!,message,this.meetingTimeInvested));
+    this.store.dispatch(new SendMessage(this.pairId,message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
   }
 

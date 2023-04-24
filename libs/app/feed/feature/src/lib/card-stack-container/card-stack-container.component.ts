@@ -33,7 +33,7 @@ export class CardStackContainerComponent {
     this.populateProfilesToShow();};
     
   ngOnInit() {
-
+    this.store.dispatch(new SubscribeToMatches());
   }
 
  
