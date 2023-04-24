@@ -61,7 +61,6 @@ export class FeedState {
       const UID= MatchUserID;
       const MID = MatchTargetID;
       const Type = type;
-
       
       const responseRef =await this.feedApi.Handle(UID,MID,Type);
       const response = responseRef?.data;

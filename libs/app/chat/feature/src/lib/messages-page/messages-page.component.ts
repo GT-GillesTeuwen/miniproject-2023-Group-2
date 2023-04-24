@@ -13,6 +13,7 @@ import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
+import { UpdateTime } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -32,8 +33,10 @@ export class MessagesPageComponent implements OnInit{
   currentPairID!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store, private route: ActivatedRoute, private router: Router) {const conversation: IConversation ={
-      ConversationID:"1",
+
+    constructor(private navCtrl: NavController, private readonly store: Store) {
+      const conversation: IConversation ={
+        PairID:"1",
       User1ID:"u1",
       User2ID:"u2",
       Messages:[],
@@ -48,6 +51,21 @@ export class MessagesPageComponent implements OnInit{
     }
     this.setCurrentUserDetails();
     this.setCurrentConvoDetails();
+
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentTimeRem=profile.TimeRemaining!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
+    this.store.select(ChatState.timeInvested).subscribe((time) => {
+      if(time!=undefined){
+        this.meetingTimeInvested=time!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
     //this.store.dispatch(new )
     // this.store.dispatch(new CreateConversation(conversation));
   }
@@ -77,6 +95,9 @@ export class MessagesPageComponent implements OnInit{
   foodSelected!: string;
   dressSelected!: string;
 
+  currentTimeRem!:number;
+  meetingTimeInvested!:number;
+
   datePass = false;
   timePass = false;
   locationPass = false;
@@ -90,6 +111,7 @@ export class MessagesPageComponent implements OnInit{
   }
 
   confirm() {
+
     if(this.timeSelected != undefined){
       if(this.timeSelected.length != 0){
         this.timePass = true;
@@ -139,8 +161,10 @@ export class MessagesPageComponent implements OnInit{
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
+      this.currentTimeRem-=30;
       this.store.dispatch(new SubscribeToConversation(this.pairId));
       this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+
       
     }else{
       this.verifyPass = false;
@@ -181,13 +205,25 @@ export class MessagesPageComponent implements OnInit{
   messageToSend!: string;
 
   sendMessage(){
+    
+    var profileUID:string|undefined|null;
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      profileUID=profile?.UID;
+      
+    });
+   
     const message: IMessage ={
       ToUserID:"u1",
-      FromUserID:this.currentUserID,
+
+      FromUserID:profileUID,
       Content:this.messageToSend
     }
+
     this.store.dispatch(new SubscribeToConversation(this.pairId));
-    this.store.dispatch(new SendMessage(this.currentPairID!,message));
+    this.currentTimeRem-=1;
+    this.meetingTimeInvested+=1;
+    this.store.dispatch(new UpdateTime(this.currentTimeRem));
+    this.store.dispatch(new SendMessage(this.currentPairID!,message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
   }
 
@@ -215,7 +251,8 @@ export class MessagesPageComponent implements OnInit{
   @ViewChild('currentLocationSelected') currentLocationSelected?: ElementRef;
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
-  @ViewChild('currentConversationID') currentConversationID?: ElementRef;
+  @ViewChild('currentPairID') currentPairID?: ElementRef;
+  @ViewChild('currentTime') currentTime?: ElementRef;
 
   getCurrentDateSelected() {
     return this.currentDateSelected?.nativeElement.innerText;
@@ -232,9 +269,10 @@ export class MessagesPageComponent implements OnInit{
   getCurrentDressSelected() {
     return this.currentDressSelected?.nativeElement.innerText;
   }
-  getCurrentConversationID() {
-    return this.currentConversationID?.nativeElement.innerText;
+  getCurrentPairID() {
+    return this.currentPairID?.nativeElement.innerText;
   }
+
 
   //GETTING DATE
   getDateFromTimestamp(timestampSeconds: number | undefined): string {

@@ -1,6 +1,6 @@
 import { IMeetingDetails, IMessage } from "../interfaces";
 
 export interface IUpdateMeetingRequest {
-  conversation: string
+  pairID: string
   meeting: IMeetingDetails;
 }

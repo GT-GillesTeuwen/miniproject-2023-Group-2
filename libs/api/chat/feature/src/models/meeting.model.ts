@@ -31,9 +31,9 @@ import { Timestamp } from "firebase-admin/firestore";
       return instance;
     }
   
-    updateMeeting(conversationID:string) {
-      console.log("AHHHH in meeting model");
-      this.apply(new MeetingUpdatedEvent(conversationID,this.toJSON()));
+    updateMeeting(pairID:string) {
+     
+      this.apply(new MeetingUpdatedEvent(pairID,this.toJSON()));
     }
   
   

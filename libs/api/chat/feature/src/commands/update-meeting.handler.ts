@@ -21,7 +21,7 @@ export class UpdateMeetinHandler
     console.log("Ahhhh in send handler");
     console.log(`${UpdateMeetinHandler.name}`);
     const request = command.request;
-    const conversationID = request.conversation;
+    const pairID = request.pairID;
     const date=request.meeting.Date;
     const time=request.meeting.Time;
     const location=request.meeting.Location;
@@ -40,7 +40,7 @@ export class UpdateMeetinHandler
       TimeInvested:timeInvested,
     };
     const message = this.publisher.mergeObjectContext(MeetingDetails.fromData(data));
-    message.updateMeeting(conversationID);
+    message.updateMeeting(pairID);
     message.commit();
   }
 }
