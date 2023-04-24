@@ -45,7 +45,7 @@ export class CardStackContainerComponent {
   // currentIndex = parseInt(parseInt(sessionStorage.getItem('currentIndex')!, 10)String!, 10);
 
   matchUsers(match: boolean){
-    this.store.dispatch(new SubscribeToMatches());
+    
     if(match == this.prevChoice){
       this.counter++;
     }
@@ -104,6 +104,7 @@ export class CardStackContainerComponent {
       tempItemIndex++;
       sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }
+    this.store.dispatch(new SubscribeToMatches());
   }
 
   setCurrentUserDetails(){
@@ -113,7 +114,6 @@ export class CardStackContainerComponent {
         this.currentUserAge=profile.Age;
         this.currentUserAgeRange=profile.Settings?.AgeRange;
       }else{
-        alert("Profile undefined subscribing again");
         this.store.dispatch(new SubscribeToProfile());
       }
     });
@@ -143,7 +143,6 @@ export class CardStackContainerComponent {
           }
         }
       }else{
-        alert("Array undefined subscribing again");
         this.store.dispatch(new SubscribeToProfile());
       }
       
