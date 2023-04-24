@@ -187,7 +187,6 @@ export class MessagesPageComponent implements OnInit{
       Content:this.messageToSend
     }
     this.store.dispatch(new SubscribeToConversation(this.pairId));
-    alert(this.currentPairID+" is the current pair id")
     this.store.dispatch(new SendMessage(this.currentPairID!,message));
     this.messageSendInput.value = "";
   }

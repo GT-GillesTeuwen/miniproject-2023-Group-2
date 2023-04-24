@@ -319,10 +319,9 @@ export class ProfileState {
 
   @Action(UpdateProfilePhotos)
   async updateProfilePhotos(ctx: StateContext<ProfileStateModel>,{profilePhotos}: UpdateProfilePhotos) {
-    alert("at profile state")
+    
     try {
      
-      alert("this is in updata photo state "+profilePhotos);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const ProfilePhotos = profilePhotos;

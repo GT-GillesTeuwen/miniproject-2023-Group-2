@@ -86,7 +86,7 @@ export class ProfilePage {
     const cookies = document.cookie.split(";");
 
     for (let i = 0; i < cookies.length; i++) {
-      alert("clear");
+      
         const cookie = cookies[i];
         const eqPos = cookie.indexOf("=");
         const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
@@ -175,7 +175,6 @@ export class ProfilePage {
           this.profilePhotosArr.push(array[index]);
         }
       }else{
-        alert("Array undefined subscribing again");
         this.store.dispatch(new SubscribeToProfile());
       }
       
@@ -214,7 +213,7 @@ export class ProfilePage {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       // Perform any action you want with the file, such as uploading it to a server
-      alert(file.name);
+      
       const storage = getStorage();
       const storageRef = ref(storage, file.name);
 
@@ -280,9 +279,7 @@ export class ProfilePage {
   async saveChanges() {
     
 
-    for (let index = 0; index < this.profilePhotosArr!.length; index++) {
-      alert(this.profilePhotosArr[index]);
-    }
+    
     
     
    
