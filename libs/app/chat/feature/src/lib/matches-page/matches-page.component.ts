@@ -37,12 +37,14 @@ export class MatchesPageComponent {
     this.setCurrentUserID();
     for(let i=0; i<theirMatches.length; i++){
       if(theirMatches[i].MatchUserID == this.currentUserID){
-        console.log(theirMatches[i].PairID);
         this.store.select(ChatState.conversation).subscribe((chatHistory) => {
-          if(chatHistory!=undefined){
-            this.lastMessage = chatHistory?.Messages?.[chatHistory.Messages.length-1].Content!;
+          if(chatHistory && chatHistory.Messages && chatHistory.Messages.length > 0){
+            const tempMessageArray = chatHistory?.Messages?.[chatHistory.Messages.length-1];
+
+            if(tempMessageArray.Content){
+              this.lastMessage = tempMessageArray.Content;
+            }
           }else{
-            alert("chat undefined subscribing again");
             // this.store.dispatch(new CreateConversation());
           }
         });
