@@ -115,6 +115,14 @@ export class ProfilesApi {
 
 
 async getUserProfileDetails(request: IGetUserProfileRequest) {
+  if (request.userId == ''){
+    let response: IGetUserProfileResponse = {
+      status: 0,
+      status_name: '',
+      content: {error_message:'User not found'}
+    }
+    return response
+  }
   return await httpsCallable<
     IGetUserProfileRequest,
     IGetUserProfileResponse
