@@ -37,5 +37,14 @@ export class UpdateMeetingDetails{
   ) {}
 }
 
+export class SetAllConversations {
+  static readonly type = '[Profile] SetAllConversations';
+  constructor(public readonly conversations: IConversation[] | null) {}
+}
+
+export class SubscribeToConversations {
+  static readonly type = '[Profile] SubscribeToConversations';
+}
+
 
 

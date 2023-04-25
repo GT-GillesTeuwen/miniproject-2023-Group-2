@@ -4,10 +4,10 @@ import { AuthState } from '@mp/app/auth/data-access';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
-import {CreateConversation, SendMessage, SetConversation,SubscribeToConversation, UpdateMeetingDetails} from '@mp/app/chat/util'
+import {CreateConversation, SendMessage, SetAllConversations, SetConversation,SubscribeToConversation, SubscribeToConversations, UpdateMeetingDetails} from '@mp/app/chat/util'
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
-import { tap } from 'rxjs';
+import { from, tap } from 'rxjs';
 import { ChatApi } from './chat.api';
 import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
 import { IConversation, ICreateConversationRequest, IMessage, IMessageSendRequest, IUpdateMeetingRequest } from '@mp/api/chat/util';
@@ -16,6 +16,7 @@ import { Navigate } from '@ngxs/router-plugin';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ConversationStateModel {
   conversation: IConversation | null;
+  conversations: IConversation[] | null;
 }
 
 export interface MessageStateModel {
@@ -27,6 +28,7 @@ export interface MessageStateModel {
   name: 'message',
   defaults: {
     message: null,
+    
   },
 })
 
@@ -34,6 +36,7 @@ export interface MessageStateModel {
   name: 'conversation',
   defaults: {
     conversation: null,
+    conversations : null,
   },
 })
 
@@ -69,6 +72,10 @@ export class ChatState {
   static timeInvested(state: ConversationStateModel) {
     return state.conversation?.MeetingDetails?.TimeInvested;
   }
+  @Selector()
+  static allConversations(state: ConversationStateModel) {
+    return state.conversations;
+  }
 
   @Selector()
   static message(state: MessageStateModel) {
@@ -93,6 +100,21 @@ export class ChatState {
         draft.conversation = conversation;
       })
     );
+  }
+
+  @Action(SubscribeToConversations)
+  subscribeToConversations(ctx: StateContext<ConversationStateModel>) {
+    // const user = this.store.selectSnapshot(AuthState.user);
+    // console.log("BAHHHHH");
+    // console.log(user);
+    // if (!user) return ctx.dispatch(new SetError('User not set'));
+    
+    const thing= from( this.chatApi
+      .allConvos$())
+      .pipe(tap((matches: IConversation[]) => ctx.dispatch(new SetAllConversations(matches))));
+      
+    console.log("here is thing",thing);
+      return thing;
   }
 
   @Action(CreateConversation)
@@ -135,6 +157,15 @@ export class ChatState {
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
+  }
+
+  @Action(SetAllConversations)
+  setAllConversations(ctx: StateContext<ConversationStateModel>, { conversations }: SetAllConversations) {
+    return ctx.setState(
+      produce((draft) => {
+        draft.conversations = conversations;
+      })
+    );
   }
 
   @Action(UpdateMeetingDetails)
