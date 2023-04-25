@@ -1,6 +1,6 @@
 import { UpdateThemeSettings, UpdatePrivacySettings } from '../commands';
 import { UpdateThemeSettingsCommand, UpdatePrivacySettingsCommand } from '@mp/api/settings/util';
-
+import { NotImplementedException } from '@nestjs/common';
 
 
 
@@ -19,13 +19,13 @@ describe('SettingsFeature', () => {
 
   describe('UpdateTheme', () => {
     it('should work', async () => {
-      expect(await updateThemeSettings.execute(updateThemeSettingsCommand)).toEqual("NotImplementedException");
+      expect(await updateThemeSettings.execute(updateThemeSettingsCommand)).toEqual(new NotImplementedException);
     });
   });
 
   describe('UpdatePrivacy', () => {
     it('should work', async () => {
-      expect(await updatePrivacySettings.execute(updatePrivacySettingsCommand)).toEqual("NotImplementedException");
+      expect(await updatePrivacySettings.execute(updatePrivacySettingsCommand)).toEqual(new NotImplementedException);
     });
   });
 });

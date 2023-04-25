@@ -42,11 +42,11 @@
             <div class="img-outer-wrapper">
                 <div class="user-status-icon"></div>
                 <div class="img-holder">
-                    <img src="https://docs-demo.ionic.io/assets/madison.jpg" alt="The Wisconsin State Capitol building in Madison, WI at night">
+                    <img src="{{imgSrc}}" alt="">
                 </div>
             </div>
             <div class="name-holder">
-                <h1>Obi Wan Kenobi</h1>
+                <h1>{{personName}}</h1>
             </div>
             <div class="time-outer-wrapper">
                 <div class="time-holder" id="click-trigger">
@@ -59,7 +59,7 @@
                             <div class="text-wrapper">
                                 <h2>Time Invested</h2>
                                 <p>You have invested</p>
-                                <h1 *ngIf="(profile$ | async) as profile;">${{profile?.TimeRemaining}}</h1>
+                                <h1 *ngIf="(chat$ | async) as chat;">${{chat?.MeetingDetails?.TimeInvested}}</h1>
                                 <p>in this meeting. Don't let it go to waste. Confirm and verify a meeting with <span>Obi Wan Kenobi</span> to get rewarded more time!</p>
                             </div>
                         </ion-content>
@@ -69,7 +69,7 @@
         </div>
 
         <div class="message-content-area" *ngIf="(chat$ | async) as chat;" style="padding-bottom: 3em">
-            <div class="date-chip-outer-wrapper">
+            <div class="date-chip-outer-wrapper" *ngIf="chat && chat.Messages && chat.Messages.length > 0 && chat.Messages[0].DateSent">
                 <div class="date-chip">{{getDateFromTimestamp(chat?.Messages![0].DateSent?.seconds)}}</div>
             </div>
 
@@ -96,7 +96,7 @@
 
             <!-- FROM ME -->
 
-            <mp-sent-bubble-ui  *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
+           
 
 
             <!-- FROM THEM -->
@@ -104,7 +104,6 @@
 
             <!-- FROM ME -->
 
-            <mp-sent-bubble-ui *ngIf="(profile$ | async) as profile;" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}></mp-sent-bubble-ui>
 
 
             <!-- FROM ME -->
@@ -118,7 +117,8 @@
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentLocationSelected>{{chat?.MeetingDetails?.Location}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentFoodSelected>{{chat?.MeetingDetails?.FoodPreference}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentDressSelected>{{chat?.MeetingDetails?.DressCode}}</div>
-        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentConversationID>{{chat?.ConversationID}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentPairID>{{chat?.PairID}}</div>
+        <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentTime>{{profile?.TimeRemaining}}</div>
         <!--  -->
 
         <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">

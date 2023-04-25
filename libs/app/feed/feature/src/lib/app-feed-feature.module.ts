@@ -16,7 +16,7 @@ import {AppFeedDataAccessModule} from "@mp/app/feed/data-access";
     CommonModule,
     RouterModule.forChild(appFeedFeatureRoutes),
     IonicModule,
-    AppFeedDataAccessModule
+    AppFeedDataAccessModule,
   ],
   declarations: [
     FeedPageComponent,

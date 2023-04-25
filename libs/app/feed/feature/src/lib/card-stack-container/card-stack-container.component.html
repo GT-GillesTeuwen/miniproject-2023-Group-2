@@ -1,29 +1,15 @@
 <div class="card-container">
    <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentTime>{{profile?.TimeRemaining}}</div>
-  <mp-card-item
+  
+  <mp-card-item *ngFor="let aProfile of profilesToShow"
     class="card-swipe-area"
     #cardItem
     (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
-  ></mp-card-item>
-  <mp-card-item
-    class="card-swipe-area"
-    #cardItem
-    (matchUsers)="matchUsers($event)"
+    firstname={{aProfile?.Name?.Firstname}}
+    surname={{aProfile?.Name?.Lastname}}
+    bio={{aProfile?.Bio}}
+    [photos]=aProfile?.ProfilePhotos
+    age={{aProfile?.Age}}
   ></mp-card-item>
   <div class="card-container-button-area">
     <button>

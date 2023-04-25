@@ -18,8 +18,6 @@ import {
   IUpdateProfileResponse
 } from '@mp/api/profiles/util';
 
-import { all } from 'axios';
-import { QuerySnapshot } from 'firebase-admin/firestore';
 import { getDocs } from 'firebase/firestore';
 import { IUpdateSettingsRequest } from '@mp/api/settings/util';
 
@@ -45,9 +43,12 @@ export class ProfilesApi {
     return docData(docRef, { idField: 'id' });
   }
 
-  async matches$(id: string): Promise<IProfile[]> {
+  async matches$(): Promise<IProfile[]> {
+    
     const docRef = collection(this.firestore, 'profiles').withConverter<IProfile>({
       fromFirestore: (snapshot) => {
+        console.log("In Profile API fetching all profiles")
+        console.log(snapshot.data());
         return snapshot.data() as IProfile;
       },
       toFirestore: (it: IProfile) => it,

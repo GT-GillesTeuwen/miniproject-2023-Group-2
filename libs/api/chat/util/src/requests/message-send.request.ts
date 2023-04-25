@@ -1,6 +1,7 @@
 import { IMessage } from "../interfaces";
 
 export interface IMessageSendRequest {
-  conversation: string
+  pairID: string
   message: IMessage;
+  newMeetingTime:number;
 }

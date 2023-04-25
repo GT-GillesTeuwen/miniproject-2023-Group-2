@@ -55,7 +55,7 @@ export class SaveProfileChanges{
 export class UpdateProfilePhotos{
   static readonly type = '[Profile] UpdateProfilePhotos';
   constructor(public readonly profilePhotos: string[],
-  ) {alert("at profile actions")}
+  ) {}
 }
     
 export class UpdateTime{
@@ -70,5 +70,5 @@ export class UpdateSettings{
   static readonly type = '[Profile] UpdateSettings';
   constructor(
     public readonly settings: ISettings,
-  ) {alert("at profile actions")}
+  ) {}
 }

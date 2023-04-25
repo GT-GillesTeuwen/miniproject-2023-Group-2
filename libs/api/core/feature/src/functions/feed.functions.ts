@@ -9,8 +9,10 @@ export const updateMatch = functions.https.onCall(
   async (
     request: IUpdateMatchRequest
   ): Promise<IUpdateMatchResponse> => {
+    console.log("This is functions of feed");
     const app = await NestFactory.createApplicationContext(CoreModule);
-     const service = app.get(FeedService);
+     const service = app.get(FeedService,{ strict: false });
+     console.log(service);
      return service.updateMatch(request);
   }
 );

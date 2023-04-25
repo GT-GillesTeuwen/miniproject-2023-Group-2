@@ -10,6 +10,8 @@ export class ProfileMatchesUpdatedEventhandler
 
   async handle(event: ProfileDetailsUpdatedEvent) {
     console.log(`${ProfileMatchesUpdatedEventhandler.name}`);
+    console.log("HUZZAH");
+    console.log("HUZZAH");
     await this.repository.updateMatches(event.profile);
   }
 }

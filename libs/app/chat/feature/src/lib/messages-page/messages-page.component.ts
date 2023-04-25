@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IonModal, IonInput } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -6,19 +6,21 @@ import { ChatState } from '@mp/app/chat/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { IProfile } from '@mp/api/profiles/util';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateConversation, SendMessage,SubscribeToConversation,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
+import { UpdateTime } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages-page',
   templateUrl: './messages-page.component.html',
   styleUrls: ['./messages-page.component.scss'],
 })
-export class MessagesPageComponent {
+export class MessagesPageComponent implements OnInit{
   @Select(ChatState.conversation) chat$!: Observable<IConversation | null>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
 
@@ -27,24 +29,50 @@ export class MessagesPageComponent {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
+  currentUserID!:string|null|undefined;
+  currentPairIDVar!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
-    constructor(private navCtrl: NavController, private readonly store: Store) {const conversation: IConversation ={
-      ConversationID:"1",
-      User1ID:"u1",
-      User2ID:"u2",
-      Messages:[],
-      MeetingDetails:{
-        Date: null,
-        Time: null,
-        Location:null,
-        FoodPreference: null,
-        DressCode: null,
-        TimeInvested:0,
+
+    constructor(private navCtrl: NavController, private readonly store: Store,private route:ActivatedRoute,private router:Router) {
+      
+    this.setCurrentUserDetails();
+    this.setCurrentConvoDetails();
+
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentTimeRem=profile.TimeRemaining!;
+      }else{
+        alert("Array undefined subscribing again");
       }
-    }
+    });
+    this.store.select(ChatState.timeInvested).subscribe((time) => {
+      if(time!=undefined){
+        this.meetingTimeInvested=time!;
+      }else{
+        alert("Array undefined subscribing again");
+      }
+    });
     //this.store.dispatch(new )
-    this.store.dispatch(new CreateConversation(conversation));
+    // this.store.dispatch(new CreateConversation(conversation));
+  }
+
+  setCurrentUserDetails(){
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if(profile!=undefined){
+        this.currentUserID=profile.UID;
+      }else{
+      }
+    });
+  }
+
+  setCurrentConvoDetails(){
+    this.store.select(ChatState.conversation).subscribe((conversation) => {
+      if(conversation!=undefined){
+        this.currentPairIDVar=conversation.PairID;
+      }else{
+      }
+    });
   }
 
   //message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
@@ -53,6 +81,9 @@ export class MessagesPageComponent {
   locationSelected!: string;
   foodSelected!: string;
   dressSelected!: string;
+
+  currentTimeRem!:number;
+  meetingTimeInvested!:number;
 
   datePass = false;
   timePass = false;
@@ -67,6 +98,7 @@ export class MessagesPageComponent {
   }
 
   confirm() {
+
     if(this.timeSelected != undefined){
       if(this.timeSelected.length != 0){
         this.timePass = true;
@@ -116,8 +148,10 @@ export class MessagesPageComponent {
         DressCode:this.dressSelected,
         TimeInvested:0 //Replace with time invested
       }
-      this.store.dispatch(new SubscribeToConversation);
-      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentConversationID(),meetingDetails));
+      this.currentTimeRem-=30;
+      this.store.dispatch(new SubscribeToConversation(this.pairId));
+      this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
+
       
     }else{
       this.verifyPass = false;
@@ -158,13 +192,31 @@ export class MessagesPageComponent {
   messageToSend!: string;
 
   sendMessage(){
+    
+    var profileUID:string|undefined|null;
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      profileUID=profile?.UID;
+      
+    });
+   
     const message: IMessage ={
       ToUserID:"u1",
-      FromUserID:"u2",
+
+      FromUserID:profileUID,
       Content:this.messageToSend
     }
-    this.store.dispatch(new SubscribeToConversation);
-    this.store.dispatch(new SendMessage("1",message));
+
+    console.log("1")
+    this.store.dispatch(new SubscribeToConversation(this.pairId));
+    console.log("2")
+    this.currentTimeRem-=1;
+    console.log("3")
+    this.meetingTimeInvested+=1;
+    console.log("4")
+    this.store.dispatch(new UpdateTime(this.currentTimeRem));
+    console.log("5")
+    this.store.dispatch(new SendMessage(this.pairId!,message,this.meetingTimeInvested));
+    console.log("6")
     this.messageSendInput.value = "";
   }
 
@@ -192,7 +244,8 @@ export class MessagesPageComponent {
   @ViewChild('currentLocationSelected') currentLocationSelected?: ElementRef;
   @ViewChild('currentFoodSelected') currentFoodSelected?: ElementRef;
   @ViewChild('currentDressSelected') currentDressSelected?: ElementRef;
-  @ViewChild('currentConversationID') currentConversationID?: ElementRef;
+  @ViewChild('currentPairID') currentPairID?: ElementRef;
+  @ViewChild('currentTime') currentTime?: ElementRef;
 
   getCurrentDateSelected() {
     return this.currentDateSelected?.nativeElement.innerText;
@@ -209,9 +262,10 @@ export class MessagesPageComponent {
   getCurrentDressSelected() {
     return this.currentDressSelected?.nativeElement.innerText;
   }
-  getCurrentConversationID() {
-    return this.currentConversationID?.nativeElement.innerText;
+  getCurrentPairID() {
+    return this.currentPairID?.nativeElement.innerText;
   }
+
 
   //GETTING DATE
   getDateFromTimestamp(timestampSeconds: number | undefined): string {
@@ -225,5 +279,26 @@ export class MessagesPageComponent {
     const year = date.getFullYear();
   
     return `${day} ${month} ${year}`;
+  }
+
+  //on init, get values from matches-page.component.ts
+  personName!: string;
+  lastMessage!: string;
+  unreadMessages!: number;
+  imgSrc!: string;
+  pairId!: string;
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+        const state = this.router.getCurrentNavigation()!.extras.state;
+        if (state) {
+          this.personName = state['personName'];
+          this.lastMessage = state['lastMessage'];
+          this.unreadMessages = state['unreadMessages'];
+          this.imgSrc = state['imgSrc'];
+          this.pairId = state['pairId'];
+          this.store.dispatch(new SubscribeToConversation(this.pairId));
+        }
+      })
   }
 }
