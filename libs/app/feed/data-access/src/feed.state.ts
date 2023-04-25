@@ -57,13 +57,10 @@ export class FeedState {
   async updateMatches(ctx: StateContext<ProfileStateModel>,{MatchUserID,MatchTargetID,type}: updateMatches) {
     try {
      
-      //alert("this is in saveProfileChanges state "+bio+", "+major+", "+cell);
-      alert("We are in state")
       const state = ctx.getState();
       const UID= MatchUserID;
       const MID = MatchTargetID;
       const Type = type;
-
       
       const responseRef =await this.feedApi.Handle(UID,MID,Type);
       const response = responseRef?.data;

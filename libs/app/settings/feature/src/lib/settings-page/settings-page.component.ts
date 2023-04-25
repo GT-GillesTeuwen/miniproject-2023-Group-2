@@ -31,7 +31,6 @@ export class SettingsPageComponent {
         }
        
       }else{
-        alert("Settings undefined");
       }
       
     });
@@ -57,7 +56,7 @@ export class SettingsPageComponent {
     // this.selectedValue = event.detail.value;
     // this.privacytype = this.selectedValue;
   //  console.log(this.privacytype);
-    alert(this.privacytype);
+    
   }
 
   onRangeChange(event: any) {

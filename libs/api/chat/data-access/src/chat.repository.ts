@@ -9,7 +9,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 export class ChatRepository {
 
   async findOne(conversation: IConversation) {
-    if (conversation.ConversationID == null) {
+    if (conversation.PairID == null) {
       throw new Error("Conversation ID is null in findOne() in chat.repository.ts");
     }
     return await admin
@@ -21,12 +21,12 @@ export class ChatRepository {
         },
         toFirestore: (it: IConversation) => it,
       })
-      .doc(conversation.ConversationID)
+      .doc(conversation.PairID)
       .get();
   }
 
-  async findOneByID(conversationID: string) {
-    if (conversationID == null) {
+  async findOneByID(pairID: string) {
+    if (pairID == null) {
       throw new Error("Conversation ID is null in findOne() in chat.repository.ts");
     }
     return await admin
@@ -38,29 +38,29 @@ export class ChatRepository {
         },
         toFirestore: (it: IConversation) => it,
       })
-      .doc(conversationID)
+      .doc(pairID)
       .get();
   }
 
   async createConversation1(conversation: IConversation) {
     // Remove password field if present
-    if (conversation.ConversationID == null) {
+    if (conversation.PairID == null) {
       throw new Error("Conversation ID is null in createConversation1() in chat.repository.ts");
     }
     console.log("here5");
     return await admin
       .firestore()
       .collection('conversations')
-      .doc(conversation.ConversationID)
+      .doc(conversation.PairID)
       .create(conversation);
   }
 
-  async sendMessage(message: IMessage, conversationID: string) {
+  async sendMessage(message: IMessage, pairID: string) {
     // Remove password field if present
-    if (conversationID == null) {
+    if (pairID == null) {
       throw new Error("Conversation ID is null in sendMessage() in chat.repository.ts");
     }
-    const convoData = (await this.findOneByID(conversationID)).data() as IConversation;
+    const convoData = (await this.findOneByID(pairID)).data() as IConversation;
 
 
 
@@ -68,25 +68,37 @@ export class ChatRepository {
     return await admin
       .firestore()
       .collection('conversations')
-      .doc(conversationID)
+      .doc(pairID)
       .set(convoData, { merge: true });
     
     
   }
 
-  async updateMeeting(meeting: IMeetingDetails, conversationID: string) {
+  async updateMeeting(meeting: IMeetingDetails, pairID: string) {
     // Remove password field if present
-    if (conversationID == null) {
+    if (pairID == null) {
       throw new Error("Conversation ID is null in sendMessage() in chat.repository.ts");
     }
     
-    return await admin
+    if(meeting.Date!=undefined && meeting.Date!=null){
+      return await admin
       .firestore()
       .collection('conversations')
-      .doc(conversationID)
+      .doc(pairID)
       .update({
         "MeetingDetails": meeting
       });
+    }else{
+      return await admin
+      .firestore()
+      .collection('conversations')
+      .doc(pairID)
+      .update({
+        "MeetingDetails.TimeInvested": meeting.TimeInvested
+      });
+    }
+
+    
     
     
   }

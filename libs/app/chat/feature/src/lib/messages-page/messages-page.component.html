@@ -47,7 +47,6 @@
             </div>
             <div class="name-holder">
                 <h1>{{personName}}</h1>
-                {{pairId}}
             </div>
             <div class="time-outer-wrapper">
                 <div class="time-holder" id="click-trigger">
@@ -60,7 +59,7 @@
                             <div class="text-wrapper">
                                 <h2>Time Invested</h2>
                                 <p>You have invested</p>
-                                <h1 *ngIf="(profile$ | async) as profile;">${{profile?.TimeRemaining}}</h1>
+                                <h1 *ngIf="(chat$ | async) as chat;">${{chat?.MeetingDetails?.TimeInvested}}</h1>
                                 <p>in this meeting. Don't let it go to waste. Confirm and verify a meeting with <span>Obi Wan Kenobi</span> to get rewarded more time!</p>
                             </div>
                         </ion-content>
@@ -118,7 +117,8 @@
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentLocationSelected>{{chat?.MeetingDetails?.Location}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentFoodSelected>{{chat?.MeetingDetails?.FoodPreference}}</div>
         <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentDressSelected>{{chat?.MeetingDetails?.DressCode}}</div>
-        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentConversationID>{{chat?.ConversationID}}</div>
+        <div style="display: none;" *ngIf="(chat$ | async) as chat;" #currentPairID>{{chat?.PairID}}</div>
+        <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentTime>{{profile?.TimeRemaining}}</div>
         <!--  -->
 
         <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">

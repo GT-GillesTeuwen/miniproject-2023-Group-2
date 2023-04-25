@@ -106,6 +106,20 @@ export class ProfileState {
   }
 
   @Selector()
+  static timeRemaining(state: ProfileStateModel):number {
+    if(state.profile!=undefined && state.profile.TimeRemaining!=undefined){
+      return state.profile.TimeRemaining;
+    }
+    return 0;
+    
+  }
+
+  @Selector()
+  static uid(state: ProfileStateModel) {
+    return state.profile?.UID;
+  }
+
+  @Selector()
   static settings(state: ProfileStateModel) {
     return state.profile?.Settings;
 
@@ -319,10 +333,9 @@ export class ProfileState {
 
   @Action(UpdateProfilePhotos)
   async updateProfilePhotos(ctx: StateContext<ProfileStateModel>,{profilePhotos}: UpdateProfilePhotos) {
-    alert("at profile state")
+    
     try {
      
-      alert("this is in updata photo state "+profilePhotos);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const ProfilePhotos = profilePhotos;
@@ -373,7 +386,7 @@ export class ProfileState {
   async updateTime(ctx: StateContext<ProfileStateModel>,{TimeRemaining}: UpdateTime) {
     try {
      
-      //alert("this is in updata photo state "+TimeRemaining);
+      alert("this is in updata time state "+TimeRemaining);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const timeRemaining = TimeRemaining;

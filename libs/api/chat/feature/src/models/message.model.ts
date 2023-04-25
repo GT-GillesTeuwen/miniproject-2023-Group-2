@@ -27,9 +27,9 @@ import { Timestamp } from "firebase-admin/firestore";
       return instance;
     }
   
-    send1(conversationID:string) {
+    send1(pairID:string) {
       console.log("AHHHH in message model");
-      this.apply(new MessageSentEvent(conversationID,this.toJSON()));
+      this.apply(new MessageSentEvent(pairID,this.toJSON()));
     }
   
   

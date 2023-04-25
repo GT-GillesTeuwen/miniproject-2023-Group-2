@@ -37,7 +37,7 @@ export class CardStackContainerComponent {
   };
     
   ngOnInit() {
-
+    this.store.dispatch(new SubscribeToMatches());
   }
 
  
@@ -125,7 +125,6 @@ export class CardStackContainerComponent {
         this.currentUserAge=profile.Age;
         this.currentUserAgeRange=profile.Settings?.AgeRange;
       }else{
-        alert("Profile undefined subscribing again");
         this.store.dispatch(new SubscribeToProfile());
       }
     });
@@ -163,8 +162,7 @@ export class CardStackContainerComponent {
           }
         }
       }else{
-        alert("Array undefined subscribing again");
-        // this.store.dispatch(new SubscribeToMatches());
+        this.store.dispatch(new SubscribeToProfile());
       }
       
     });

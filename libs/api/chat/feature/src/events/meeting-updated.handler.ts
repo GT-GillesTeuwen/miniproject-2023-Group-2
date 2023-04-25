@@ -10,6 +10,6 @@ export class MeetingUpdatedHandler
 
   async handle(event: MeetingUpdatedEvent) {
     console.log(`${MeetingUpdatedHandler.name}`);
-    await this.repository.updateMeeting(event.meeting,event.conversationID);
+    await this.repository.updateMeeting(event.meeting,event.pairID);
   }
 }

@@ -16,5 +16,5 @@ export class updateMatches {
     public readonly MatchUserID: string,
     public readonly MatchTargetID: string,
     public readonly type: string,
-  ) {alert("called updateMatches constructor");}
+  ) {}
 }
