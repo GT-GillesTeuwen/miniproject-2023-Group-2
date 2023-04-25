@@ -4,7 +4,7 @@
             <div *ngIf="(profile$ | async) as currentProfile;">
                 <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'" 
                 personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
-                lastMessage="{{getLastMessage(profile?.Matches!)}}"
+                lastMessage="{{getPairId(profile?.Matches!)}}"
                 unreadMessages=">=0" 
                 imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
                 pairId="{{pairId}}">

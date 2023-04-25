@@ -5,7 +5,7 @@ import { IProfile } from '@mp/api/profiles/util';
 import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
 //import {CardItemComponent} from "../card-item/card-item.component";
-import { SubscribeToMatches, SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
+import { SetMatches, SubscribeToMatches, SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
 import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 import { updateMatches } from '@mp/app/feed/util';
 
@@ -20,6 +20,7 @@ export class CardStackContainerComponent {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
   @ViewChild('currentTime') currentTime?: ElementRef;
 
+  @Select(ProfileState.allProfiles) allProfiles$!: Observable<IProfile[] | null>
   
   profilesToShow: IProfile[]=[];
   currentUserID!:string|null|undefined;
@@ -30,7 +31,10 @@ export class CardStackContainerComponent {
     private readonly store: Store
   ) {
     this.setCurrentUserDetails();
-    this.populateProfilesToShow();};
+    this.populateProfilesToShow();
+    console.log("before match: ", this.profilesToShow);
+    this.store.dispatch(new SubscribeToMatches);
+  };
     
   ngOnInit() {
 
@@ -45,7 +49,7 @@ export class CardStackContainerComponent {
   // currentIndex = parseInt(parseInt(sessionStorage.getItem('currentIndex')!, 10)String!, 10);
 
   matchUsers(match: boolean){
-    this.store.dispatch(new SubscribeToMatches());
+    // this.store.dispatch(new SubscribeToMatches());
     if(match == this.prevChoice){
       this.counter++;
     }
@@ -66,7 +70,7 @@ export class CardStackContainerComponent {
     if(match){
       console.log(this.profilesToShow);
       console.log(tempArray);
-      alert("index: " + parseInt(sessionStorage.getItem('currentIndex')!, 10));
+      // alert("index: " + parseInt(sessionStorage.getItem('currentIndex')!, 10));
       alert("this is their ID: " + tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].UID + "\nthis is my id: " + this.currentUserID + "\nthis is the currentIndex: "  + parseInt(sessionStorage.getItem('currentIndex')!, 10));
       let didTheyLikeMe = false;
       tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].Matches?.forEach((match) => {
@@ -104,6 +108,14 @@ export class CardStackContainerComponent {
       tempItemIndex++;
       sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }
+
+    // this.profilesToShow.pop();
+    // this.store.dispatch(new SetMatches(this.profilesToShow));
+    // console.log("matches obserable now: ");
+
+    setTimeout(() => this.populateProfilesToShow(), 2000);
+
+    console.log("after match: ", this.profilesToShow);
   }
 
   setCurrentUserDetails(){
@@ -120,35 +132,43 @@ export class CardStackContainerComponent {
   }
 
   populateProfilesToShow(){
+    this.store.dispatch(new SubscribeToMatches);
     this.store.select(ProfileState.allProfiles).subscribe((profiles) => {
       this.profilesToShow=[];
       if(profiles!=undefined){
+        console.log("their profile is: ", profiles);
         for (let index = 0; index < profiles.length; index++) {
-          if(this.getMatchStatus(profiles[index],this.currentUserID)=="RECEIVED"){
+          // alert(["profile: " + profiles[index].Name?.Firstname]);
+          if(this.getMatchStatus(profiles[index],this.currentUserID)=="SENT"){
+            // alert("went in");
             this.profilesToShow.push(profiles[index]);
+            console.log("being pushed 1: ", profiles[index]);
           }
         }
         for (let index = 0; index < profiles.length; index++) {
+          console.log("details: ", profiles[index]);
           const matchStatus=this.getMatchStatus(profiles[index],this.currentUserID);
           if(
             profiles[index].Name?.Firstname!=null&&
             matchStatus!="RECEIVED"&&
           matchStatus!="PAIRED"&&
-          matchStatus!="PENDING"&&
+          matchStatus!="SENT"&&
           this.isInRange(this.currentUserAge,profiles[index].Settings?.AgeRange)&&
           this.isInRange(profiles[index].Age,this.currentUserAgeRange)&&
           profiles[index].Settings?.Privacy!="Private"&&
           profiles[index].UID!=this.currentUserID){
+            // alert("adding to profilesToShow: " + profiles[index].Name?.Firstname);
             this.profilesToShow.push(profiles[index]);
+            console.log("being pushed 2: ", profiles[index]);
           }
         }
       }else{
         alert("Array undefined subscribing again");
-        this.store.dispatch(new SubscribeToProfile());
+        // this.store.dispatch(new SubscribeToMatches());
       }
       
     });
-    console.log(this.profilesToShow);
+    console.log("gilles one: ", this.profilesToShow);
   }
 
   isInRange(age:string|null|undefined,ageRange:IAgeRange|null|undefined){

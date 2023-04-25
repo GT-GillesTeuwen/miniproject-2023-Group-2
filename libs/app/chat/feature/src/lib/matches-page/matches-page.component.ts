@@ -6,13 +6,19 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { SubscribeToProfile } from '@mp/app/profile/util';
 import { ChatState } from '@mp/app/chat/data-access';
-import { CreateConversation } from '@mp/app/chat/util';
+import { CreateConversation, SubscribeToConversation } from '@mp/app/chat/util';
+
+interface LastMessage {
+  message: string;
+  pairId: string;
+}
 
 @Component({
   selector: 'mp-matches-page',
   templateUrl: './matches-page.component.html',
   styleUrls: ['./matches-page.component.scss'],
 })
+
 export class MatchesPageComponent {
   @Select(ProfileState.allProfiles) matches$!: Observable<IProfile[] | null>;
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
@@ -34,13 +40,28 @@ export class MatchesPageComponent {
     });
   }
 
-  getLastMessage(theirMatches: IMatchDetails[]){
+  allMessages:string[] = [];
+
+  allLastMessages: LastMessage[] = [];
+
+  getPairId(theirMatches: IMatchDetails[]){
     this.setCurrentUserID();
     for(let i=0; i<theirMatches.length; i++){
       if(theirMatches[i].MatchUserID == this.currentUserID){
 
         console.log("Pair id: " + theirMatches[i].PairID);
         this.pairId = theirMatches[i].PairID!;
+      }
+    }
+
+    this.getLastMessage();
+    return this.pairId;
+  }
+
+
+
+  getLastMessage(){
+    // this.store.dispatch(new SubscribeToConversation(this.pairId));
 
         this.store.select(ChatState.conversation).subscribe((chatHistory) => {
           if(chatHistory && chatHistory.Messages && chatHistory.Messages.length > 0){
@@ -48,13 +69,14 @@ export class MatchesPageComponent {
 
             if(tempMessageArray.Content){
               this.lastMessage = tempMessageArray.Content;
+              this.allLastMessages.push({message: this.lastMessage, pairId: this.pairId});
+              this.allMessages.push(this.lastMessage);
             }
           }else{
             // this.store.dispatch(new CreateConversation());
           }
         });
-      }
-    }
+    console.log("all messages: ", this.allLastMessages);
     return this.lastMessage;
   }
 }
