@@ -113,23 +113,23 @@ export class AuthState {
   @Action(ContinueWithGoogle)
   async continueWithGoogle(ctx: StateContext<AuthStateModel>) {
     try {
+      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
       const uid = await this.authApi.continueWithGoogle()
-      //alert(uid)
-      
+      alert("User ID " + uid)
+      // await sleep(3000)
       const validProfile$ = await this.authApi.findProfile(uid);
 
       let gender: string | null | undefined
       validProfile$.subscribe((profile: IProfile) => {
-        //alert("UID: " +profile.UID)
+        alert("UID: " + profile.UID)
         gender = profile.Gender;
-        //alert("subscribe GENDER: "+gender)
+        alert("subscribe GENDER: "+ gender)
       })
 
-      const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
       await sleep(2000)
 
       if(gender == undefined){
-        //alert("redirect")
+        alert("IF Gender")
         return ctx.dispatch(new Navigate(['register/complete']));
       }
       

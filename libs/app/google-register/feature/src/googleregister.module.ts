@@ -21,4 +21,8 @@ import { GoogleRegisterRouting } from './googleregister.routing';
   declarations: [GoogleRegisterPage],
   exports: [],
 })
-export class GoogleRegisterModule {}
+export class GoogleRegisterModule {
+  constructor() {
+    alert('GoogleRegisterModule');
+  }
+}
