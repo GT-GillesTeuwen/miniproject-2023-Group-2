@@ -22,6 +22,7 @@ export class CreateAuthHandler implements ICommandHandler<CreateAuthCommand> {
     };
     const auth = this.publisher.mergeObjectContext(Auth.fromData(data));
 
+    console.log(auth);
     auth.create();
     auth.commit();
   }
