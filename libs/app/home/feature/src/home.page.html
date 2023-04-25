@@ -1,10 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start" class="logo">  
+    <ion-buttons slot="start" class="logo">
       <!-- <ion-icon name="alert-circle-outline" size="small" aria-hidden="true"></ion-icon>-->
       <img src="https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/logo.png?alt=media&token=c4fa121d-be03-4fed-ac74-f8cf6ab28dba" alt="logo">
     </ion-buttons>
-  
+
     <ion-title class="ion-text-center">
       <div class="time-remaining-outer-wrapper">
         <div class="time-remaining-inner-wrapper"  *ngIf="(profile$ | async) as profile;">
@@ -17,13 +17,13 @@
       <ion-searchbar animated="true" placeholder="Search for user..." *ngIf="isSearchBarOpened" show-cancel-button="always" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
     </div>
 
-    <ion-buttons slot="end" class="search-button">  
+    <ion-buttons slot="end" class="search-button">
       <ion-button *ngIf="!isSearchBarOpened" (click)="isSearchBarOpened=true">
         <ion-icon name="search-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons slot="end" class="notification-button">  
+    <ion-buttons slot="end" class="notification-button">
       <ion-icon name="notifications-outline" size="small" aria-hidden="true"></ion-icon>
     </ion-buttons>
 
