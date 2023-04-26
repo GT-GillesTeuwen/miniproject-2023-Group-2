@@ -2,8 +2,6 @@ import { ProfilesService } from '@mp/api/profiles/feature';
 import {
   IRemoveProfileRequest,
     IRemoveProfileResponse,
-    IUpdateAccountDetailsRequest,
-    IUpdateAccountDetailsResponse,
     IUpdateAddressDetailsRequest,
     IUpdateAddressDetailsResponse,
     IUpdateContactDetailsRequest,
