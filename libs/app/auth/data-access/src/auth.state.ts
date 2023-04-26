@@ -131,9 +131,10 @@ export class AuthState {
       if(gender == undefined){
         alert("IF Gender")
         return ctx.dispatch(new Navigate(['register/complete']));
+        alert("Complete Register");
       }
       
-      //alert("failed redirect")
+      alert("failed redirect")
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
