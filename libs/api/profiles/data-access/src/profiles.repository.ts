@@ -86,7 +86,28 @@ export class ProfilesRepository {
           )
 
       }
-      
-   
   }
+
+  async removeProfile(profile : IProfile){
+    // Get a reference to the document to be deleted
+    if(profile.UID)
+      {
+        const docRef = admin.firestore().collection("profiles").doc(profile.UID);
+
+        // Delete the document
+        docRef.delete().then(function() {
+            console.log("User successfully deleted! User : "+profile.UID);
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    
+
+      }
+    else
+    throw "Cannot remove user with this id : Does not exist";
+ 
+  }
+
+
+
 }

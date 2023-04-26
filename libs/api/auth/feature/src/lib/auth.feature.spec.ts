@@ -135,8 +135,8 @@ describe('AuthFeature', () => {
     when(eventPublisherMock.mergeObjectContext(Auth.fromData(data))).thenReturn(auth);
 
 
-    jest.spyOn(auth, 'create').mockImplementation(() => {});
-    jest.spyOn(auth, 'commit').mockImplementation(() => {});
+    // jest.spyOn(auth, 'create').mockImplementation(() => {});
+    // jest.spyOn(auth, 'commit').mockImplementation(() => {});
 
       
       createAuthHandler = new CreateAuthHandler(eventPublisherMock);

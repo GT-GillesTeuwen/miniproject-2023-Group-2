@@ -5,7 +5,7 @@ import {
     IProfile,
     PersonalDetailsUpdatedEvent,
     ProfileCreatedEvent,
-    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ProfileMatchesUpdatedEvent,ISettings
+    AgeGroup,Gender, ProfileDetailsUpdatedEvent, IMatchDetails, ProfileMatchesUpdatedEvent,ISettings, RemoveProfileUpdatedEvent
 
 } from '@mp/api/profiles/util';
 import { AggregateRoot } from '@nestjs/cqrs';
@@ -86,6 +86,14 @@ export class Profile extends AggregateRoot implements IProfile {
     this.ContactDetails = profile.ContactDetails;
     this.Settings=profile.Settings;
     this.apply(new ProfileDetailsUpdatedEvent(this.toJSON())); 
+  }
+
+  removeProfile(profile : IProfile){
+    const request : IProfile =  {
+      UID: profile.UID,
+    }
+    this.UID = profile.UID;
+    this.apply(new RemoveProfileUpdatedEvent(request))
   }
 
   updateMatch(profile : IProfile,type : string) {
