@@ -5,7 +5,7 @@ import { IProfile } from '@mp/api/profiles/util';
 import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
 //import {CardItemComponent} from "../card-item/card-item.component";
-import { SetMatches, SubscribeToMatches, SubscribeToProfile, UpdateTime } from '@mp/app/profile/util'
+import { SetMatches, SubscribeToMatches, SubscribeToProfile, UpdateTime, RemoveProfile } from '@mp/app/profile/util'
 import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 import { updateMatches } from '@mp/app/feed/util';
 
@@ -58,9 +58,15 @@ export class CardStackContainerComponent {
       this.counter = 0;
     }
     if(this.counter > 2){
+      if(this.currentTime?.nativeElement.innerText < 5){
+        this.store.dispatch(new RemoveProfile())
+      }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-5));
     }
     else{
+      if(this.currentTime?.nativeElement.innerText == 1){
+        this.store.dispatch(new RemoveProfile())
+      }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }
 

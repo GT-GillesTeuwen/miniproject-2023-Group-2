@@ -19,7 +19,7 @@ import { CoreModule } from '../core.module';
 
 
 
-export const RemoveAccount = functions.https.onCall(
+export const RemoveProfile = functions.https.onCall(
   async (
     request: IRemoveProfileRequest
   ): Promise<IRemoveProfileResponse> => {

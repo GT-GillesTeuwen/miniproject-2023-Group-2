@@ -15,7 +15,9 @@ import {
   IUpdatePersonalDetailsRequest,
   IUpdatePersonalDetailsResponse,
   IUpdateProfileRequest,
-  IUpdateProfileResponse
+  IUpdateProfileResponse,
+  IRemoveProfileRequest,
+  IRemoveProfileResponse
 } from '@mp/api/profiles/util';
 
 import { getDocs } from 'firebase/firestore';
@@ -114,6 +116,16 @@ export class ProfilesApi {
 
 }
 
+  async removeProfile(request: IRemoveProfileRequest){
+    return await httpsCallable<
+      IRemoveProfileRequest,
+      IRemoveProfileResponse
+    >(
+      this.functions,
+      'RemoveProfile'
+    )(request);
+
+}
 
 async getUserProfileDetails(request: IGetUserProfileRequest) {
   return await httpsCallable<
