@@ -278,10 +278,6 @@ export class ProfilePage {
   currentCell!: string;
   async saveChanges() {
     
-
-    
-    
-    
    
     if (this.changeMade) {
 
@@ -374,5 +370,11 @@ export class ProfilePage {
       result = false;
     }
     return result; // Return the result
+  }
+
+  //remove image from array:
+  removeImageFromArray(index: number){
+    this.profilePhotosArr.splice(index, 1);
+    this.store.dispatch(new UpdateProfilePhotos(this.profilePhotosArr));
   }
 }
