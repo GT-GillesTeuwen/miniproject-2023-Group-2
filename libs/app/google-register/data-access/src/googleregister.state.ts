@@ -22,7 +22,7 @@ export interface GoogleRegisterStateModel {
 }
 
 @State<GoogleRegisterStateModel>({
-  name: 'register',
+  name: 'complete',
   defaults: {
     registerForm: {
       model: {

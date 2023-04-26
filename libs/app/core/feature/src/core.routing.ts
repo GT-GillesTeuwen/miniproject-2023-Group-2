@@ -77,7 +77,7 @@ const routes: Routes = [
       import('@mp/app/register/feature').then((m) => m.RegisterModule),
   },
   {
-    path: 'register/complete',
+    path: 'complete',
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedOut },

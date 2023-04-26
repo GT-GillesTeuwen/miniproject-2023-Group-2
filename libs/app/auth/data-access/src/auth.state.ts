@@ -130,7 +130,7 @@ export class AuthState {
 
       if(gender == undefined){
         alert("IF Gender")
-        return ctx.dispatch(new Navigate(['register/complete']));
+        return ctx.dispatch(new Navigate(['complete']));
         alert("Complete Register");
       }
       
