@@ -113,7 +113,7 @@ export class CardStackContainerComponent {
     // this.store.dispatch(new SetMatches(this.profilesToShow));
     // console.log("matches obserable now: ");
 
-    setTimeout(() => this.populateProfilesToShow(), 2000);
+    setTimeout(() => this.populateProfilesToShow(), 1000);
 
     console.log("after match: ", this.profilesToShow);
   }

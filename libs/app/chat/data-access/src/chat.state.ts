@@ -111,7 +111,7 @@ export class ChatState {
     
     const thing= from( this.chatApi
       .allConvos$())
-      .pipe(tap((matches: IConversation[]) => ctx.dispatch(new SetAllConversations(matches))));
+      .pipe(tap((conversations: IConversation[]) => ctx.dispatch(new SetAllConversations(conversations))));
       
     console.log("here is thing",thing);
       return thing;

@@ -165,6 +165,14 @@ ion-input{
 }
 
 //modal styling
+ion-grid{
+  margin-left: -1em;
+}
+
+ion-row{
+  height: 300px;
+}
+
 ion-col{
   display: flex;
   justify-content: center;
@@ -176,6 +184,9 @@ ion-col{
 
 ion-col img{
   border-radius: 19px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .empty-photo{

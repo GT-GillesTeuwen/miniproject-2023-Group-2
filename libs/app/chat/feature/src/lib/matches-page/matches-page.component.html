@@ -1,14 +1,12 @@
-
-<div class="matches-page-content" *ngIf="(profile$ | async) as currentProfile;">
-    <div *ngFor="let match of currentProfile.Matches">
-        <div *ngIf="(matches$ | async) as allProfiles;">
-            <div *ngFor="let profile of allProfiles">
-                <mp-profile-card-page  *ngIf="match.MatchUserID===profile.UID && match.MatchStatus==='PAIRED'" 
+<div class="matches-page-content" *ngIf="(matches$ | async) as allProfiles;">
+    <div *ngFor="let profile of allProfiles">
+        <div *ngFor="let match of profile.Matches">
+            <div *ngIf="(profile$ | async) as currentProfile;">
+                <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'" 
                 personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
-                lastMessage="{{getLastMessage2(match.PairID!)}}"
                 unreadMessages=">=0" 
                 imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
-                pairId="{{match.PairID!}}">
+                pairId="{{getPairId(profile?.Matches!)}}">
                 </mp-profile-card-page>
             </div>
         </div>

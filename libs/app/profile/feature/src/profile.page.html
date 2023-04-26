@@ -226,58 +226,47 @@
       </ion-header>
       <ion-content class="ion-padding modal-content">
 
-        <ion-grid>
+        <ion-grid *ngIf="(profile$ | async) as profile;">
           <ion-row>
-            <ion-col>
-              <img src="https://picsum.photos/200/400?random=10" alt="img-1">
-              <ion-buttons class="delete-image-btns">  
-                <ion-button class="delete-image-btn" id="open-modal" expand="block">
-                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-              <ion-col><img src="https://picsum.photos/200/400?random=11" alt="img-1">
-              <ion-buttons class="delete-image-btns">  
-                <ion-button class="delete-image-btn" id="open-modal" expand="block">
-                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col>
-              <img src="https://picsum.photos/200/400?random=12" alt="img-1">
-              <ion-buttons class="delete-image-btns">  
-                <ion-button class="delete-image-btn" id="open-modal" expand="block">
-                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+            <ion-col *ngFor="let column of [1, 2, 3]; let index=index" [class.empty-photo]="isPhotosArrayAtIndexEmpty(index)">
+
+              <ng-template [ngIf]="!isPhotosArrayAtIndexEmpty(index)">
+                <img src="{{profile?.ProfilePhotos![index]}}" alt="img-1">
+                <ion-buttons class="delete-image-btns">  
+                  <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                    <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ng-template>
+
+              <ng-template class="empty" [ngIf]="isPhotosArrayAtIndexEmpty(index)">
+                <ion-buttons class="plus-image-btns">  
+                  <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+                    <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ng-template>
+
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col>
-              <img src="https://picsum.photos/200/400?random=13" alt="img-1">
-              <ion-buttons class="delete-image-btns">  
-                <ion-button class="delete-image-btn" id="open-modal" expand="block">
-                  <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col class="empty-photo">
-              <ion-buttons class="plus-image-btns">  
+            <ion-col *ngFor="let column of [1, 2, 3]; let index=index" [class.empty-photo]="isPhotosArrayAtIndexEmpty(index+3)">
+              <ng-template [ngIf]="!isPhotosArrayAtIndexEmpty(index+3)">
+                <img src="{{profile?.ProfilePhotos![index+3]}}" alt="img-1">
+                <ion-buttons class="delete-image-btns">  
+                  <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                    <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ng-template>
 
-                <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
-
-                  <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-col>
-            <ion-col class="empty-photo">
-              <ion-buttons class="plus-image-btns">  
-
-                <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
-
-                  <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+              <ng-template class="empty" [ngIf]="isPhotosArrayAtIndexEmpty(index+3)">
+                <ion-buttons class="plus-image-btns">  
+                  <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+                    <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ng-template>
             </ion-col>
           </ion-row>
         </ion-grid>

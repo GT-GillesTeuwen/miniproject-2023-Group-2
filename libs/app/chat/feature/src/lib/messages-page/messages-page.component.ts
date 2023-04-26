@@ -290,7 +290,6 @@ export class MessagesPageComponent implements OnInit{
 
   //on init, get values from matches-page.component.ts
   personName!: string;
-  lastMessage!: string;
   unreadMessages!: number;
   imgSrc!: string;
   pairId!: string;
@@ -300,7 +299,6 @@ export class MessagesPageComponent implements OnInit{
         const state = this.router.getCurrentNavigation()!.extras.state;
         if (state) {
           this.personName = state['personName'];
-          this.lastMessage = state['lastMessage'];
           this.unreadMessages = state['unreadMessages'];
           this.imgSrc = state['imgSrc'];
           this.pairId = state['pairId'];

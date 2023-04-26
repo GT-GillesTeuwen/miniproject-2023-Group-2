@@ -364,4 +364,15 @@ export class ProfilePage {
     this.store.dispatch(new Logout());
   }
 
+  //check if profile photos array is empty:
+  isPhotosArrayAtIndexEmpty(index: number){
+    // Process the index here
+    let result;
+    if(this.profilePhotosArr.length-1 < index){
+      result = true;
+    }else{
+      result = false;
+    }
+    return result; // Return the result
+  }
 }
