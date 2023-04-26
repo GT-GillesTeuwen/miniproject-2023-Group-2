@@ -8,6 +8,7 @@ import { ProfileState } from '@mp/app/profile/data-access';
 import { SetMatches, SubscribeToMatches, SubscribeToProfile, UpdateTime, RemoveProfile } from '@mp/app/profile/util'
 import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
 import { updateMatches } from '@mp/app/feed/util';
+import { RemoveAuth } from '@mp/app/auth/util';
 
 @Component({
   selector: 'mp-card-stack-container',
@@ -60,12 +61,14 @@ export class CardStackContainerComponent {
     if(this.counter > 2){
       if(this.currentTime?.nativeElement.innerText < 5){
         this.store.dispatch(new RemoveProfile())
+        this.store.dispatch(new RemoveAuth())
       }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-5));
     }
     else{
-      if(this.currentTime?.nativeElement.innerText == 1){
+      if(this.currentTime?.nativeElement.innerText <= 1){
         this.store.dispatch(new RemoveProfile())
+        this.store.dispatch(new RemoveAuth())
       }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }

@@ -3,10 +3,10 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AuthSagas } from './auth.sagas';
 import { AuthService } from './auth.service';
-import { CreateAuthHandler, UpdateAuthHandler } from './commands';
-import { AuthCreatedHandler, AuthUpdatedHandler } from './events';
-export const CommandHandlers = [CreateAuthHandler, UpdateAuthHandler];
-export const EventHandlers = [AuthCreatedHandler, AuthUpdatedHandler];
+import { CreateAuthHandler, RemoveAuthHandler, UpdateAuthHandler } from './commands';
+import { AuthCreatedHandler, AuthRemovedhandler, AuthUpdatedHandler } from './events';
+export const CommandHandlers = [CreateAuthHandler, UpdateAuthHandler, RemoveAuthHandler];
+export const EventHandlers = [AuthCreatedHandler, AuthUpdatedHandler, AuthRemovedhandler];
 
 @Module({
   imports: [CqrsModule, AuthDataAccessModule],

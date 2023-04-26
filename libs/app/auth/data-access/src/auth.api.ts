@@ -15,6 +15,7 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
+import { IRemoveAuthRequest, IRemoveAuthResponse, IUpdateAuthRequest, IUpdateAuthResponse} from '@mp/api/auth/util'
 
 @Injectable()
 export class AuthApi {
@@ -118,6 +119,19 @@ export class AuthApi {
     const provider = new GoogleAuthProvider();
     return await signInWithPopup(this.auth, provider);
   }
+
+
+  async RemoveAuth(request: IUpdateAuthRequest) {
+    await httpsCallable<
+      IUpdateAuthRequest,
+      IUpdateAuthResponse
+    >(
+      this.functions,   // auth.functions.ts in api/core/feature
+      'removeAuth'
+    )(request);
+    return await signOut(this.auth);
+  }
+
 
   async logout() {
     sessionStorage.removeItem('firstTime');
