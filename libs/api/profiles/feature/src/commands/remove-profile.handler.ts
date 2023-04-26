@@ -29,8 +29,8 @@ export class RemoveProfileHandler
       Profile.fromData(profileData)
     );
 
-    if (!request.profile.ContactDetails)
-      throw new Error('Profile contact details not found');
+    if (!request.profile)
+      throw new Error('Profile not found');
     profile.removeProfile(request.profile);
     profile.commit();
 
