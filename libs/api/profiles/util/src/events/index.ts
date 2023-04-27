@@ -6,3 +6,4 @@ export * from './personal-details-updated.event';
 export * from './profile-created.event';
 export * from './profile-details-updated.event';
 export * from './profile-matches-updated.event';
+export * from './remove-profile-updated.event';

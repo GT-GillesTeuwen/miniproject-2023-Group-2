@@ -1,4 +1,4 @@
-import { CreateAuthCommand, ICreateAuthRequest } from '@mp/api/auth/util';
+import { CreateAuthCommand, ICreateAuthRequest, IRemoveAuthRequest, IRemoveAuthResponse, RemoveAuthCommand } from '@mp/api/auth/util';
 // import { IUpdateProfileRequest, IUpdateProfileResponse } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
@@ -25,4 +25,15 @@ export class AuthService {
       IUpdateProfileResponse
     >(new UpdateDetailsCommand(request));
   }
+
+  async removeAuth(
+    request: IRemoveAuthRequest
+  ): Promise<IRemoveAuthResponse> {
+    return await this.commandBus.execute<
+      RemoveAuthCommand,
+      IRemoveAuthResponse
+    >(new RemoveAuthCommand(request));
+  }
+
+
 }

@@ -5,6 +5,7 @@ import {
     CreateProfileHandler,
     UpdateContactDetailsHandler,
     UpdatePersonalDetailsHandler,
+    RemoveProfileHandler
 } from './commands';
 import {
     AccountDetailsUpdatedHandler,
@@ -13,17 +14,19 @@ import {
     OccupationDetailsUpdatedHandler,
     PersonalDetailsUpdatedHandler,
     ProfileCreatedHandler,
-    ProfileDetailsUpdatedHandler
+    ProfileDetailsUpdatedHandler,
 } from './events';
 import { ProfilesSagas } from './profiles.sagas';
 import { ProfilesService } from './profiles.service';
 import { UpdateDetailsHandler } from './commands/update-details.handler';
 import { ProfileMatchesUpdatedEventhandler } from './events/profile-match-updated.handler';
+import { RemoveProfileUpdatedHandler } from './events/remove-profile-updated.handler';
 export const CommandHandlers = [
   CreateProfileHandler,
   UpdateContactDetailsHandler,
   UpdatePersonalDetailsHandler,
   UpdateDetailsHandler,
+  RemoveProfileHandler
 ];
 export const EventHandlers = [
   ProfileCreatedHandler,
@@ -34,7 +37,8 @@ export const EventHandlers = [
   AccountDetailsUpdatedHandler,
   ProfileDetailsUpdatedHandler,
   UpdateDetailsHandler,
-  ProfileMatchesUpdatedEventhandler
+  ProfileMatchesUpdatedEventhandler,
+  RemoveProfileUpdatedHandler
 ];
 
 @Module({
