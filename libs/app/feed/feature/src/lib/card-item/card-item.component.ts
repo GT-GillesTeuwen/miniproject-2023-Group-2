@@ -30,6 +30,8 @@ export class CardItemComponent implements AfterViewInit{
   @Input() surname!: string;
   @Input() age!: string;
   @Input() bio!: string;
+  @Input() major!: string;
+  @Input() hobbies!: string[] | null | undefined;
 
  // @ViewChild('card-item') swipeableCard : HTMLElement;
   gestureSetup(){
@@ -81,12 +83,65 @@ export class CardItemComponent implements AfterViewInit{
 
   }
 
+    //INTERESTS FUNCTIONALITY
+    showGames = false;
+    showFootball = false;
+    showReading = false;
+    showMusic = false;
+    showWriting = false;
+    showBasketball = false;
+    showGym = false;
+    showArt = false;
+    showPhotography = false;
+    showTravel = false;
+    showTakeOut = false;
+    showWine = false;
+    showFishing = false;
+    showIceCream = false;
+    showPets = false;
+    showSpace = false;
+
   constructor(
     private elRef: ElementRef,
     private windowRef: Window) {
 
   }
 
+  ngOnInit(){
+    console.log("hobbies: ", this.photos);
+    if (this.hobbies?.includes("games"))
+          this.showGames = true;
+        if (this.hobbies?.includes("football"))
+          this.showFootball = true;
+        if (this.hobbies?.includes("reading"))
+          this.showReading = true;
+        if (this.hobbies?.includes("music"))
+          this.showMusic = true;
+        if (this.hobbies?.includes("writing"))
+          this.showWriting = true;
+        if (this.hobbies?.includes("basketball"))
+          this.showBasketball = true;
+        if (this.hobbies?.includes("gym"))
+          this.showGym = true;
+        if (this.hobbies?.includes("art"))
+          this.showArt = true;
+        if (this.hobbies?.includes("photography"))
+          this.showPhotography = true;
+        if (this.hobbies?.includes("travel"))
+          this.showTravel = true;
+        if (this.hobbies?.includes("takeOut"))
+          this.showTakeOut = true;
+        if (this.hobbies?.includes("wine"))
+          this.showWine = true;
+        if (this.hobbies?.includes("fishing"))
+          this.showFishing = true;
+        if (this.hobbies?.includes("iceCream"))
+          this.showIceCream = true;
+        if (this.hobbies?.includes("pets"))
+          this.showPets = true;
+        if (this.hobbies?.includes("space"))
+          this.showSpace = true;
+  }
 
 
 

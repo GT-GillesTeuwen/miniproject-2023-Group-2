@@ -1,6 +1,6 @@
 .swipe-card-component {
-  height: 80%;
-  margin-top: 5rem;
+  height: 100%;
+  margin-top: 3rem;
 
   .image-swipe-area{
     height: 25rem;
@@ -13,6 +13,7 @@
   }
 }
 
+
 swiper-container {
   swiper-slide{
     img{
@@ -21,4 +22,24 @@ swiper-container {
       object-fit: cover;
     }
   }
+}
+
+ion-card-title{
+  font-size: 2em;
+  color: coral;
+  // font-family: ;
+}
+
+.card-content{
+  font-size: 1.2em;
+  color: black;
+  padding: 1em;
+}
+
+ion-chip{
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  pointer-events: none;
 }

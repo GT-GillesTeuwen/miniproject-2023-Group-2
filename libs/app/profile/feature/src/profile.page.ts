@@ -93,6 +93,41 @@ export class ProfilePage {
         const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
+    console.log("AHH");
+    this.store.select(ProfileState.profilePhotos).subscribe((array) => {
+      this.profilePhotosArr=[];
+      if(array!=undefined){
+        for (let index = 0; index < array.length; index++) {
+          this.profilePhotosArr.push(array[index]);
+        }
+      }else{
+        // this.store.dispatch(new SubscribeToProfile());
+      }
+      
+    });
+    
+    
+  }
+
+  ngOnInit(){
+    this.showGamesTick = false;
+    this.showFootballTick = false;
+    this.showReadingTick = false;
+    this.showMusicTick = false;
+    this.showWritingTick = false;
+    this.showBasketballTick = false;
+    this.showGymTick = false;
+    this.showArtTick = false;
+    this.showPhotographyTick = false;
+    this.showTravelTick = false;
+    this.showTakeOutTick = false;
+    this.showWineTick = false;
+    this.showFishingTick = false;
+    this.showIceCreamTick = false;
+    this.showPetsTick = false;
+    this.showSpaceTick = false;
+    this.alreadyChangedHobby = false;
+
     let doOnceBio = true;
     let doOnceMajor = true;
     let doOnceCell = true;
@@ -169,40 +204,6 @@ export class ProfilePage {
         }
       }
     });
-    console.log("AHH");
-    this.store.select(ProfileState.profilePhotos).subscribe((array) => {
-      this.profilePhotosArr=[];
-      if(array!=undefined){
-        for (let index = 0; index < array.length; index++) {
-          this.profilePhotosArr.push(array[index]);
-        }
-      }else{
-        // this.store.dispatch(new SubscribeToProfile());
-      }
-      
-    });
-    
-    
-  }
-
-  ngOnInit(){
-    this.showGamesTick = false;
-    this.showFootballTick = false;
-    this.showReadingTick = false;
-    this.showMusicTick = false;
-    this.showWritingTick = false;
-    this.showBasketballTick = false;
-    this.showGymTick = false;
-    this.showArtTick = false;
-    this.showPhotographyTick = false;
-    this.showTravelTick = false;
-    this.showTakeOutTick = false;
-    this.showWineTick = false;
-    this.showFishingTick = false;
-    this.showIceCreamTick = false;
-    this.showPetsTick = false;
-    this.showSpaceTick = false;
-    this.alreadyChangedHobby = false;
   }
 
   //IMAGES MODAL

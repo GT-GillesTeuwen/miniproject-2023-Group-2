@@ -27,6 +27,7 @@ export class MessagesPageComponent implements OnInit{
   public isSearchBarOpened = false;
 
   @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild('scrollToMe') scrollToMe!: ElementRef;
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
   currentUserID!:string|null|undefined;
@@ -225,6 +226,8 @@ export class MessagesPageComponent implements OnInit{
     this.store.dispatch(new UpdateTime(this.currentTimeRem));
     this.store.dispatch(new SendMessage(this.pairId,message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
+
+    this.scrollToMe.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
   checkEnterKey(event: KeyboardEvent){

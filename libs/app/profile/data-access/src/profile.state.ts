@@ -388,7 +388,7 @@ export class ProfileState {
   async updateTime(ctx: StateContext<ProfileStateModel>,{TimeRemaining}: UpdateTime) {
     try {
      
-      alert("this is in updata time state "+TimeRemaining);
+      // alert("this is in updata time state "+TimeRemaining);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const timeRemaining = TimeRemaining;
