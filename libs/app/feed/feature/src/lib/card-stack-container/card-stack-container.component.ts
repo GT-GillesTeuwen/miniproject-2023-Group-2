@@ -18,6 +18,7 @@ export class CardStackContainerComponent {
 
 
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
+
   @ViewChild('currentTime') currentTime?: ElementRef;
 
   @Select(ProfileState.allProfiles) allProfiles$!: Observable<IProfile[] | null>
@@ -45,11 +46,7 @@ export class CardStackContainerComponent {
   prevChoice = true;
   counter = 0;
 
-  // currentIndexString = sessionStorage.getItem('currentIndex'); //currentIndexCounterForProfilesToShow 
-  // currentIndex = parseInt(parseInt(sessionStorage.getItem('currentIndex')!, 10)String!, 10);
-
   matchUsers(match: boolean){
-    // this.store.dispatch(new SubscribeToMatches());
     if(match == this.prevChoice){
       this.counter++;
     }
@@ -68,12 +65,11 @@ export class CardStackContainerComponent {
     console.log('Users Matched!:'+match)
     //CHECK IF USER SWIPED LEFT OR RIGHT AND CALL FUNCTIONS ACCORDINGLY
     if(match){
-      console.log(this.profilesToShow);
-      console.log(tempArray);
-      // alert("index: " + parseInt(sessionStorage.getItem('currentIndex')!, 10));
-      alert("this is their ID: " + tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].UID + "\nthis is my id: " + this.currentUserID + "\nthis is the currentIndex: "  + parseInt(sessionStorage.getItem('currentIndex')!, 10));
+      console.log("profiles to show:", this.profilesToShow);
+      console.log("temp array: ", tempArray);
+      alert("this is their ID: " + tempArray[0].UID + "\nthis is my id: " + this.currentUserID);
       let didTheyLikeMe = false;
-      tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].Matches?.forEach((match) => {
+      tempArray[0].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
@@ -81,19 +77,16 @@ export class CardStackContainerComponent {
 
       if(!didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "SEND"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[0]!.UID!, "SEND"));
         }
       }else{
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "PAIR"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[0]!.UID!, "PAIR"));
         }
       }
-      let tempItemIndex = parseInt(sessionStorage.getItem('currentIndex')!, 10);
-      tempItemIndex++;
-      sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }else{
       let didTheyLikeMe = false;
-      tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)].Matches?.forEach((match) => {
+      tempArray[0].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
@@ -101,19 +94,12 @@ export class CardStackContainerComponent {
 
       if(didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
-          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[parseInt(sessionStorage.getItem('currentIndex')!, 10)]!.UID!, "REMOVE"));
+          this.store.dispatch(new updateMatches(this.currentUserID, tempArray[0]!.UID!, "REMOVE"));
         }
       }
-      let tempItemIndex = parseInt(sessionStorage.getItem('currentIndex')!, 10);
-      tempItemIndex++;
-      sessionStorage.setItem('currentIndex', tempItemIndex.toString());
     }
 
-    // this.profilesToShow.pop();
-    // this.store.dispatch(new SetMatches(this.profilesToShow));
-    // console.log("matches obserable now: ");
-
-    setTimeout(() => this.populateProfilesToShow(), 1000);
+    this.profilesToShow.pop();
 
     console.log("after match: ", this.profilesToShow);
   }
@@ -125,25 +111,16 @@ export class CardStackContainerComponent {
         this.currentUserAge=profile.Age;
         this.currentUserAgeRange=profile.Settings?.AgeRange;
       }else{
-        this.store.dispatch(new SubscribeToProfile());
+        // this.store.dispatch(new SubscribeToProfile());
       }
     });
   }
 
   populateProfilesToShow(){
-    this.store.dispatch(new SubscribeToMatches);
     this.store.select(ProfileState.allProfiles).subscribe((profiles) => {
       this.profilesToShow=[];
       if(profiles!=undefined){
         console.log("their profile is: ", profiles);
-        for (let index = 0; index < profiles.length; index++) {
-          // alert(["profile: " + profiles[index].Name?.Firstname]);
-          if(this.getMatchStatus(profiles[index],this.currentUserID)=="SENT"){
-            // alert("went in");
-            this.profilesToShow.push(profiles[index]);
-            console.log("being pushed 1: ", profiles[index]);
-          }
-        }
         for (let index = 0; index < profiles.length; index++) {
           console.log("details: ", profiles[index]);
           const matchStatus=this.getMatchStatus(profiles[index],this.currentUserID);
@@ -156,13 +133,18 @@ export class CardStackContainerComponent {
           this.isInRange(profiles[index].Age,this.currentUserAgeRange)&&
           profiles[index].Settings?.Privacy!="Private"&&
           profiles[index].UID!=this.currentUserID){
-            // alert("adding to profilesToShow: " + profiles[index].Name?.Firstname);
             this.profilesToShow.push(profiles[index]);
             console.log("being pushed 2: ", profiles[index]);
           }
         }
+        for (let index = 0; index < profiles.length; index++) {
+          if(this.getMatchStatus(profiles[index],this.currentUserID)=="SENT"){
+            this.profilesToShow.push(profiles[index]);
+            console.log("being pushed 1: ", profiles[index]);
+          }
+        }
       }else{
-        this.store.dispatch(new SubscribeToProfile());
+        // this.store.dispatch(new SubscribeToProfile());
       }
       
     });
@@ -192,5 +174,10 @@ export class CardStackContainerComponent {
       }
     }
     return "null";
+  }
+
+  //clicking on refresh button:
+  refreshPage(){
+    window.location.reload();
   }
 }
