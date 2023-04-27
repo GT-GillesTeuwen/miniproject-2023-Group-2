@@ -45,6 +45,7 @@ export class ProfilePage {
 
   
   changeMade = false;
+  alreadyChangedHobby = false;
 
   remainingAboutMeChars = 300;
   remainingMajorChars = 50;
@@ -127,6 +128,7 @@ export class ProfilePage {
           if(doOnceHobby){
             this.profileCompleteText += 25;
             doOnceHobby = false;
+            this.alreadyChangedHobby = true;
           }
           if (this.hobbiesText.includes("games"))
             this.showGamesTick = true;
@@ -175,7 +177,7 @@ export class ProfilePage {
           this.profilePhotosArr.push(array[index]);
         }
       }else{
-        this.store.dispatch(new SubscribeToProfile());
+        // this.store.dispatch(new SubscribeToProfile());
       }
       
     });
@@ -183,7 +185,25 @@ export class ProfilePage {
     
   }
 
-  
+  ngOnInit(){
+    this.showGamesTick = false;
+    this.showFootballTick = false;
+    this.showReadingTick = false;
+    this.showMusicTick = false;
+    this.showWritingTick = false;
+    this.showBasketballTick = false;
+    this.showGymTick = false;
+    this.showArtTick = false;
+    this.showPhotographyTick = false;
+    this.showTravelTick = false;
+    this.showTakeOutTick = false;
+    this.showWineTick = false;
+    this.showFishingTick = false;
+    this.showIceCreamTick = false;
+    this.showPetsTick = false;
+    this.showSpaceTick = false;
+    this.alreadyChangedHobby = false;
+  }
 
   //IMAGES MODAL
   @ViewChild(IonModal) modal!: IonModal;
@@ -328,8 +348,24 @@ export class ProfilePage {
       if (this.showSpaceTick)
         hobbies.push("space");
 
+        console.log("hobbies: ", hobbies);
       this.store.dispatch(new SaveProfileChanges(this.aboutMeText, this.majorText, this.phoneText, hobbies));
 
+      //UPDATE COMPLETION OF HOBBIES
+
+      if(hobbies.length > 0){
+        if(!this.alreadyChangedHobby){
+          this.profileCompleteText += 25;
+          this.alreadyChangedHobby = true;
+        }
+      }else{
+        if(this.alreadyChangedHobby){
+          this.profileCompleteText -= 25;
+          this.alreadyChangedHobby = false;
+        }
+      }
+
+      this.changeMade = false;
     }
   }
 
@@ -357,6 +393,28 @@ export class ProfilePage {
 
   //Logout
   logout() {
+    this.showGamesTick = false;
+    this.showFootballTick = false;
+    this.showReadingTick = false;
+    this.showMusicTick = false;
+    this.showWritingTick = false;
+    this.showBasketballTick = false;
+    this.showGymTick = false;
+    this.showArtTick = false;
+    this.showPhotographyTick = false;
+    this.showTravelTick = false;
+    this.showTakeOutTick = false;
+    this.showWineTick = false;
+    this.showFishingTick = false;
+    this.showIceCreamTick = false;
+    this.showPetsTick = false;
+    this.showSpaceTick = false;
+    this.changeMade = false;
+    this.alreadyChangedHobby = false;
+    this.aboutMeText = "";
+    this.majorText = "";
+    this.phoneText = "";
+    this.profileCompleteText = 0;
     this.store.dispatch(new Logout());
   }
 
