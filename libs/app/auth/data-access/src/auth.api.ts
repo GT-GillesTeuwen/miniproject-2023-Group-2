@@ -9,10 +9,7 @@ import {
   updatePassword,
   sendPasswordResetEmail
 } from '@angular/fire/auth';
-
-
 import { Functions, httpsCallable } from '@angular/fire/functions';
-
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
 import { IRemoveAuthRequest, IRemoveAuthResponse, IUpdateAuthRequest, IUpdateAuthResponse} from '@mp/api/auth/util'
