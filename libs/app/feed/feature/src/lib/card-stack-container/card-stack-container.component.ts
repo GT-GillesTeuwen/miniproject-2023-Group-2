@@ -35,7 +35,7 @@ export class CardStackContainerComponent {
   ) {
     this.setCurrentUserDetails();
     this.populateProfilesToShow();
-    console.log("before match: ", this.profilesToShow);
+    //console.log("before match: ", this.profilesToShow);
     this.store.dispatch(new SubscribeToMatches);
   };
     
@@ -57,33 +57,26 @@ export class CardStackContainerComponent {
       this.counter = 0;
     }
     if(this.counter > 2){
-      if(this.currentTime?.nativeElement.innerText < 5){
-        this.store.dispatch(new RemoveProfile())
-        this.store.dispatch(new RemoveAuth())
-      }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-5));
     }
     else{
-      if(this.currentTime?.nativeElement.innerText <= 1){
-        this.store.dispatch(new RemoveProfile())
-        this.store.dispatch(new RemoveAuth())
-      }
       this.store.dispatch(new UpdateTime(this.currentTime?.nativeElement.innerText-1));
     }
 
     let tempArray = this.profilesToShow.slice().reverse();
-    console.log('Users Matched!:'+match)
+    //console.log('Users Matched!:'+match)
     //CHECK IF USER SWIPED LEFT OR RIGHT AND CALL FUNCTIONS ACCORDINGLY
     if(match){
-      console.log("profiles to show:", this.profilesToShow);
-      console.log("temp array: ", tempArray);
-      alert("this is their ID: " + tempArray[0].UID + "\nthis is my id: " + this.currentUserID);
+      //console.log("profiles to show:", this.profilesToShow);
+      //console.log("temp array: ", tempArray);
+      //alert("this is their ID: " + tempArray[0].UID + "\nthis is my id: " + this.currentUserID);
       let didTheyLikeMe = false;
       tempArray[0].Matches?.forEach((match) => {
         if(match.MatchUserID == this.currentUserID){
           didTheyLikeMe = true;
         }
       });
+
 
       if(!didTheyLikeMe){
         if(this.currentUserID != null && this.currentUserID != undefined){
@@ -111,7 +104,7 @@ export class CardStackContainerComponent {
 
     this.profilesToShow.pop();
 
-    console.log("after match: ", this.profilesToShow);
+    //console.log("after match: ", this.profilesToShow);
   }
 
   setCurrentUserDetails(){
@@ -130,9 +123,9 @@ export class CardStackContainerComponent {
     this.store.select(ProfileState.allProfiles).subscribe((profiles) => {
       this.profilesToShow=[];
       if(profiles!=undefined){
-        console.log("their profile is: ", profiles);
+        //console.log("their profile is: ", profiles);
         for (let index = 0; index < profiles.length; index++) {
-          console.log("details: ", profiles[index]);
+          //console.log("details: ", profiles[index]);
           const matchStatus=this.getMatchStatus(profiles[index],this.currentUserID);
           if(
             profiles[index].Name?.Firstname!=null&&
@@ -144,13 +137,13 @@ export class CardStackContainerComponent {
           profiles[index].Settings?.Privacy!="Private"&&
           profiles[index].UID!=this.currentUserID){
             this.profilesToShow.push(profiles[index]);
-            console.log("being pushed 2: ", profiles[index]);
+            //console.log("being pushed 2: ", profiles[index]);
           }
         }
         for (let index = 0; index < profiles.length; index++) {
           if(this.getMatchStatus(profiles[index],this.currentUserID)=="SENT"){
             this.profilesToShow.push(profiles[index]);
-            console.log("being pushed 1: ", profiles[index]);
+            //console.log("being pushed 1: ", profiles[index]);
           }
         }
       }else{
@@ -158,7 +151,7 @@ export class CardStackContainerComponent {
       }
       
     });
-    console.log("gilles one: ", this.profilesToShow);
+    //console.log("gilles one: ", this.profilesToShow);
   }
 
   isInRange(age:string|null|undefined,ageRange:IAgeRange|null|undefined){
