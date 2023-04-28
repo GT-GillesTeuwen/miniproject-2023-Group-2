@@ -10,11 +10,94 @@
         </div>
         <ion-card-header>
           <ion-card-title>{{firstname}} {{surname}}, {{age}}</ion-card-title>
-          <ion-card-subtitle>{{bio ?? 'Swipe right if you dare'}}</ion-card-subtitle>
+          <ion-card-subtitle>{{major}}</ion-card-subtitle>
         </ion-card-header>
-        <ion-card-content>
+        <div class="card-content">
           {{bio}}
-        </ion-card-content>
+
+          <br><br>
+
+          <ion-chip *ngIf="showGames">
+            <ion-icon name="game-controller-outline" size="large"></ion-icon>
+            <ion-label>Video Games</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showFootball">
+            <ion-icon name="football-outline" size="large"></ion-icon>
+            <ion-label>Football</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showReading">
+            <ion-icon name="library-outline" size="large"></ion-icon>
+            <ion-label>Reading</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showMusic">
+            <ion-icon name="musical-notes-outline" size="large"></ion-icon>
+            <ion-label>Music</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showWriting">
+            <ion-icon name="pencil-outline" size="large"></ion-icon>
+            <ion-label>Writing</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showBasketball">
+            <ion-icon name="basketball-outline" size="large"></ion-icon>
+            <ion-label>Basketball</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showGym">
+            <ion-icon name="barbell-outline" size="large"></ion-icon>
+            <ion-label>Gym</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showArt">
+            <ion-icon name="color-palette-outline" size="large"></ion-icon>
+            <ion-label>Art</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showPhotography">
+            <ion-icon name="camera-outline" size="large"></ion-icon>
+            <ion-label>Photography</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showTravel">
+            <ion-icon name="airplane-outline" size="large"></ion-icon>
+            <ion-label>Travel</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showTakeOut"> 
+            <ion-icon name="pizza-outline" size="large"></ion-icon>
+            <ion-label>Take-out</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showWine">
+            <ion-icon name="wine-outline" size="large"></ion-icon>
+            <ion-label>Wine</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showFishing">
+            <ion-icon name="fish-outline" size="large"></ion-icon>
+            <ion-label>Fishing</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showIceCream">
+            <ion-icon name="ice-cream-outline" size="large"></ion-icon>
+            <ion-label>Ice-cream</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showPets">
+            <ion-icon name="paw-outline" size="large"></ion-icon>
+            <ion-label>Pets</ion-label>
+          </ion-chip>
+
+          <ion-chip *ngIf="showSpace">
+            <ion-icon name="telescope-outline" size="large"></ion-icon>
+            <ion-label>Space</ion-label>
+          </ion-chip>
+
+        </div>
   </ion-card>
 
 

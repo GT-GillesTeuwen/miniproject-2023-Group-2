@@ -9,17 +9,16 @@
 <ng-template #matchData>
   <div class="matches-page-content" *ngIf="(matches$ | async) as allProfiles;">
     <div *ngFor="let profile of allProfiles">
-      <div *ngFor="let match of profile.Matches">
-        <div *ngIf="(profile$ | async) as currentProfile;">
-          <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'"
-                                 personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
-                                 lastMessage="{{getLastMessage(profile?.Matches!)}}"
-                                 unreadMessages=">=0"
-                                 imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
-                                 pairId="{{pairId}}">
-          </mp-profile-card-page>
+        <div *ngFor="let match of profile.Matches">
+            <div *ngIf="(profile$ | async) as currentProfile;">
+                <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'" 
+                personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
+                unreadMessages=">=0" 
+                imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
+                pairId="{{getPairId(profile?.Matches!)}}">
+                </mp-profile-card-page>
+            </div>
         </div>
-      </div>
     </div>
   </div>
 </ng-template>

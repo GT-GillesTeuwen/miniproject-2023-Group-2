@@ -40,7 +40,7 @@
       
         <div class="user-header">
             <div class="img-outer-wrapper">
-                <div class="user-status-icon"></div>
+                <!-- <div class="user-status-icon"></div> -->
                 <div class="img-holder">
                     <img src="{{imgSrc}}" alt="">
                 </div>
@@ -75,12 +75,12 @@
 
             <div *ngFor="let message of chat?.Messages">
               <div *ngIf="(profile$ | async) as profile;">
-                <mp-received-bubble-ui *ngIf="message.FromUserID != profile.UID" messageContent="{{message.Content}}"></mp-received-bubble-ui>
+                <mp-received-bubble-ui *ngIf="message.FromUserID != profile.UID" imgSrc={{imgSrc}} messageContent="{{message.Content}}"></mp-received-bubble-ui>
                 <mp-sent-bubble-ui *ngIf="message.FromUserID == profile.UID" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}} messageContent="{{message.Content}}"></mp-sent-bubble-ui>
               </div>
             </div>
 
-            <div #scrollToMe></div>
+            <div #scrollToMe class="scrollToMe"></div>
 
             <!-- FROM THEM -->
             <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->

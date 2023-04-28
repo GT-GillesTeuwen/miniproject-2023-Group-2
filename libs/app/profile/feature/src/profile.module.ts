@@ -7,7 +7,9 @@ import { ProfileModule as ProfileUiModule } from '@mp/app/profile/ui';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProfilePage } from './profile.page';
 import { ProfileRouting } from './profile.routing';
-
+import { AppFeedFeatureModule } from '@mp/app/feed/feature';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+//import { ReceivedBubbleUiComponent } from 'libs/app/chat/feature/src/lib/received-bubble-ui/received-bubble-ui.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +19,9 @@ import { ProfileRouting } from './profile.routing';
     ProfileUiModule,
     ProfileDataAccessModule,
     NgxSkeletonLoaderModule,
+    AppFeedFeatureModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [ProfilePage],
 })
 export class ProfileModule {}

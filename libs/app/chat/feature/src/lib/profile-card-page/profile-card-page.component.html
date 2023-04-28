@@ -1,7 +1,21 @@
 <div class="card-area">
-    <div class="card-component" (click)="openMessagesPage()">
+    <div (click)="openMessagesPage()">
+      <ion-card-header>
+        <ion-card-title>{{personName}}</ion-card-title>
+        <div *ngIf="(allConvos$ | async) as allConvos;">
+          <div *ngFor="let convo of allConvos">
+            <div *ngIf="convo.PairID == pairId;">
+              <ion-card-subtitle *ngIf="convo?.Messages?.length! > 0; else noMessagesYet">{{convo?.Messages?.[convo?.Messages?.length! - 1]?.Content}}</ion-card-subtitle>
+            </div>
+            <ng-template #noMessagesYet>
+              <ion-card-subtitle>Start a conversation!</ion-card-subtitle>
+            </ng-template>
+          </div>
+        </div>
+        <ion-badge>{{unreadMessages}}</ion-badge>
+      </ion-card-header>
 
-      <div class="card-component--image">
+      <div>
         <div class="img-holder">
           <img src="{{imgSrc}}" alt="">
         </div>
@@ -9,7 +23,6 @@
 
       <div class="card-component--info">
         <h3>{{personName}}</h3>
-        <p>{{lastMessage}}</p>
         <ion-badge>{{unreadMessages}}</ion-badge>
       </div>
 

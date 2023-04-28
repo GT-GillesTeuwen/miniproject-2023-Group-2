@@ -8,7 +8,7 @@ export class ProfileMatchesUpdatedEventhandler
 {
   constructor(private readonly repository: ProfilesRepository) {}
 
-  async handle(event: ProfileDetailsUpdatedEvent) {
+  async handle(event: ProfileMatchesUpdatedEvent) {    //This could be problematic
     console.log(`${ProfileMatchesUpdatedEventhandler.name}`);
     console.log("HUZZAH");
     console.log("HUZZAH");
