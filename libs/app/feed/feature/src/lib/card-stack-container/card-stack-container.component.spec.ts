@@ -3,7 +3,8 @@ import { Store, NgxsModule } from '@ngxs/store';
 import { CardStackContainerComponent } from './card-stack-container.component';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { IMatchDetails } from '@mp/api/profiles/util';
+import { IMatchDetails, IProfile } from '@mp/api/profiles/util';
+import { IAgeRange } from '@mp/api/profiles/util';
 
 describe('CardStackContainerComponent', () => {
   let component: CardStackContainerComponent;
@@ -34,6 +35,90 @@ describe('CardStackContainerComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should be in range', () => {
+    const range: IAgeRange = {
+      MinAge: 10,
+      MaxAge: 50 
+    }
+
+    expect(component.isInRange('12', range)).toBe(true);
+
+
+  });
+
+  it('should be smaller than range', () => {
+    const range: IAgeRange = {
+      MinAge: 10,
+      MaxAge: 50 
+    }
+
+    expect(component.isInRange('9', range)).toBe(false);
+
+
+  });
+
+  it('should be bigger than range', () => {
+    const range: IAgeRange = {
+      MinAge: 10,
+      MaxAge: 50 
+    }
+
+    expect(component.isInRange('51', range)).toBe(false);
+
+
+  });
+
+  it('should return SEND', () => {
+
+    const match: IMatchDetails = {
+      MatchUserID: '12',
+      PairID: '123',
+      MatchStatus: 'SEND'
+    };
+
+    const profile: IProfile = {
+      UID: '123',
+      Matches: [match]
+    };
+
+    expect(component.getMatchStatus(profile, '12')).toBe('SEND');
+
+  });
+
+  it('should return REMOVE', () => {
+
+    const match: IMatchDetails = {
+      MatchUserID: '12',
+      PairID: '123',
+      MatchStatus: 'REMOVE'
+    };
+
+    const profile: IProfile = {
+      UID: '123',
+      Matches: [match]
+    };
+
+    expect(component.getMatchStatus(profile, '12')).toBe('REMOVE');
+
+  });
+
+  it('should return PAIR', () => {
+
+    const match: IMatchDetails = {
+      MatchUserID: '12',
+      PairID: '123',
+      MatchStatus: 'PAIR'
+    };
+
+    const profile: IProfile = {
+      UID: '123',
+      Matches: [match]
+    };
+
+    expect(component.getMatchStatus(profile, '12')).toBe('PAIR');
+
+  });
+
   it('should match user where the other user did not match', () => {
 
     component.currentUserID = '123'
@@ -60,7 +145,7 @@ describe('CardStackContainerComponent', () => {
     const match: IMatchDetails = {
       MatchUserID: '123',
       PairID: '12343',
-      MatchStatus: 'SENT'
+      MatchStatus: 'SEND'
     }
 
     component.profilesToShow[0] = {
@@ -80,7 +165,7 @@ describe('CardStackContainerComponent', () => {
     const match: IMatchDetails = {
       MatchUserID: '12',
       PairID: '12343',
-      MatchStatus: 'SENT'
+      MatchStatus: 'RECIEVE'
     }
 
     component.profilesToShow[0] = {
@@ -99,8 +184,8 @@ describe('CardStackContainerComponent', () => {
     component.currentUserID = '123'
     const match: IMatchDetails = {
       MatchUserID: '123',
-      PairID: '12343',
-      MatchStatus: 'SENT'
+      PairID: '1',
+      MatchStatus: 'REMOVE'
     }
 
     component.profilesToShow[0] = {

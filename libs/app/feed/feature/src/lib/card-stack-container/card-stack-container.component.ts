@@ -7,7 +7,7 @@ import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
 //import {CardItemComponent} from "../card-item/card-item.component";
 import { SetMatches, SubscribeToMatches, SubscribeToProfile, UpdateTime, RemoveProfile } from '@mp/app/profile/util'
-import { IAgeRange } from 'libs/api/profiles/util/src/interfaces/age-range.interface';
+import { IAgeRange } from '@mp/api/profiles/util';
 import { updateMatches } from '@mp/app/feed/util';
 import { RemoveAuth } from '@mp/app/auth/util';
 
