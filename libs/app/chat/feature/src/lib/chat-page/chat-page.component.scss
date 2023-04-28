@@ -1,34 +1,49 @@
-ion-content{
+.chat-page {
+  width: 100%;
+  height: 100%;
+
+  ion-content{
     --padding-top: 80px;
-}
+  }
 
-ion-segment{
-    --background: #D9D9D9;
-    height: 60px;
+  ion-segment{
+    --background: #dcdcdc;
+    height: 3.5rem;
     width: 100%;
-}
+  }
 
-ion-segment-button{
+  ion-segment-button{
     width: 100%;
-}
+  }
 
-ion-segment-button.md::part(indicator-background) {
-    height: 4px;
+  ion-segment-button.md::part(indicator-background) {
+    height: 0.2rem;
+    border-radius: 50px;
     background-color: coral;
     width: 100%;
-}
+  }
 
-ion-segment-button{
+  ion-segment-button{
     ion-label{
-        text-transform: capitalize;
-        font-size: 1.5em;
+      text-transform: capitalize;
+      font-size: 1.1rem;
     }
-}
+  }
 
-.segment-button-checked.md::part(native) {
+  .segment-button-checked.md::part(native) {
     color: coral;
-}
+  }
 
-ion-label{
+  ion-label{
     width: 100%;
+  }
+
+  .chat-page-content {
+     height: 100%;
+
+    .to-display {
+      height: 100%;
+    }
+  }
+
 }

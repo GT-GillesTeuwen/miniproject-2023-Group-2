@@ -1,16 +1,25 @@
-<div class="matches-page-content" *ngIf="(matches$ | async) as allProfiles;">
-    <div *ngFor="let profile of allProfiles">
-        <div *ngFor="let match of profile.Matches">
-            <div *ngIf="(profile$ | async) as currentProfile;">
-                <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'" 
-                personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
-                lastMessage="{{getLastMessage(profile?.Matches!)}}"
-                unreadMessages=">=0" 
-                imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
-                pairId="{{pairId}}">
-                </mp-profile-card-page>
-            </div>
-        </div>
-    </div>
+<ng-container *ngIf="(matches$ | async) !== null; else matchData">
+  <div class="no-matches-screen">
+    <h2 class="no-matches-header">No matches yet</h2>
+    <p>Keep swiping on Feed to get a few</p>
+  </div>
+</ng-container>
 
-</div>
+
+<ng-template #matchData>
+  <div class="matches-page-content" *ngIf="(matches$ | async) as allProfiles;">
+    <div *ngFor="let profile of allProfiles">
+      <div *ngFor="let match of profile.Matches">
+        <div *ngIf="(profile$ | async) as currentProfile;">
+          <mp-profile-card-page  *ngIf="match.MatchUserID===currentProfile.UID && match.MatchStatus==='PAIRED'"
+                                 personName="{{profile?.Name?.Firstname}} {{profile?.Name?.Lastname}}"
+                                 lastMessage="{{getLastMessage(profile?.Matches!)}}"
+                                 unreadMessages=">=0"
+                                 imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}}
+                                 pairId="{{pairId}}">
+          </mp-profile-card-page>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

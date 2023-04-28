@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Work+Sans:wght@100;200;300;400&display=swap');
+
 ion-toolbar {
     --background: white;
     --color: black;
@@ -76,7 +78,7 @@ ion-searchbar {
     width: 80%;
     background-color: white;
 }
-  
+
 ion-searchbar.md {
     --cancel-button-color: rgba(40,20,255,0.7);
 }
@@ -85,3 +87,4 @@ ion-searchbar.md {
     width: 20%;
     margin-left: -1em;
 }
+
