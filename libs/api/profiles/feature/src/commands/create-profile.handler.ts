@@ -46,7 +46,7 @@ export class CreateProfileHandler
       Settings:{
         Privacy:"Public",
         AgeRange:{
-          MinAge:0,
+          MinAge:16,
           MaxAge:99,
         },
         BlockedList:[],

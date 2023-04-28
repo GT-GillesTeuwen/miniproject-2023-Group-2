@@ -71,6 +71,7 @@ export class SettingsPageComponent {
   ngOnInit()
   {
     this.initialVisibility = 'private'; 
+    this.rangeValue.lower = 16;
    // this.visibility = this.initialVisibility;
   }
   onVisibilityChange() {
@@ -86,7 +87,7 @@ export class SettingsPageComponent {
     // retreive information to load Settings page
   }
 
-  SaveChanges()
+  saveChanges()
   {
     const privacySave = this.privacytype;
     const ageSave = {lowerSave : this.lowerValue, upperSave : this.upperValue}
