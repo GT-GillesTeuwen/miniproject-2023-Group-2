@@ -13,9 +13,9 @@ When users "match" they are taken to a lobby where they can plan a meeting. Conf
 Users get a set amount of time (250 minutes) when they first register, each swipe costs them time, 1 minute for the first two in any direction in a row and then if it's more the two in the same direction in a row it costs 5 minutes. When users match they can set up a meeting in which they invest time into that meeting. Once the meeting has happened and has been verified each party gets their invested time back and more based on the multiplier applied to the original time invested. The swiping creates a passive deduction of time so that it limits the amount of time users have on the app.
 
 # Circ Technologies
- + Frontend: Angular-ionic.![angularjs-original](https://user-images.githubusercontent.com/99959171/235228478-e976f12b-a681-45e7-be1c-591fec9f1334.svg =250x250)
- + Hosting : Firebase.![firebase-plain](https://user-images.githubusercontent.com/99959171/235228656-c186627c-88a4-4a82-a18e-91ed0cb03e5b.svg)
- + Backend : Typescript.![typescript-original](https://user-images.githubusercontent.com/99959171/235228847-3c4ba330-8ba2-4641-b950-d3335336982a.svg)
+ + Frontend: Angular-ionic.
+ + Hosting : Firebase.
+ + Backend : Typescript.
  + Database: Firestore.
  + We used Firebase Authentication for the login and "Continue with Google" features.
 
