@@ -1,0 +1,17 @@
+<ng-container>
+  <ion-content>      
+    <ion-segment value="matches" [(ngModel)]="segment">  
+      <ion-segment-button value="matches">  
+        <ion-label>Matches</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="friends">  
+        <ion-label>Friends</ion-label>
+      </ion-segment-button>  
+    </ion-segment>  
+
+    <div class="to-display" [ngSwitch]="segment">
+      <mp-matches-page *ngSwitchCase="'matches'"></mp-matches-page>
+      <mp-friends-page *ngSwitchCase="'friends'"></mp-friends-page>
+    </div>
+  </ion-content>  
+</ng-container>

@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reset Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="iContent">
+
+  <form [formGroup]="forgotForm" ngxsForm="forgot.forgotForm" (submit)="sendEmail()">
+    <ion-text>
+      <h1 class="ion-text-center" style="margin-top: 50px;"><b>Find Your Account</b></h1>
+    </ion-text>
+    <ion-list style="margin: 10px">
+      <ion-item>
+        <ion-label position="floating" class="required">Email</ion-label>
+        <ion-input
+          type="email"
+          minlength="6"
+          maxlength="64"
+          placeholder="Enter your email"
+          required="true"
+          autocomplete="email"
+          formControlName="email"></ion-input>
+      </ion-item>
+      <ion-text
+        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
+        class="ion-padding-start"
+        color="danger">
+        <small>{{ emailError }}</small>
+      </ion-text>
+    </ion-list>
+
+    <ion-grid class="ion-padding">
+      <ion-row>
+        <ion-col>
+          <ion-button
+            style="--background:coral"
+            expand="block"
+            [disabled]="!this.forgotForm.valid || (busy$ | async)"
+            type="submit">
+            <ion-spinner *ngIf="busy$ | async"></ion-spinner>
+            <ion-text>Send reset link</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+<ion-footer collapse="condense" class="ion-padding ion-text-center">
+  <ms-copyright-component></ms-copyright-component>
+</ion-footer>

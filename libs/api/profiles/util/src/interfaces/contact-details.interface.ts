@@ -1,6 +1,4 @@
-import { ProfileStatus } from '../enums';
-
 export interface IContactDetails {
-  cellphone?: string | null | undefined;
-  status?: ProfileStatus | null | undefined;
+  Email?: string | null | undefined;
+  Cell?: string | null | undefined;
 }

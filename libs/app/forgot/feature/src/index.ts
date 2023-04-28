@@ -1,1 +1,5 @@
-export * from './li./forgot-feature';
+
+export * from './lib/app-forgot-feature.module';
+
+export * from './lib/lib.routes';
+
