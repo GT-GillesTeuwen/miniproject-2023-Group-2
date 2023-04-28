@@ -3,6 +3,7 @@ import { Store, NgxsModule } from '@ngxs/store';
 import { CardStackContainerComponent } from './card-stack-container.component';
 import { of } from 'rxjs';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IMatchDetails } from '@mp/api/profiles/util';
 
 describe('CardStackContainerComponent', () => {
   let component: CardStackContainerComponent;
@@ -31,5 +32,25 @@ describe('CardStackContainerComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should match user where the other user did not match', () => {
+
+    component.currentUserID = '123'
+    const match: IMatchDetails = {
+      MatchUserID: '12',
+      PairID: '123',
+      MatchStatus: 'SENT'
+    }
+
+    component.profilesToShow[0] = {
+      UID: '123',
+      Matches: [match]
+    }
+
+    component.matchUsers(true);
+
+    expect(StoreMock.dispatch).toHaveBeenCalledTimes(4);
+
   });
 });
