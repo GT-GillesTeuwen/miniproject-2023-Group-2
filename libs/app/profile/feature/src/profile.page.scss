@@ -271,3 +271,44 @@ ion-progress-bar::part(track) {
 ion-progress-bar::part(progress) {
   background: coral;
 }
+
+
+
+//card preview
+.swipe-card-component {
+  height: 100%;
+  margin-top: 3rem;
+
+  .image-swipe-area{
+    height: 25rem;
+
+    img {
+      height: 25rem;
+      background-size: contain;
+      background-position: center;
+    }
+  }
+}
+
+
+swiper-container {
+  swiper-slide{
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+ion-card-title{
+  font-size: 2em;
+  color: coral;
+  // font-family: ;
+}
+
+.card-content{
+  font-size: 1.2em;
+  color: black;
+  padding: 1em;
+}

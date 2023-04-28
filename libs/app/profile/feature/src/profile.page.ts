@@ -43,6 +43,8 @@ export class ProfilePage {
   profilePhotosArr: string[]=[];
   profileCompleteText = 0;
 
+  segment = 'edit';
+
   
   changeMade = false;
   alreadyChangedHobby = false;
