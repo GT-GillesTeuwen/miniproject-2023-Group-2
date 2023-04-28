@@ -34,7 +34,7 @@
   </ion-card-header>
 
   <ion-card-content>
-    <ion-range (ionChange)="onRangeChange($event)" aria-label="Dual Knobs Range" [dualKnobs]="true" [pin]="true" [pinFormatter]="pinFormatter" [(ngModel)]="rangeValue"  (ngModelChange)="onVisibilityChange()">
+    <ion-range (ionChange)="onRangeChange($event)" aria-label="Dual Knobs Range" [dualKnobs]="true"[value]="{ lower: 16, upper: 80 }" [pin]="true" [pinFormatter]="pinFormatter" [(ngModel)]="rangeValue"  (ngModelChange)="onVisibilityChange()">
 
     </ion-range>
 
