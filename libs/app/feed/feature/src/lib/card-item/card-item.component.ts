@@ -13,8 +13,6 @@ import { IProfile } from '@mp/api/profiles/util';
 import { Select, Store } from '@ngxs/store';
 
 import { Gesture, GestureConfig, createGesture } from '@ionic/core';
-import {window} from "rxjs";
-
 
 @Component({
   selector: 'mp-card-item',
@@ -30,13 +28,6 @@ export class CardItemComponent implements AfterViewInit{
   @Input() surname!: string;
   @Input() age!: string;
   @Input() bio!: string;
-
- // @ViewChild('card-item') swipeableCard : HTMLElement;
-  gestureSetup(){
-    //this.initGesture();
-  }
-
-  //async initGesture() {}
 
   ngAfterViewInit() {
 

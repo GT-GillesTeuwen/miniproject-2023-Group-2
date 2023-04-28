@@ -6,11 +6,11 @@
               <img alt="Silhouette of mountains" src={{photo}} />
             </swiper-slide>
           </swiper-container>
-          
+
         </div>
         <ion-card-header>
           <ion-card-title>{{firstname}} {{surname}}, {{age}}</ion-card-title>
-          <ion-card-subtitle>Subtitle</ion-card-subtitle>
+          <ion-card-subtitle>{{bio ?? 'Swipe right if you dare'}}</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           {{bio}}

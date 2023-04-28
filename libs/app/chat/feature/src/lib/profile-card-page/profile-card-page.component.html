@@ -1,15 +1,17 @@
 <div class="card-area">
-    <ion-card (click)="openMessagesPage()">
-      <ion-card-header>
-        <ion-card-title>{{personName}}</ion-card-title>
-        <ion-card-subtitle>{{lastMessage}}</ion-card-subtitle>
-        <ion-badge>{{unreadMessages}}</ion-badge>
-      </ion-card-header>
-      
-      <ion-card-content>
+    <div class="card-component" (click)="openMessagesPage()">
+
+      <div class="card-component--image">
         <div class="img-holder">
           <img src="{{imgSrc}}" alt="">
         </div>
-      </ion-card-content>
-    </ion-card>
+      </div>
+
+      <div class="card-component--info">
+        <h3>{{personName}}</h3>
+        <p>{{lastMessage}}</p>
+        <ion-badge>{{unreadMessages}}</ion-badge>
+      </div>
+
+    </div>
 </div>

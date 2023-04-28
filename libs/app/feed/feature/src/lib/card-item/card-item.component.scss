@@ -1,6 +1,9 @@
 .swipe-card-component {
   height: 80%;
+  min-height: 520px;
   margin-top: 5rem;
+  display: block;
+  background-color: #cb0009;
 
   .image-swipe-area{
     height: 25rem;
