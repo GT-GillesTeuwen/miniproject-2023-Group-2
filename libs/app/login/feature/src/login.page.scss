@@ -1,0 +1,22 @@
+//ion-item::part(native) {
+//  margin-top: 15px;
+//}
+
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.backdrop{
+  position: absolute;
+  left: -50vw;
+  width: 200vw;
+  height: 100%;
+  background-color: #efeded;
+  z-index: -1;
+}

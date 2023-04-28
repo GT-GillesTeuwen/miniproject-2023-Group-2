@@ -20,8 +20,28 @@ export class Login {
 export class Register {
   static readonly type = '[Auth] Register';
   constructor(
+    public readonly gender: string,
+    public readonly age: string,
+    public readonly firstname: string,
+    public readonly lastname: string,
     public readonly email: string,
     public readonly password: string
+  ) {}
+}
+
+export class ResetPassword {
+  static readonly type = '[Auth] ResetPassword';
+  constructor(
+    public readonly email: string,
+    public readonly password: string,
+    public readonly newPassword: string
+  ) {}
+}
+
+export class ForgotPassword {
+  static readonly type = '[Auth] ForgotPassword';
+  constructor(
+    public readonly email: string,
   ) {}
 }
 

@@ -23,19 +23,19 @@ const compileLogEventCommand = (event: IEvent) => {
 };
 @Injectable()
 export class EventstoreSagas {
-  @Saga()
-  onAccountDetailsUpdated = (
-    events$: Observable<IEvent>
-  ): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(AccountDetailsUpdatedEvent),
-      map((event: AccountDetailsUpdatedEvent) => {
-        // Special case, delete password before hitting eventstore
-        delete event.profile.accountDetails?.password;
-        return compileLogEventCommand(event);
-      })
-    );
-  };
+  // @Saga()
+  // onAccountDetailsUpdated = (
+  //   events$: Observable<IEvent>
+  // ): Observable<ICommand> => {
+  //   return events$.pipe(
+  //     ofType(AccountDetailsUpdatedEvent),
+  //     map((event: AccountDetailsUpdatedEvent) => {
+  //       // Special case, delete password before hitting eventstore
+  //       delete event.profile.accountDetails?.password;
+  //       return compileLogEventCommand(event);
+  //     })
+  //   );
+  // };
 
   onAuthUpdated = (events$: Observable<IEvent>): Observable<ICommand> => {
     return events$.pipe(

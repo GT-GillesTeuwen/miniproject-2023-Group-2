@@ -1,0 +1,87 @@
+ion-toolbar {
+    --background: white;
+    --color: black;
+
+    --padding-top: 10px;
+    --padding-bottom: 10px;
+
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-title{
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0%, -50%);
+}
+
+.time-remaining-outer-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.time-remaining-inner-wrapper{
+    background-color: rgba(0,0,0,0.1);
+    width: 30%;
+    padding: 0.5em;
+    border-radius: 2.5em;
+    color: coral;
+    font-size: 1em;
+}
+
+.toolbar-title{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-card-title{
+    color: coral;
+}
+
+.logo{
+    padding-left: 1em;
+}
+
+.search-button{
+    padding-right: 1em;
+}
+
+.notification-button{
+    padding-right: 1em;
+}
+
+.search-bar-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ion-searchbar {
+    --background: white;
+    --color: rgba(40,20,255,0.7);
+    --placeholder-color: rgba(40,20,255,0.7);
+    --icon-color: rgba(40,20,255,1);
+    --clear-button-color: rgba(40,20,255,0.7);
+    --border-radius: 2em;
+    border: 2px solid rgba(40,20,255,0.7);
+    border-radius: 2em;
+    --box-shadow: none;
+    width: 80%;
+    background-color: white;
+}
+  
+ion-searchbar.md {
+    --cancel-button-color: rgba(40,20,255,0.7);
+}
+
+.logo{
+    width: 20%;
+    margin-left: -1em;
+}

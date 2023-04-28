@@ -17,46 +17,44 @@ export class CreateProfileHandler
     console.log(`${CreateProfileHandler.name}`);
 
     const request = command.request;
-    const userId = request.user.id;
+    const UID = request.user.id;
     const displayName = request.user.displayName;
     const email = request.user.email;
-    const photoURL = request.user.photoURL;
+    // const photoURL = request.user.photoURL;
     const cellphone = request.user.phoneNumber;
 
     const data: IProfile = {
-      userId,
-      accountDetails: {
-        displayName,
-        email,
-        photoURL,
-        status: ProfileStatus.INCOMPLETE,
+      UID,
+      Bio : null,
+      ProfilePhotos: null,
+      TimeRemaining : null,
+      RecentlyActive : null ,
+      Gender: null,
+      Age : null,
+      Hobby : null,
+      Major : null,
+      Name : {
+        Firstname:null,
+        Lastname:null
+      },   //name consists of a struct, so will have to hanndle later
+       ContactDetails : {
+        Email : email,
+        Cell : cellphone
       },
-      personalDetails: {
-        age: null,
-        gender: null,
-        ethnicity: null,
-        status: ProfileStatus.INCOMPLETE,
-      },
-      contactDetails: {
-        cellphone,
-        status: ProfileStatus.INCOMPLETE,
-      },
-      addressDetails: {
-        residentialArea: null,
-        workArea: null,
-        status: ProfileStatus.INCOMPLETE,
-      },
-      occupationDetails: {
-        householdIncome: null,
-        occupation: null,
-        status: ProfileStatus.INCOMPLETE,
-      },
-      status: ProfileStatus.INCOMPLETE,
-      created: Timestamp.fromDate(new Date()),
+      Matches: null,
+      Created: Timestamp.fromDate(new Date()),
+      Settings:{
+        Privacy:"Public",
+        AgeRange:{
+          MinAge:0,
+          MaxAge:99,
+        },
+        BlockedList:[],
+      }
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
 
-    profile.create();
+    await profile.create();
     profile.commit();
   }
 }

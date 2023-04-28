@@ -54,6 +54,10 @@ pubsub-debug.log
 # Keys
 .keys/*.json
 
-# Env files
+# Env
 .env
 .env.prod
+
+.firebaserc
+.firebase.json
+

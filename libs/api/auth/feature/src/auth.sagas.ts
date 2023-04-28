@@ -9,26 +9,26 @@ import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class AuthSagas {
-  @Saga()
-  onAccountDetailsUpdated = (
-    events$: Observable<any>
-  ): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(AccountDetailsUpdatedEvent),
-      map(
-        (event: AccountDetailsUpdatedEvent) =>
-          new UpdateAuthCommand({
-            auth: {
-              id: event.profile.userId,
-              displayName: event.profile.accountDetails?.displayName,
-              email: event.profile.accountDetails?.email,
-              photoURL: event.profile.accountDetails?.photoURL,
-              password: event.profile.accountDetails?.password,
-            },
-          })
-      )
-    );
-  };
+  // @Saga()
+  // onAccountDetailsUpdated = (
+  //   events$: Observable<any>
+  // ): Observable<ICommand> => {
+  //   return events$.pipe(
+  //     ofType(AccountDetailsUpdatedEvent),
+  //     map(
+  //       (event: AccountDetailsUpdatedEvent) =>
+  //         new UpdateAuthCommand({
+  //           auth: {
+  //             id: event.profile.userId,
+  //             displayName: event.profile.accountDetails?.displayName,
+  //             email: event.profile.accountDetails?.email,
+  //             photoURL: event.profile.accountDetails?.photoURL,
+  //             password: event.profile.accountDetails?.password,
+  //           },
+  //         })
+  //     )
+  //   );
+  // };
 
   @Saga()
   onContactDetailsUpdated = (
@@ -40,8 +40,8 @@ export class AuthSagas {
         (event: ContactDetailsUpdatedEvent) =>
           new UpdateAuthCommand({
             auth: {
-              id: event.profile.userId,
-              phoneNumber: event.profile.contactDetails?.cellphone,
+              id: event.profile.UID,
+              phoneNumber: event.profile.ContactDetails?.Cell,
             },
           })
       )
