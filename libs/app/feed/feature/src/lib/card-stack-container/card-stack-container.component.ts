@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import { NgModule } from '@angular/core';
 import {Observable} from "rxjs";
-import { Select, Store } from '@ngxs/store';
+import { Select, Store, NgxsModule } from '@ngxs/store';
 import { IProfile } from '@mp/api/profiles/util';
 import {IUser} from "@mp/api/users/util";
 import { ProfileState } from '@mp/app/profile/data-access';
