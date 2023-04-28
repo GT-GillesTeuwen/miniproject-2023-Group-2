@@ -38,12 +38,17 @@
       "@mp/api/profiles/data-access": [
         "libs/api/profiles/data-access/src/index.ts"
       ],
+      "@mp/api/feed/data-access": [
+        "libs/api/feed/data-access/src/index.ts"
+      ],
       "@mp/api/chat/data-access": [
         "libs/api/chat/data-access/src/index.ts"
       ],
       "@mp/api/profiles/feature": ["libs/api/profiles/feature/src/index.ts"],
+      "@mp/api/feed/feature": ["libs/api/feed/feature/src/index.ts"],
       "@mp/api/chat/feature": ["libs/api/chat/feature/src/index.ts"],
       "@mp/api/profiles/util": ["libs/api/profiles/util/src/index.ts"],
+      "@mp/api/feed/util": ["libs/api/feed/util/src/index.ts"],
       "@mp/api/chat/util": ["libs/api/chat/util/src/index.ts"],
       "@mp/api/settings/data-access": [
         "libs/api/settings/data-access/src/index.ts"
@@ -86,12 +91,18 @@
       "@mp/app/profile/data-access": [
         "libs/app/profile/data-access/src/index.ts"
       ],
+      "@mp/app/feed/data-access": [
+        "libs/app/feed/data-access/src/index.ts"
+      ],
       "@mp/app/chat/data-access": [
         "libs/app/chat/data-access/src/index.ts"
       ],
       "@mp/app/profile/feature": ["libs/app/profile/feature/src/index.ts"],
       "@mp/app/profile/ui": ["libs/app/profile/ui/src/index.ts"],
       "@mp/app/profile/util": ["libs/app/profile/util/src/index.ts"],
+      "@mp/app/feed/feature": ["libs/app/feed/feature/src/index.ts"],
+      "@mp/app/feed/ui": ["libs/app/feed/ui/src/index.ts"],
+      "@mp/app/feed/util": ["libs/app/feed/util/src/index.ts"],
       "@mp/app/chat/util": ["libs/app/chat/util/src/index.ts"],
       "@mp/app/register/data-access": [
         "libs/app/register/data-access/src/index.ts"
