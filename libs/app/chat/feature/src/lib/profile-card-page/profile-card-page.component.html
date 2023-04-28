@@ -1,5 +1,5 @@
 <div class="card-area">
-    <div (click)="openMessagesPage()">
+    <ion-card (click)="openMessagesPage()">
       <ion-card-header>
         <ion-card-title>{{personName}}</ion-card-title>
         <div *ngIf="(allConvos$ | async) as allConvos;">
@@ -14,17 +14,11 @@
         </div>
         <ion-badge>{{unreadMessages}}</ion-badge>
       </ion-card-header>
-
-      <div>
+      
+      <ion-card-content>
         <div class="img-holder">
           <img src="{{imgSrc}}" alt="">
         </div>
-      </div>
-
-      <div class="card-component--info">
-        <h3>{{personName}}</h3>
-        <ion-badge>{{unreadMessages}}</ion-badge>
-      </div>
-
-    </div>
+      </ion-card-content>
+    </ion-card>
 </div>

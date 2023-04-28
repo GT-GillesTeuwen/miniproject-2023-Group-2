@@ -1,4 +1,4 @@
-<ng-container *ngIf="(matches$ | async) !== null; else matchData">
+<ng-container *ngIf="!doIHaveMatches(); else matchData">
   <div class="no-matches-screen">
     <h2 class="no-matches-header">No matches yet</h2>
     <p>Keep swiping on Feed to get a few</p>

@@ -136,7 +136,6 @@ export class AuthApi {
   async logout() {
     sessionStorage.removeItem('firstTime');
     sessionStorage.removeItem('currentIndex');
-    alert(sessionStorage.getItem('currentIndex'));
     return await signOut(this.auth);
   }
 }

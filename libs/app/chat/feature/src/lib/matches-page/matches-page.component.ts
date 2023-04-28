@@ -122,4 +122,20 @@ export class MatchesPageComponent implements OnInit{
     console.log("all messages: ", this.allLastMessages);
     return this.lastMessage;
   }
+
+
+  //check if I have any matches at all
+  doIHaveMatches(){
+    let returning = false;
+    this.store.select(ProfileState.profile).subscribe((profile) => {
+      if (profile != undefined) {
+        for(let i=0; i<profile.Matches?.length!; i++){
+          if(profile.Matches?.[i].MatchStatus == "PAIRED"){
+            returning = true;
+          }
+        }
+      }
+    });
+    return returning;
+  }
 }
