@@ -1,6 +1,10 @@
 # Mini-Project 2023
 
+![Circ_1](https://user-images.githubusercontent.com/99959171/235227370-cd281adc-814c-47e9-838e-7b77fe7324a8.png)
+
+
 # Circ Application
+
 Circ is an application, mainly targeted at groups such as university first years, to help users meet each other in a Tinder-inspired manner. The application features a time-based economy in which each user has an amount of time they can spend on finding matches and planning meetings. 
 
 When users "match" they are taken to a lobby where they can plan a meeting. Confirming meeting details, such as time and place, and general chatting invests the users' time into that meeting. If they follow through with the meeting, they are awarded the time they invested plus a calculated amount of interest. This encourages users to be mindful when planning meetings and encourages them to follow through.
@@ -9,23 +13,11 @@ When users "match" they are taken to a lobby where they can plan a meeting. Conf
 Users get a set amount of time (250 minutes) when they first register, each swipe costs them time, 1 minute for the first two in any direction in a row and then if it's more the two in the same direction in a row it costs 5 minutes. When users match they can set up a meeting in which they invest time into that meeting. Once the meeting has happened and has been verified each party gets their invested time back and more based on the multiplier applied to the original time invested. The swiping creates a passive deduction of time so that it limits the amount of time users have on the app.
 
 # Circ Technologies
- + Frontend: Angular-ionic.
- + Hosting : Firebase.
- + Backend : Typescript.
+ + Frontend: Angular-ionic.![angularjs-original](https://user-images.githubusercontent.com/99959171/235228478-e976f12b-a681-45e7-be1c-591fec9f1334.svg)
+ + Hosting : Firebase.![firebase-plain](https://user-images.githubusercontent.com/99959171/235228656-c186627c-88a4-4a82-a18e-91ed0cb03e5b.svg)
+ + Backend : Typescript.![typescript-original](https://user-images.githubusercontent.com/99959171/235228847-3c4ba330-8ba2-4641-b950-d3335336982a.svg)
  + Database: Firestore.
  + We used Firebase Authentication for the login and "Continue with Google" features.
-
- # Circ Logo Link
-https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/Circ%201.png?alt=media&token=78b37d22-3a17-4da1-a4bf-d7657c0893cc
-
-# Circ Database ERD
-https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/COS301Mini.png?alt=media&token=b71c61ee-6a26-4e7b-82d1-ffb0f81d7be4
-
-# Circ Login Requests
-https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/LoginRequests.png?alt=media&token=47973013-8eb3-4317-a69d-945d8ab546f7
-
-# Circ Register Requests
-https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/RegisterRequests.PNG?alt=media&token=ae7a8450-9230-4e4d-869a-3674c2c13b05
 
 # Circ Requirements
 The following items are required to run Circ:
