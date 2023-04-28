@@ -19,7 +19,10 @@ export class HomePage {
   waitASecond(){
     this.store.select(ProfileState.profile).subscribe((profile) => {
       if(profile!=undefined){
-        if(profile.TimeRemaining! <= 0){
+        if(profile.TimeRemaining != null && profile.TimeRemaining!= undefined)
+        if(profile.TimeRemaining <= 0){
+          
+
           this.navCtrl.navigateForward('home/chat/verify');
         }
       }else{
