@@ -216,6 +216,7 @@ export class ProfilePage {
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
+    this.setOpen(false);
   }
 
   confirm() {
@@ -438,4 +439,12 @@ export class ProfilePage {
     this.profilePhotosArr.splice(index, 1);
     this.store.dispatch(new UpdateProfilePhotos(this.profilePhotosArr));
   }
+
+  isModalOpen = false;
+
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 }
+
+

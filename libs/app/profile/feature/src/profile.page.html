@@ -68,7 +68,7 @@
                 <img src={{profilePhotosArr[profilePhotosArr.length-1]}} alt="">
               </div>
               <ion-buttons>  
-                <ion-button class="add-images-btn" id="open-modal" expand="block">
+                <ion-button class="add-images-btn" (click)="setOpen(true)" expand="block">
                   <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
                 </ion-button>
               </ion-buttons>
@@ -325,7 +325,7 @@
   <input type="file" (change)="onFileSelected($event)" #fileInput style="display: none" accept="image/*">
 
 
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" mode="ios">
+  <ion-modal [isOpen]="isModalOpen" (willDismiss)="onWillDismiss($event)" mode="ios">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -345,7 +345,7 @@
               <ng-template [ngIf]="!isPhotosArrayAtIndexEmpty(index)">
                 <img src="{{profile?.ProfilePhotos![index]}}" alt="img-1">
                 <ion-buttons class="delete-image-btns">  
-                  <ion-button class="delete-image-btn" id="open-modal" expand="block" (click)="removeImageFromArray(index)">
+                  <ion-button class="delete-image-btn" expand="block" (click)="removeImageFromArray(index)">
                     <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -353,7 +353,7 @@
 
               <ng-template class="empty" [ngIf]="isPhotosArrayAtIndexEmpty(index)">
                 <ion-buttons class="plus-image-btns">  
-                  <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+                  <ion-button class="plus-image-btn"  expand="block" (click)="fileInput.click()">
                     <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -366,7 +366,7 @@
               <ng-template [ngIf]="!isPhotosArrayAtIndexEmpty(index+3)">
                 <img src="{{profile?.ProfilePhotos![index+3]}}" alt="img-1">
                 <ion-buttons class="delete-image-btns">  
-                  <ion-button class="delete-image-btn" id="open-modal" expand="block">
+                  <ion-button class="delete-image-btn"  expand="block">
                     <ion-icon name="trash-outline" size="large" class="delete-img" slot="icon-only" (click)="removeImageFromArray(index+3)"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -374,7 +374,7 @@
 
               <ng-template class="empty" [ngIf]="isPhotosArrayAtIndexEmpty(index+3)">
                 <ion-buttons class="plus-image-btns">  
-                  <ion-button class="plus-image-btn" id="open-modal" expand="block" (click)="fileInput.click()">
+                  <ion-button class="plus-image-btn"  expand="block" (click)="fileInput.click()">
                     <ion-icon name="add-outline" size="large" class="add-img" slot="icon-only"></ion-icon>
                   </ion-button>
                 </ion-buttons>
