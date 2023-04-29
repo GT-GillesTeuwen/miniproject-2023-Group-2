@@ -25,7 +25,7 @@ describe('CardStackContainerComponent', () => {
     eventMock = {
       target: {
         value: {
-          length: 1
+          length: 30
         }
       }
     };
@@ -59,6 +59,23 @@ describe('CardStackContainerComponent', () => {
   
     component.remainingAboutMeChars = 300;
     component.remainingMajorChars = 50;
+
+    component.showGamesTick = true;
+    component.showFootballTick = true;
+    component.showReadingTick = true;
+    component.showMusicTick = true;
+    component.showWritingTick = false;
+    component.showBasketballTick = false;
+    component.showGymTick = false;
+    component.showArtTick = false;
+    component.showPhotographyTick = false;
+    component.showTravelTick = false;
+    component.showTakeOutTick = false;
+    component.showWineTick = false;
+    component.showFishingTick = false;
+    component.showIceCreamTick = false;
+    component.showPetsTick = false;
+    component.showSpaceTick = false;
   });
 
   it('should create', () => {
@@ -68,17 +85,65 @@ describe('CardStackContainerComponent', () => {
   it('onAboutMeChange test', () => {
 
     component.onAboutMeChange(eventMock);
+    expect(component.remainingAboutMeChars).toBe(270);
     expect(component.changeMade).toBe(true);
 
   });
 
-  // it('should be smaller than range', () => {
-  //   const range: IAgeRange = {
-  //     MinAge: 10,
-  //     MaxAge: 50 
-  //   }
+  it('onMajorChange test', () => {
+    component.onMajorChange(eventMock);
+    expect(component.remainingMajorChars).toBe(20);
+    expect(component.changeMade).toBe(true);
+});
 
-  //   expect(component.isInRange('9', range)).toBe(false);
+it('onPhoneChange test', () => {
+  component.onMajorChange(eventMock);
+  expect(component.changeMade).toBe(true);
+});
+
+it('is index empty test', () => {
+  const result = component.isPhotosArrayAtIndexEmpty(2);
+  expect(result).toBe(true);
+});
+
+it('remove image test', () => {
+  component.removeImageFromArray(0);
+  expect(component.profilePhotosArr.length).toBe(0);
+});
+
+it('save changes test', () => {
+  component.onAboutMeChange(eventMock);
+  component.saveChanges();
+  expect(component.alreadyChangedHobby).toBe(true);
+  expect(component.profileCompleteText).toBe(25);
+  expect(component.changeMade).toBe(false);
+});
+
+it('logout test', () => {
+  component.logout();
+  expect(component.showGamesTick).toBe(false);
+  expect(component.showFootballTick).toBe(false);
+  expect(component.showReadingTick).toBe(false);
+  expect(component.showMusicTick).toBe(false);
+  expect(component.showWritingTick).toBe(false);
+  expect(component.showBasketballTick).toBe(false);
+  expect(component.showGymTick).toBe(false);
+  expect(component.showArtTick).toBe(false);
+  expect(component.showPhotographyTick).toBe(false);
+  expect(component.showTravelTick).toBe(false);
+  expect(component.showTakeOutTick).toBe(false);
+  expect(component.showWineTick).toBe(false);
+  expect(component.showFishingTick).toBe(false);
+  expect(component.showIceCreamTick).toBe(false);
+  expect(component.showPetsTick).toBe(false);
+  expect(component.showSpaceTick).toBe(false);
+  expect(component.changeMade).toBe(false);
+  expect(component.alreadyChangedHobby).toBe(false);
+  expect(component.aboutMeText).toBe("");
+  expect(component.majorText).toBe("");
+  expect(component.phoneText).toBe("");
+  expect(component.profileCompleteText).toBe(0);
+});
 
 
   // });
