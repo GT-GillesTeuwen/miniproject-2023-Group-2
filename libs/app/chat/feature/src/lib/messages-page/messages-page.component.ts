@@ -245,7 +245,7 @@ export class MessagesPageComponent implements OnInit{
 
 
   openVerifyPage() {
-    if(this.verifyPass == true || (this.locationSelected != null && this.locationSelected != undefined)){
+    if(this.verifyPass == true || (this.locationSelected != null && this.locationSelected != undefined && this.locationSelected.length>0)){
       this.navCtrl.navigateForward('home/chat/verified', {
         state: {
           otherPersonName: this.personName,
