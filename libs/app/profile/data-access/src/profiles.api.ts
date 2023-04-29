@@ -113,7 +113,16 @@ export class ProfilesApi {
     };
 
     return await this.updateProfileDetails( {profile});
+  }
 
+  async updateOtherProfileTime(request: IUpdatePersonalDetailsRequest){
+    //alert("this is the time update")
+  const profile: IProfile = {
+    UID:request.profile.UID, 
+    TimeRemaining: request.profile.TimeRemaining,
+  };
+
+  return await this.updateProfileDetails( {profile});
 }
 
   async removeProfile(request: IRemoveProfileRequest){

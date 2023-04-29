@@ -31,11 +31,11 @@ export class AuthApi {
   
 
   async login(email: string, password: string) {
-    alert("init card-stack");
+    // alert("init card-stack");
     const isFirstTime = sessionStorage.getItem('firstTime') === null;
 
     if (isFirstTime) {
-      alert("only once you say!??");
+      // alert("only once you say!??");
       sessionStorage.setItem('currentIndex', '0');
       sessionStorage.setItem('firstTime', 'false');
     }

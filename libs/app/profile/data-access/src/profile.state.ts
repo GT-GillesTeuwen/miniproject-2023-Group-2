@@ -17,7 +17,8 @@ import {
     UpdatePersonalDetails,
     UpdateProfilePhotos,
     UpdateSettings,
-    RemoveProfile
+    RemoveProfile,
+    UpdateOtherProfileTime
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -388,7 +389,7 @@ export class ProfileState {
   async updateTime(ctx: StateContext<ProfileStateModel>,{TimeRemaining}: UpdateTime) {
     try {
      
-      // alert("this is in updata time state "+TimeRemaining);
+      alert("this is in updata time state "+TimeRemaining);
       const state = ctx.getState();
       const UID= this.authApi.auth.currentUser?.uid;
       const timeRemaining = TimeRemaining;
@@ -402,6 +403,28 @@ export class ProfileState {
       };
 
       const responseRef =await this.profileApi.updateTime(request);
+      const response = responseRef.data;
+      return response;
+      //return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateOtherProfileTime)
+  async updateOtherProfileTime(ctx: StateContext<ProfileStateModel>,{timeRemaining, uid}: UpdateOtherProfileTime) {
+    try {
+
+      //alert("UID at saveProfileChanges is "+UID);
+
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:uid,
+          TimeRemaining:timeRemaining,
+        },
+      };
+
+      const responseRef =await this.profileApi.updateOtherProfileTime(request);
       const response = responseRef.data;
       return response;
       //return ctx.dispatch(new SetProfile(response.profile));

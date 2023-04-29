@@ -65,6 +65,14 @@ export class UpdateTime{
   ) {}
 }
 
+export class UpdateOtherProfileTime{
+  static readonly type = '[Profile] UpdateOtherProfileTime';
+  constructor(
+    public readonly timeRemaining: number,
+    public readonly uid: string
+  ) {}
+}
+
 export class RemoveProfile{
   static readonly type = '[Profile] RemoveProfile';
 }

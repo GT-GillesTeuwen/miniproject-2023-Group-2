@@ -119,7 +119,7 @@ export class MatchesPageComponent implements OnInit{
         // this.store.dispatch(new CreateConversation());
       }
     });
-    console.log("all messages: ", this.allLastMessages);
+    // console.log("all messages: ", this.allLastMessages);
     return this.lastMessage;
   }
 

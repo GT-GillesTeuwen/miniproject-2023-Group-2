@@ -13,7 +13,7 @@ import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
-import { UpdateTime } from '@mp/app/profile/util';
+import { SubscribeToProfile, UpdateTime } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -180,6 +180,8 @@ export class MessagesPageComponent implements OnInit{
   }
 
   checkFormValues(){
+    this.store.dispatch(new SubscribeToConversation(this.pairId));
+
     if(this.getCurrentDateSelected() != null){
       this.dateSelected = this.getCurrentDateSelected();
     }
@@ -243,8 +245,14 @@ export class MessagesPageComponent implements OnInit{
 
 
   openVerifyPage() {
-    if(this.verifyPass == true){
-      this.navCtrl.navigateForward('home/chat/verified');
+    if(this.verifyPass == true || (this.locationSelected != null && this.locationSelected != undefined)){
+      this.navCtrl.navigateForward('home/chat/verified', {
+        state: {
+          otherPersonName: this.personName,
+          timeInvested: this.meetingTimeInvested,
+          pairId: this.pairId
+        }
+      });
       this.cancel();
     }else{
       this.showVerifyError = true;
