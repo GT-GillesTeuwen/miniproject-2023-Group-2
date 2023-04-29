@@ -53,6 +53,9 @@
       width: 100%;
       margin-left: 0.3rem;
     }
+    width: 100vw;
+    // background-color: red;
+
   }
 
   .age-preference-section{
@@ -98,7 +101,39 @@
     }
   }
 
+  
+
 }
+
+ion-button.verifyButton {
+  margin-top: 0em;
+  width: 50%;
+  --background: coral;
+  --background-hover: rgb(245, 156, 123);
+  // --background-activated: #88f4be;
+  // --background-focused: #88f4be;
+
+  --color: white;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: blue;
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+}
+
+.settings-page-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 
 
 //ion-radio-group {

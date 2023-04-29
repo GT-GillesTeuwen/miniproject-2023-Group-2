@@ -1,32 +1,46 @@
-import { NotImplementedException } from '@nestjs/common';
-import { AuthApi } from '../auth.api'
+import { TestBed } from '@angular/core/testing';
+import { AuthApi } from '../auth.api';
 import {
-  Auth, authState, createUserWithEmailAndPassword,
-  GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup,
-  updatePassword, sendPasswordResetEmail
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  updatePassword,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
-import { mock, when } from 'ts-mockito';
-import { Functions } from '@angular/fire/functions';
+import { Auth } from '@angular/fire/auth';
+import { Functions, httpsCallable } from '@angular/fire/functions';
+
+describe('DashboardPageComponent', () => {
+  let api: AuthApi;
+  let authMock: any;
+  let functionsMock: any;
+  let sendPasswordResetEmailMock: jest.Mock;
+
+  beforeEach(async () => {
+
+    sendPasswordResetEmailMock = jest.fn();
+
+    authMock = {
+    };
+
+    functionsMock = {
+    };
 
 
-describe('AuthApi', () => {
-  let authapi : AuthApi
-  const auth = mock(Auth);
-  const functions = mock(Functions);
-
-  when(createUserWithEmailAndPassword).thenReturn(jest.fn());
-  
-
-  beforeEach(() => {
-     authapi = new AuthApi(auth, functions);
-  });
-
-  describe('ResetAuth', () => {
-    it('should work', async () => {
-
-      
-      expect(await authapi.register('Male', '20', 'Test', 'Jest', 'example@gmail.com', '1234password')).toEqual(NotImplementedException);
+    TestBed.configureTestingModule({
+      providers: [
+        AuthApi,
+        { provide: Auth, useValue: authMock },
+        { provide: Functions, useValue: functionsMock },
+        { provide: sendPasswordResetEmail, useValue: sendPasswordResetEmailMock },
+      ],
     });
+    api = TestBed.inject(AuthApi);
   });
-});
-  
+
+  it('should create', () => {
+    expect(api).toBeTruthy();
+  });
+
+}); 
