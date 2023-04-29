@@ -143,7 +143,7 @@
           <ion-button
             style="--background:coral"
             expand="block"
-            [disabled]="!this.registerForm.valid || (busy$ | async)"
+            [disabled]="!this.registerForm.valid || (busy$ | async) || !check"
             type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
             <ion-text>Register</ion-text>

@@ -61,12 +61,20 @@ export class RegisterPage {
     return this.registerForm.get('confirmPassword');
   }
 
+  get check() {
+    // alert(this.password?.value);
+    // alert(this.confirmPassword?.value);
+    if(this.password?.value==this.confirmPassword?.value)
+    return true;
+    else return false;
+  }
+
   get confirmError(): string | boolean {
     //console.log(this.password?.value);
     if (this.confirmPassword?.errors?.['required']) 
       return 'Confirm your password';
     if(this.confirmPassword?.value != this.password?.value)
-      return 'Passwords does not match'; 
+      return 'Passwords do not match'; 
     return false
   }
 
