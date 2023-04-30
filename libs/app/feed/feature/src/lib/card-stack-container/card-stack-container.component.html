@@ -4,7 +4,7 @@
    <div class="no-more-profiles-container">
     <div class="no-more-profiles-box">
       <p>You do not have any more potential matches. Refresh the page to check again.</p>
-      <ion-buttons>  
+      <ion-buttons>
         <ion-button (click)="refreshPage()" class="refresh-button">
           <ion-icon name="refresh-outline" size="large" aria-hidden="true" slot="icon-only" class="refresh-icon"></ion-icon>
         </ion-button>
@@ -48,19 +48,6 @@
             </path>
       </svg>
     </button>
-
-    <!-- <div *ngIf="(profile$ | async) as profile;">
-      <div *ngFor="let aProfile of allProfiles" style="margin-bottom: 10em">
-        <div *ngIf="aProfile?.Name?.Firstname != null && (aProfile?.Name?.Firstname != profile?.Name?.Firstname && aProfile.UID != profile.UID)">
-          <div *ngFor="let match of aProfile.Matches" style="margin-bottom: 10em">
-            {{match | json}} <br>
-            <div *ngIf="match.MatchUserID != profile?.UID">
-              {{aProfile | json}} <br>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <button>
       <svg stroke="currentColor"
