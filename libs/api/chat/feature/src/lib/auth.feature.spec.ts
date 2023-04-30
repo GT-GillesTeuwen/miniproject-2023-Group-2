@@ -14,7 +14,7 @@ describe('AuthFeature', () => {
   let udpateMeetingCommand: UpdateMeetingCommand;
   let updateMeetingsHandler: UpdateMeetinHandler;
 
-  describe('AuthFeature', () => {
+  it('should run', () => {
 
     const request: IConversation = {
       PairID: '1',
