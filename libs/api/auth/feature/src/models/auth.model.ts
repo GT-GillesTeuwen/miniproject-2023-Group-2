@@ -1,4 +1,4 @@
-import { AuthCreatedEvent, AuthUpdatedEvent, IAuth } from '@mp/api/auth/util';
+import { AuthCreatedEvent, AuthRemovedEvent, AuthUpdatedEvent, IAuth, IRemoveAuthRequest } from '@mp/api/auth/util';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Timestamp } from 'firebase-admin/firestore';
 
@@ -34,6 +34,10 @@ export class Auth extends AggregateRoot implements IAuth {
 
   update() {
     this.apply(new AuthUpdatedEvent(this.toJSON()));
+  }
+
+  remove(removeRequest : IRemoveAuthRequest){
+    this.apply(new AuthRemovedEvent(removeRequest.auth));
   }
 
   toJSON(): IAuth {

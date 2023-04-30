@@ -1,5 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonInput } from '@ionic/angular';
+import { Store } from '@ngxs/store';
+import { Logout } from '@mp/app/auth/util'
 
 @Component({
   selector: 'mp-verify-page',
@@ -23,6 +25,8 @@ export class VerifyPageComponent {
     }
   }
 
+  constructor(private readonly store: Store){}
+  
   acceptedValues = ["0","1","2","3","4","5","6","7","8","9"];
   i = 0;
 
@@ -52,4 +56,7 @@ export class VerifyPageComponent {
     }
   }
 
+  logout(){
+    this.store.dispatch(new Logout());
+  }
 }

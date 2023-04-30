@@ -1,4 +1,6 @@
 import {
+  IRemoveProfileRequest,
+    IRemoveProfileResponse,
     IUpdateAccountDetailsRequest,
     IUpdateAccountDetailsResponse,
     IUpdateAddressDetailsRequest,
@@ -9,6 +11,7 @@ import {
     IUpdateOccupationDetailsResponse,
     IUpdatePersonalDetailsRequest,
     IUpdatePersonalDetailsResponse,
+    RemoveProfileCommand,
     UpdateAddressDetailsCommand,
     UpdateContactDetailsCommand,
     UpdateOccupationDetailsCommand,
@@ -21,14 +24,14 @@ import { CommandBus } from '@nestjs/cqrs';
 export class ProfilesService {
   constructor(private readonly commandBus: CommandBus) {}
 
-  // async updateAccountDetails(
-  //   request: IUpdateAccountDetailsRequest
-  // ): Promise<IUpdateAccountDetailsResponse> {
-  //   return await this.commandBus.execute<
-  //     UpdateAccountDetailsCommand,
-  //     IUpdateAccountDetailsResponse
-  //   >(new UpdateAccountDetailsCommand(request));
-  // }
+  async removeProfile(
+    request: IRemoveProfileRequest
+  ): Promise<IRemoveProfileResponse> {
+    return await this.commandBus.execute<
+      RemoveProfileCommand,
+      IRemoveProfileResponse
+    >(new RemoveProfileCommand(request));
+  }
 
   async updateAddressDetails(
     request: IUpdateAddressDetailsRequest

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
     IProfile, ISettings, IUpdatePersonalDetailsRequest,
+    IRemoveProfileRequest
 } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
 import { Logout as AuthLogout } from '@mp/app/auth/util';
@@ -16,6 +17,8 @@ import {
     UpdatePersonalDetails,
     UpdateProfilePhotos,
     UpdateSettings,
+    RemoveProfile,
+    UpdateOtherProfileTime
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -403,6 +406,48 @@ export class ProfileState {
       const response = responseRef.data;
       return response;
       //return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(UpdateOtherProfileTime)
+  async updateOtherProfileTime(ctx: StateContext<ProfileStateModel>,{timeRemaining, uid}: UpdateOtherProfileTime) {
+    try {
+
+      //alert("UID at saveProfileChanges is "+UID);
+
+      const request: IUpdatePersonalDetailsRequest = {
+        profile: {
+          UID:uid,
+          TimeRemaining:timeRemaining,
+        },
+      };
+
+      const responseRef =await this.profileApi.updateOtherProfileTime(request);
+      const response = responseRef.data;
+      return response;
+      //return ctx.dispatch(new SetProfile(response.profile));
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(RemoveProfile)
+  async removeProfile(ctx: StateContext<ProfileStateModel>) {
+    try {
+     
+      const UID= this.authApi.auth.currentUser?.uid;
+
+      const request: IRemoveProfileRequest = {
+        profile: {
+          UID:UID,
+        },
+      };
+
+      const responseRef =await this.profileApi.removeProfile(request);
+      const response = responseRef.data;
+      return response;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }

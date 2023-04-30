@@ -49,6 +49,11 @@ export class ContinueWithGoogle {
   static readonly type = '[Auth] ContinueWithGoogle';
 }
 
+
+export class RemoveAuth {
+  static readonly type = '[Auth] RemoveAut';
+}
+
 export class Logout {
   static readonly type = '[Auth] Logout';
 }

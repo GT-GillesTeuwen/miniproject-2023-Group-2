@@ -23,7 +23,7 @@ export class RegisterPage {
     firstName: [ '', [ Validators.maxLength(64)],],
     lastName: [ '', [ Validators.maxLength(64)],],
     gender: [ '', [ Validators.minLength(3), Validators.maxLength(64)],],
-    age: [ '', [ Validators.minLength(1), Validators.maxLength(3)],],
+    age: [ '', [ Validators.min(16), Validators.max(100)],],
     email: [ '', [Validators.email, Validators.minLength(6), Validators.maxLength(64)],],
     password: ['', [Validators.minLength(6), Validators.maxLength(64)]],
     confirmPassword: ['', [Validators.minLength(6), Validators.maxLength(64) ]],
@@ -61,21 +61,29 @@ export class RegisterPage {
     return this.registerForm.get('confirmPassword');
   }
 
+  get check() {
+    // alert(this.password?.value);
+    // alert(this.confirmPassword?.value);
+    if(this.password?.value==this.confirmPassword?.value)
+    return true;
+    else return false;
+  }
+
   get confirmError(): string | boolean {
     //console.log(this.password?.value);
     if (this.confirmPassword?.errors?.['required']) 
       return 'Confirm your password';
     if(this.confirmPassword?.value != this.password?.value)
-      return 'Passwords does not match'; 
+      return 'Passwords do not match'; 
     return false
   }
 
   get ageError(): string {
     if (this.age?.errors?.['required']) return 'Age is required';
-    if (this.age?.errors?.['minlength'])
-      return 'Age should be longer than 0 characters';
-    if (this.age?.errors?.['maxlength'])
-      return 'Age should be shorter than 4 characters';
+    if (this.age?.errors?.['min'])
+      return 'You need to be 16 years old';
+    if (this.age?.errors?.['min'])
+      return 'You need to be 16 years old';
     return 'Age is invalid';
   }
 

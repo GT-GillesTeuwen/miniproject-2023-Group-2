@@ -13,4 +13,16 @@ export class AuthRepository {
       password: auth.password ? auth.password : undefined,
     });
   }
+
+  async removeUser(auth: IAuth) {
+    await admin.auth().
+    deleteUser(auth.id)
+    .then(() => {
+      console.log('Successfully deleted user');
+    })
+    .catch((error) => {
+      console.log('Error deleting user:', error);
+    });
+  
+  }
 }

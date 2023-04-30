@@ -8,7 +8,8 @@ import {
     SetUser,
     SubscribeToAuthState,
     ResetPassword,
-    ForgotPassword
+    ForgotPassword,
+    RemoveAuth
 } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import { Navigate } from '@ngxs/router-plugin';
@@ -16,6 +17,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 import produce from 'immer';
 import { tap } from 'rxjs';
 import { AuthApi } from './auth.api';
+import { IAuth, IRemoveAuthRequest } from '@mp/api/auth/util';
 
 export interface AuthStateModel {
   user: User | null;
@@ -114,6 +116,25 @@ export class AuthState {
       return ctx.dispatch(new Navigate(['home']));
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(RemoveAuth)
+  async removeAuth(ctx: StateContext<AuthStateModel>) {
+
+    const UID= this.authApi.auth.currentUser?.uid;
+    if(UID){
+      const iAuth : IAuth = {
+        id: UID
+      }
+      const request: IRemoveAuthRequest = {
+        auth: iAuth
+      };
+      await this.authApi.RemoveAuth(request);
+      return ctx.dispatch(new Navigate(['/']));
+    }
+    else {
+      return ctx.dispatch(new SetError("UID was undifined."));
     }
   }
 

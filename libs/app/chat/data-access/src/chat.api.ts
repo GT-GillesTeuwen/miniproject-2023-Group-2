@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { doc, docData, Firestore } from '@angular/fire/firestore';
+import { collection, doc, docData, Firestore, getDocs } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { IConversation, ICreateConversationRequest, ICreateConversationResponse, IMessageSendRequest, IMessageSendResponse, IUpdateMeetingRequest, IUpdateMeetingResponse } from '@mp/api/chat/util';
 import {
@@ -48,6 +48,26 @@ export class ChatApi {
       toFirestore: (it: IConversation) => it,
     });
     return docData(docRef, { idField: 'id' });
+  }
+
+  async allConvos$(): Promise<IConversation[]> {
+    
+    const docRef = collection(this.firestore, 'conversations').withConverter<IConversation>({
+      fromFirestore: (snapshot) => {
+        console.log("In Chat API fetching all convos")
+        console.log(snapshot.data());
+        return snapshot.data() as IConversation;
+      },
+      toFirestore: (it: IConversation) => it,
+    });
+  
+    try {
+      const querySnapshot = await getDocs(docRef);
+      return querySnapshot.docs.map((doc) => doc.data() as IConversation);
+    } catch (error) {
+      console.error('Error fetching profiles:', error);
+      return [];
+    }
   }
 
   async updateProfileDetails(request: IUpdateProfileRequest) {

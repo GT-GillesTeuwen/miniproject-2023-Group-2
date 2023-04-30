@@ -1,18 +1,14 @@
 <ion-content>
-    <div class="whitespace"></div>
+    <div class="whitespace">
+        <img src="https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/Circ%201.png?alt=media&token=78b37d22-3a17-4da1-a4bf-d7657c0893cc" class="logo">
+    </div>
     <div class="backdrop">
         <div class="text-holder">
-            <h1>Meeting Verification</h1>
-            <p>Verify your meeting with <span>Obi Wan Kenobi</span> by entering the 4-digit code that appears on their screen.</p>
-            
-            <ion-input #input0 style="display:none"></ion-input>
+            <h1>Account Suspended</h1>
+            <p>Your account has been suspended because your time remaining is:</p>
+            <h2>$0</h2>
 
-            <div class="code-input-wrapper">
-                <ion-input #input1 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input1, input2, input0)" (ionChange)="checkInput($event, input1)"></ion-input>
-                <ion-input #input2 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input2, input3, input1)" (ionChange)="checkInput($event, input2)"></ion-input>
-                <ion-input #input3 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input3, input4, input2)" (ionChange)="checkInput($event, input3)"></ion-input>
-                <ion-input #input4 type="text" class="codeInput" maxlength="1" (keydown)="checkKey($event, input4, input0, input3)" (ionChange)="checkInput($event, input4)"></ion-input>
-            </div>
+            <ion-button class="verifyButton" (click)="logout()" [strong]="true" expand="block" shape="round">Logout</ion-button>
         </div>
     </div>
     <div class="img-holder"></div>

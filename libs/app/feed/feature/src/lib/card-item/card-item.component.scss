@@ -1,6 +1,8 @@
 .swipe-card-component {
-  height: 80%;
-  margin-top: 5rem;
+  height: 650px;
+  min-height: 520px;
+  margin-top: 3rem;
+  display: block;
 
   .image-swipe-area{
     height: 25rem;
@@ -11,4 +13,56 @@
       background-position: center;
     }
   }
+}
+
+
+swiper-container {
+  swiper-slide{
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+
+ion-card-title{
+  font-size: 2em;
+  color: coral;
+  // font-family: ;
+}
+
+.card-content{
+  font-size: 1.2em;
+  color: black;
+  padding: 1em;
+}
+
+ion-chip{
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  pointer-events: none;
+}
+
+.scroll-area{
+  overflow: scroll;
+  height: 18em;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scroll-area::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.opaque-one{
+  width: 100%;
+  height: 30px;
+  background: rgb(255,255,255);
+  background: linear-gradient(0deg, rgba(255,255,255,1) 10%, rgba(255,255,255,0) 100%);
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
 }

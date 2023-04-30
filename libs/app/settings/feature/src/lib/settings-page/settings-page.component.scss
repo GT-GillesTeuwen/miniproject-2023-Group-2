@@ -1,53 +1,192 @@
-ion-radio-group {
-    --color: coral;
-  }
+.settings-page {
 
-  ion-content {
-    --ion-background-color: coral;
-  }
-
-
-  ion-card {
-    --background: rgb(255, 253, 253);
-
-    --color: coral;
-  }
-  
-  ion-card-title {
-    --color: coral;
-  }
-  
-  ion-card-subtitle {
-    --color: coral;
-  }
-
-  ion-button {
-      --color: coral;
-      --background: rgba(255, 127, 80, 0.404);
-  }
-
-  ion-radio {
-    
-    --color: #ddd;
-    --color-checked: coral;
-  }
+  $themePrimaryColor: coral;
+  $themePrimaryColorHighlight: #ff9570;
 
   ion-range {
     --bar-background: rgba(255, 127, 80, 0.308);
     --bar-background-active: rgba(255, 127, 80, 0.308);
-    // --bar-height: 8px;
-    // --bar-border-radius: 8px;
     --knob-background: rgb(255, 149, 110);
-    // --knob-size: 40px;
-    --pin-background: coral;
+    --pin-background: $themePrimaryColor;
     --pin-color: #fff;
   }
 
-  ion-item::part(native) {
-    background: rgb(255, 242, 238);
-    color: coral;
-  
-    
+  ion-radio-group {
+      --color: $themePrimaryColor;
+
+      ion-radio {
+        --color: #ddd;
+        --color-checked: coral;
+      }
+    }
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .header{
+    margin-top: 4rem;
+  }
+
+  .settings-page-content {
+    margin-top: 6em;
+  }
+
+  .section-header {
+    padding-left: 1.5rem;
+
+    .section-header-text {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: $themePrimaryColor;
+      font-family: 'DM Sans', sans-serif;
+    }
+  }
+
+  .privacy-section {
+    //background-color: #e0ac08;
+    margin-bottom: 1.5rem;
+
+    .privacy-section-content {
+      width: 100%;
+      margin-left: 0.3rem;
+    }
+    width: 100vw;
+    // background-color: red;
+
+  }
+
+  .age-preference-section{
+    padding-top: 0.8rem;
+
+    .age-preference-section-content {
+      padding-left: 1.2rem;
+      padding-right: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .age-preference-range-feedback{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0.5rem;
+
+        ion-label{
+          font-size: 1.1rem;
+          font-weight: 400;
+        }
+      }
+    }
+
+  }
+
+  .blocked-section{
+    //background-color: #cb0009;
+    padding-top: 3rem;
+
+    .blocked-section-content {
+      //background-color: #cb0009;
+      padding-top: 0.8rem;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+
+        ion-button {
+            --color: $themePrimaryColor;
+            --background: rgba(255, 127, 80, 0.404);
+        }
+    }
   }
 
   
+
+}
+
+ion-button.verifyButton {
+  margin-top: 3em;
+  width: 50%;
+  --background: coral;
+  --background-hover: rgb(245, 156, 123);
+  // --background-activated: #88f4be;
+  // --background-focused: #88f4be;
+
+  --color: white;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: blue;
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  margin-top: 1em;
+  margin-bottom: 1em;
+
+}
+
+.settings-page-content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+}
+
+
+
+//ion-radio-group {
+//    --color: coral;
+//  }
+//
+//  ion-content {
+//    --ion-background-color: coral;
+//  }
+//
+//
+//  ion-card {
+//    --background: rgb(255, 253, 253);
+//
+//    --color: coral;
+//  }
+//
+//  ion-card-title {
+//    --color: coral;
+//  }
+//
+//  ion-card-subtitle {
+//    --color: coral;
+//  }
+//
+//  ion-button {
+//      --color: coral;
+//      --background: rgba(255, 127, 80, 0.404);
+//  }
+//
+//  ion-radio {
+//
+//    --color: #ddd;
+//    --color-checked: coral;
+//  }
+//
+//  ion-range {
+//    --bar-background: rgba(255, 127, 80, 0.308);
+//    --bar-background-active: rgba(255, 127, 80, 0.308);
+//    // --bar-height: 8px;
+//    // --bar-border-radius: 8px;
+//    --knob-background: rgb(255, 149, 110);
+//    // --knob-size: 40px;
+//    --pin-background: coral;
+//    --pin-color: #fff;
+//  }
+//
+//  ion-item::part(native) {
+//    background: rgb(255, 242, 238);
+//    color: coral;
+//
+//
+//  }
+//
+//

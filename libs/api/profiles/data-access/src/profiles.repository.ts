@@ -1,6 +1,9 @@
 import { IMatchDetails, IProfile } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { DocumentData, DocumentReference } from 'firebase-admin/firestore';
+import { getFirestore,deleteDoc,doc } from 'firebase/firestore';
+import { collection } from 'firebase/firestore';
 
 @Injectable()
 export class ProfilesRepository {
@@ -86,7 +89,27 @@ export class ProfilesRepository {
           )
 
       }
-      
-   
   }
+
+  async removeProfile(profile : IProfile){
+    // Get a reference to the document to be deleted
+    if(profile.UID)
+      {
+        const docRef = admin.firestore().collection('profiles').doc(profile.UID).delete()
+        .then(() => {
+            console.log("Profile Document deleted Successfully.")
+        })
+        .catch(error => {
+            console.log(error);
+        })
+            
+
+      }
+    else
+    throw "Cannot remove user with this id : Does not exist";
+ 
+  }
+
+
+
 }
