@@ -73,12 +73,6 @@
           <ion-select-option value="female">Female</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-text
-        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-        class="ion-padding-start"
-        color="danger">
-        <small>{{ emailError }}</small>
-      </ion-text>
       <ion-item>
         <ion-label position="floating" class="required">Email</ion-label>
         <ion-input
