@@ -1,6 +1,13 @@
+*{
+  overflow: none !important;
+}
+
+.card-swipe-area{
+  overflow: none;
+}
+
 .card-container {
   position: relative;
-  margin-bottom: 20em;
   width: 100%;
   height: 100vh;
   display: grid;
@@ -60,6 +67,7 @@
 
     button {
       height: 4rem;
+      margin-top: 0.5em;
       width: 4rem;
       display: flex;
       justify-content: center;

@@ -45,3 +45,24 @@ ion-chip{
   padding-bottom: 0.5em;
   pointer-events: none;
 }
+
+.scroll-area{
+  overflow: scroll;
+  height: 18em;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scroll-area::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+.opaque-one{
+  width: 100%;
+  height: 30px;
+  background: rgb(255,255,255);
+  background: linear-gradient(0deg, rgba(255,255,255,1) 10%, rgba(255,255,255,0) 100%);
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
+}
