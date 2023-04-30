@@ -410,5 +410,3 @@ command_file = open(f"./api/{library_name}/feature/src/{library_name}.saga.ts", 
 command_file.write(saga_code)
 command_file.close()
 
-
-# I wan die now :)
