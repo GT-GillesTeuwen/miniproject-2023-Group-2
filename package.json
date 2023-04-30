@@ -26,7 +26,8 @@
     "shipit:prod": "yarn build:app:prod && yarn build:api:prod && yarn deploy:prod",
     "generate:pwa:assets:icons": "pwa-asset-generator apps/app/src/assets/logos/schadre-logo-only.png apps/app/src/assets/pwa --favicon --icon-only --padding \"20px\" --mstile --maskable --manifest apps/app/src/manifest.webmanifest",
     "generate:pwa:assets:splashes": "pwa-asset-generator apps/app/src/assets/logos/schadre-logo-only.png apps/app/src/assets/pwa --favicon --splash-only --padding \"150px\" --mstile --maskable --manifest apps/app/src/manifest.webmanifest",
-    "host:app": "http-server dist/apps/app"
+    "host:app": "http-server dist/apps/app",
+    "cypress:test": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -104,7 +105,7 @@
     "@types/node": "^18.13.0",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
-    "cypress": "^12.2.0",
+    "cypress": "^12.11.0",
     "env-cmd": "^10.1.0",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
