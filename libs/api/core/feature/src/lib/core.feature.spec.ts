@@ -1,5 +1,6 @@
 import {HttpClient, HttpHeaders, HttpHandler} from '@angular/common/http'
-import fetch from 'node-fetch'
+//import fetch from 'node-fetch'
+import axios from 'axios'
 
 describe('ChatFunctions', () => {
   let http: HttpClient;
@@ -32,13 +33,7 @@ describe('ChatFunctions', () => {
 
     const headers = {'Content-type': 'application/json'};
     const body = JSON.stringify(Mockrequest)
-    const res = await fetch('http://127.0.0.1:5005/demo-project/us-central1/getUser', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(Mockrequest),
-    });
-    //const resp = http.post('http://127.0.0.1:5005/cos301miniprojectg2/us-central1/createConversation',body,{'headers': headers}).subscribe(respnse => {
-                  //console.log(respnse);});
+    const resp = axios.get('http://127.0.0.1:5005/cos301miniprojectg2/us-central1/createConversation').then(response => {console.log(response)});
     //console.log(resp);
 
   });

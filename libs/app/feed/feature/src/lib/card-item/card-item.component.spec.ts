@@ -22,7 +22,6 @@ describe('CardItemComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [CardItemComponent],
-      imports: [NgxsModule.forRoot([])],
       providers: [{provide: Window, useValue: WindowMock},
                   {privide: ElementRef, useValue: elementRegMock}],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],

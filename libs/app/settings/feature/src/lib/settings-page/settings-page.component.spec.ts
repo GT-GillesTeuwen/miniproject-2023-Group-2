@@ -20,7 +20,6 @@ describe('SettingsPageComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [SettingsPageComponent],
-      imports: [NgxsModule.forRoot([])],
       providers: [{provide: Store, useValue: StoreMock}],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     }).compileComponents();
