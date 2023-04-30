@@ -13,7 +13,7 @@ import { NavController } from '@ionic/angular';
 import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
-import { UpdateTime } from '@mp/app/profile/util';
+import { SubscribeToProfile, UpdateTime } from '@mp/app/profile/util';
 
 @Component({
   selector: 'mp-messages-page',
@@ -27,15 +27,29 @@ export class MessagesPageComponent implements OnInit{
   public isSearchBarOpened = false;
 
   @ViewChild(IonModal) modal!: IonModal;
+  @ViewChild('scrollToMe') scrollToMe!: ElementRef;
   @ViewChild('messageSendInput') messageSendInput!: IonInput;
 
   currentUserID!:string|null|undefined;
-  currentPairIDVar!:string|null|undefined;
+  currentPairIDVarVar!:string|null|undefined;
 
     //ROUTING TO VERIFICATION PAGE
 
     constructor(private navCtrl: NavController, private readonly store: Store,private route:ActivatedRoute,private router:Router) {
-      
+      const conversation: IConversation ={
+        PairID:"1",
+      User1ID:"u1",
+      User2ID:"u2",
+      Messages:[],
+      MeetingDetails:{
+        Date: null,
+        Time: null,
+        Location:null,
+        FoodPreference: null,
+        DressCode: null,
+        TimeInvested:0,
+      }
+    }
     this.setCurrentUserDetails();
     this.setCurrentConvoDetails();
 
@@ -69,7 +83,7 @@ export class MessagesPageComponent implements OnInit{
   setCurrentConvoDetails(){
     this.store.select(ChatState.conversation).subscribe((conversation) => {
       if(conversation!=undefined){
-        this.currentPairIDVar=conversation.PairID;
+        this.currentPairIDVarVar =conversation.PairID;
       }else{
       }
     });
@@ -152,7 +166,7 @@ export class MessagesPageComponent implements OnInit{
       this.store.dispatch(new SubscribeToConversation(this.pairId));
       this.store.dispatch(new UpdateMeetingDetails(this.getCurrentPairID(),meetingDetails));
 
-      
+
     }else{
       this.verifyPass = false;
     }
@@ -166,6 +180,8 @@ export class MessagesPageComponent implements OnInit{
   }
 
   checkFormValues(){
+    this.store.dispatch(new SubscribeToConversation(this.pairId));
+
     if(this.getCurrentDateSelected() != null){
       this.dateSelected = this.getCurrentDateSelected();
     }
@@ -192,13 +208,13 @@ export class MessagesPageComponent implements OnInit{
   messageToSend!: string;
 
   sendMessage(){
-    
+
     var profileUID:string|undefined|null;
     this.store.select(ProfileState.profile).subscribe((profile) => {
       profileUID=profile?.UID;
-      
+
     });
-   
+
     const message: IMessage ={
       ToUserID:"u1",
 
@@ -214,10 +230,10 @@ export class MessagesPageComponent implements OnInit{
     this.meetingTimeInvested+=1;
     console.log("4")
     this.store.dispatch(new UpdateTime(this.currentTimeRem));
-    console.log("5")
-    this.store.dispatch(new SendMessage(this.pairId!,message,this.meetingTimeInvested));
-    console.log("6")
+    this.store.dispatch(new SendMessage(this.pairId,message,this.meetingTimeInvested));
     this.messageSendInput.value = "";
+
+    this.scrollToMe.nativeElement.scrollIntoView({ behavior: 'smooth' });
   }
 
   checkEnterKey(event: KeyboardEvent){
@@ -229,8 +245,14 @@ export class MessagesPageComponent implements OnInit{
 
 
   openVerifyPage() {
-    if(this.verifyPass == true){
-      this.navCtrl.navigateForward('home/chat/verified');
+    if(this.verifyPass == true || (this.locationSelected != null && this.locationSelected != undefined && this.locationSelected.length>0)){
+      this.navCtrl.navigateForward('home/chat/verified', {
+        state: {
+          otherPersonName: this.personName,
+          timeInvested: this.meetingTimeInvested,
+          pairId: this.pairId
+        }
+      });
       this.cancel();
     }else{
       this.showVerifyError = true;
@@ -272,18 +294,17 @@ export class MessagesPageComponent implements OnInit{
     if (!timestampSeconds) {
       return '';
     }
-  
+
     const date = new Date(timestampSeconds * 1000); // Convert to milliseconds
     const day = date.getDate();
     const month = date.toLocaleString('default', { month: 'long' });
     const year = date.getFullYear();
-  
+
     return `${day} ${month} ${year}`;
   }
 
   //on init, get values from matches-page.component.ts
   personName!: string;
-  lastMessage!: string;
   unreadMessages!: number;
   imgSrc!: string;
   pairId!: string;
@@ -293,7 +314,6 @@ export class MessagesPageComponent implements OnInit{
         const state = this.router.getCurrentNavigation()!.extras.state;
         if (state) {
           this.personName = state['personName'];
-          this.lastMessage = state['lastMessage'];
           this.unreadMessages = state['unreadMessages'];
           this.imgSrc = state['imgSrc'];
           this.pairId = state['pairId'];

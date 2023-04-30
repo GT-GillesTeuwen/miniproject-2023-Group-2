@@ -12,9 +12,9 @@
         </div>
       </ion-title>
   
-      <div class="search-bar-wrapper">
+      <!-- <div class="search-bar-wrapper">
         <ion-searchbar animated="true" placeholder="Search for user..." *ngIf="isSearchBarOpened" show-cancel-button="always" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
-      </div>
+      </div> -->
   
       <ion-buttons slot="end" class="meeting-button">  
         <ion-button id="open-modal" expand="block" (click)="checkFormValues()">
@@ -22,15 +22,15 @@
         </ion-button>
       </ion-buttons>
 
-      <ion-buttons slot="end" class="search-button">  
+      <!-- <ion-buttons slot="end" class="search-button">  
         <ion-button *ngIf="!isSearchBarOpened" (click)="isSearchBarOpened=true">
           <ion-icon name="search-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
         </ion-button>
-      </ion-buttons>
+      </ion-buttons> -->
   
-      <ion-buttons slot="end" class="notification-button">  
+      <!-- <ion-buttons slot="end" class="notification-button">  
         <ion-icon name="notifications-outline" size="small" aria-hidden="true"></ion-icon>
-      </ion-buttons>
+      </ion-buttons> -->
   
     </ion-toolbar>
 </ion-header>
@@ -40,7 +40,7 @@
       
         <div class="user-header">
             <div class="img-outer-wrapper">
-                <div class="user-status-icon"></div>
+                <!-- <div class="user-status-icon"></div> -->
                 <div class="img-holder">
                     <img src="{{imgSrc}}" alt="">
                 </div>
@@ -75,12 +75,12 @@
 
             <div *ngFor="let message of chat?.Messages">
               <div *ngIf="(profile$ | async) as profile;">
-                <mp-received-bubble-ui *ngIf="message.FromUserID != profile.UID" messageContent="{{message.Content}}"></mp-received-bubble-ui>
+                <mp-received-bubble-ui *ngIf="message.FromUserID != profile.UID" imgSrc={{imgSrc}} messageContent="{{message.Content}}"></mp-received-bubble-ui>
                 <mp-sent-bubble-ui *ngIf="message.FromUserID == profile.UID" imgSrc={{profile?.ProfilePhotos![profile?.ProfilePhotos!.length-1]}} messageContent="{{message.Content}}"></mp-sent-bubble-ui>
               </div>
             </div>
 
-            <div #scrollToMe></div>
+            <div #scrollToMe class="scrollToMe"></div>
 
             <!-- FROM THEM -->
             <!-- <mp-received-bubble-ui></mp-received-bubble-ui> -->

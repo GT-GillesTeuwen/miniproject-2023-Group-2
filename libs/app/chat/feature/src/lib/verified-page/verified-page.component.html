@@ -1,32 +1,32 @@
 <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start" class="logo">  
+      <ion-buttons slot="start" class="logo">
         <!-- <ion-icon name="alert-circle-outline" size="small" aria-hidden="true"></ion-icon>-->
-        <img src="https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/logo.png?alt=media&token=6700dbee-efe3-42fe-85c4-13f7a28918a3" alt="logo">
+        <img src="https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/Circ%201.png?alt=media&token=78b37d22-3a17-4da1-a4bf-d7657c0893cc" width=70px alt="logo">
       </ion-buttons>
     
       <ion-title class="ion-text-center">
         <div class="time-remaining-outer-wrapper">
           <div class="time-remaining-inner-wrapper"  *ngIf="(profile$ | async) as profile;">
-            {{profile?.TimeRemaining}} <!--REPLACE WITH TimeRemaining-->
+            ${{profile?.TimeRemaining}} <!--REPLACE WITH TimeRemaining-->
           </div>
         </div>
       </ion-title>
   
-      <div class="search-bar-wrapper">
+      <!-- <div class="search-bar-wrapper">
         <ion-searchbar animated="true" placeholder="Search for user..." *ngIf="isSearchBarOpened" show-cancel-button="always" (ionCancel)="isSearchBarOpened=false"></ion-searchbar>
-      </div>
+      </div> -->
   
-      <ion-buttons slot="end" class="search-button">  
+      <!-- <ion-buttons slot="end" class="search-button">  
         <ion-button *ngIf="!isSearchBarOpened" (click)="isSearchBarOpened=true">
           <ion-icon name="search-outline" size="small" aria-hidden="true" slot="icon-only"></ion-icon>
         </ion-button>
-      </ion-buttons>
+      </ion-buttons> -->
   
-      <ion-buttons slot="end" class="notification-button">  
+      <!-- <ion-buttons slot="end" class="notification-button">  
         <ion-icon name="notifications-outline" size="small" aria-hidden="true"></ion-icon>
       </ion-buttons>
-  
+   -->
     </ion-toolbar>
 </ion-header>
 
@@ -35,10 +35,12 @@
     <div class="backdrop">
         <div class="text-holder">
             <h1>Meeting Verified!</h1>
-            <p>Your meeting with <span><b>Obi Wan Kenobi</b></span> has been verified!</p>
-            <p>You have earned</p>
+            <p>Your meeting with <span><b>{{otherPersonName}}</b></span> has been verified! <br>The time you invested was </p>
+            <h3>${{meetingTimeInvested}}</h3>
+
+            <p>And you have earned</p>
             
-            <h2>$1200</h2>
+            <h2>${{meetingTimeInvested*2}}</h2>
 
             <ion-button class="homeButton" (click)="goHome()" [strong]="true" expand="block" shape="round">Return Home</ion-button>
         </div>

@@ -9,12 +9,10 @@ import {
   updatePassword,
   sendPasswordResetEmail
 } from '@angular/fire/auth';
-
-
 import { Functions, httpsCallable } from '@angular/fire/functions';
-
 import { signOut } from '@firebase/auth';
 import { IUpdateProfileRequest, IUpdateProfileResponse,IProfile } from '@mp/api/profiles/util';
+import { IRemoveAuthRequest, IRemoveAuthResponse, IUpdateAuthRequest, IUpdateAuthResponse} from '@mp/api/auth/util'
 
 @Injectable()
 export class AuthApi {
@@ -30,11 +28,11 @@ export class AuthApi {
   
 
   async login(email: string, password: string) {
-    alert("init card-stack");
+    // alert("init card-stack");
     const isFirstTime = sessionStorage.getItem('firstTime') === null;
 
     if (isFirstTime) {
-      alert("only once you say!??");
+      // alert("only once you say!??");
       sessionStorage.setItem('currentIndex', '0');
       sessionStorage.setItem('firstTime', 'false');
     }
@@ -119,10 +117,22 @@ export class AuthApi {
     return await signInWithPopup(this.auth, provider);
   }
 
+
+  async RemoveAuth(request: IUpdateAuthRequest) {
+    await httpsCallable<
+      IUpdateAuthRequest,
+      IUpdateAuthResponse
+    >(
+      this.functions,   // auth.functions.ts in api/core/feature
+      'removeAuth'
+    )(request);
+    return await signOut(this.auth);
+  }
+
+
   async logout() {
     sessionStorage.removeItem('firstTime');
     sessionStorage.removeItem('currentIndex');
-    alert(sessionStorage.getItem('currentIndex'));
     return await signOut(this.auth);
   }
 }

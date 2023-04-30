@@ -1,6 +1,17 @@
-<div class="card-container">
+<div class="card-container" *ngIf="(allProfiles$ | async) as allProfiles;">
    <div style="display: none;" *ngIf="(profile$ | async) as profile;" #currentTime>{{profile?.TimeRemaining}}</div>
-  
+
+   <div class="no-more-profiles-container">
+    <div class="no-more-profiles-box">
+      <p>You do not have any more potential matches. Refresh the page to check again.</p>
+      <ion-buttons>
+        <ion-button (click)="refreshPage()" class="refresh-button">
+          <ion-icon name="refresh-outline" size="large" aria-hidden="true" slot="icon-only" class="refresh-icon"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </div>
+
   <mp-card-item *ngFor="let aProfile of profilesToShow"
     class="card-swipe-area"
     #cardItem
@@ -10,7 +21,10 @@
     bio={{aProfile?.Bio}}
     [photos]=aProfile?.ProfilePhotos
     age={{aProfile?.Age}}
+    major={{aProfile?.Major}}
+    [hobbies]=aProfile?.Hobby
   ></mp-card-item>
+
   <div class="card-container-button-area">
     <button>
       <svg stroke="currentColor"

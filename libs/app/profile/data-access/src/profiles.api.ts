@@ -15,7 +15,9 @@ import {
   IUpdatePersonalDetailsRequest,
   IUpdatePersonalDetailsResponse,
   IUpdateProfileRequest,
-  IUpdateProfileResponse
+  IUpdateProfileResponse,
+  IRemoveProfileRequest,
+  IRemoveProfileResponse
 } from '@mp/api/profiles/util';
 
 import { getDocs } from 'firebase/firestore';
@@ -111,9 +113,28 @@ export class ProfilesApi {
     };
 
     return await this.updateProfileDetails( {profile});
+  }
 
+  async updateOtherProfileTime(request: IUpdatePersonalDetailsRequest){
+    //alert("this is the time update")
+  const profile: IProfile = {
+    UID:request.profile.UID, 
+    TimeRemaining: request.profile.TimeRemaining,
+  };
+
+  return await this.updateProfileDetails( {profile});
 }
 
+  async removeProfile(request: IRemoveProfileRequest){
+    return await httpsCallable<
+      IRemoveProfileRequest,
+      IRemoveProfileResponse
+    >(
+      this.functions,
+      'RemoveProfile'
+    )(request);
+
+}
 
 async getUserProfileDetails(request: IGetUserProfileRequest) {
   if (request.userId == ''){

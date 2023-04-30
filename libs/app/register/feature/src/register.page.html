@@ -10,7 +10,7 @@
 <ion-content [fullscreen]="true">
 
   <form [formGroup]="registerForm" ngxsForm="register.registerForm" (submit)="register()">
-    <img src="https://docs-demo.ionic.io/assets/madison.jpg" class="logo">
+    <img src="https://firebasestorage.googleapis.com/v0/b/cos301miniprojectg2.appspot.com/o/Circ%201.png?alt=media&token=78b37d22-3a17-4da1-a4bf-d7657c0893cc" class="logo">
     <ion-text>
       <h1 class="ion-text-center"><b>Create an account</b></h1>
     </ion-text>
@@ -73,12 +73,6 @@
           <ion-select-option value="female">Female</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-text
-        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-        class="ion-padding-start"
-        color="danger">
-        <small>{{ emailError }}</small>
-      </ion-text>
       <ion-item>
         <ion-label position="floating" class="required">Email</ion-label>
         <ion-input
@@ -143,7 +137,7 @@
           <ion-button
             style="--background:coral"
             expand="block"
-            [disabled]="!this.registerForm.valid || (busy$ | async)"
+            [disabled]="!this.registerForm.valid || (busy$ | async) || !check"
             type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
             <ion-text>Register</ion-text>
