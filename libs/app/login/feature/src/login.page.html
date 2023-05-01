@@ -17,6 +17,7 @@
       <ion-item>
         <ion-label position="floating" class="required">Email</ion-label>
         <ion-input
+          id="emailInput"
           type="email"
           minlength="6"
           maxlength="64"
@@ -34,6 +35,7 @@
       <ion-item>
         <ion-label position="floating" class="required">Password</ion-label>
         <ion-input
+          id="passwordInput"
           [type]="showPassword ? 'text' : 'password'"
           minlength="6"
           maxlength="64"
@@ -59,6 +61,7 @@
       <ion-row>
         <ion-col>
           <ion-button
+            id="loginButton"
             style="--background:coral"
             expand="block"
             [disabled]="!this.loginForm.valid || (busy$ | async)"
