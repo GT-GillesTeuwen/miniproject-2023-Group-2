@@ -26,8 +26,7 @@ import { tap, from } from 'rxjs';
 import { ProfilesApi } from './profiles.api';
 
 import { AuthApi } from '@mp/app/auth/data-access';
-import {IUpdateSettingsRequest} from 'libs/api/settings/util/src'
-import { Profile } from 'libs/api/profiles/feature/src/models';
+import {IUpdateSettingsRequest} from '@mp/api/settings/util'
 
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

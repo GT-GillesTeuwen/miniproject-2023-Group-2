@@ -8,4 +8,3 @@ export * from './update-profile.response';
 export * from './i-get-user-profile.response';
 export * from './update-time.response';
 export * from './remove-profile.response';
-export * from './';

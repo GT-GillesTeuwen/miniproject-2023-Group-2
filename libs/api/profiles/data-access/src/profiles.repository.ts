@@ -22,6 +22,7 @@ export class ProfilesRepository {
       .doc(profile.UID)
       .get();
     }
+    throw "impossible";
   }
 
   async createProfile(profile: IProfile) {
@@ -36,6 +37,7 @@ export class ProfilesRepository {
       .doc(profile.UID)
       .create(profile);
   }
+  throw "impossible";
 }
 
   async updateProfile(profile: IProfile) {
@@ -50,6 +52,7 @@ export class ProfilesRepository {
         profile, { merge: true }
         );
       }
+      throw "impossible";
     }
 
   async updateMatches(profile: IProfile) {
@@ -89,6 +92,7 @@ export class ProfilesRepository {
           )
 
       }
+      throw "impossible";
   }
 
   async removeProfile(profile : IProfile){
