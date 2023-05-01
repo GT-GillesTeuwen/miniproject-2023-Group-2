@@ -10,7 +10,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CreateConversation, SendMessage,SubscribeToConversation,UpdateMeetingDetails } from '@mp/app/chat/util';
 
 import { NavController } from '@ionic/angular';
-import { SentBubbleUiComponent } from '../sent-bubble-ui/sent-bubble-ui.component';
 import { Time } from '@angular/common';
 import { IConversation, IMeetingDetails, IMessage } from '@mp/api/chat/util';
 import { SubscribeToProfile, UpdateTime } from '@mp/app/profile/util';

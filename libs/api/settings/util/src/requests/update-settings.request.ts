@@ -1,5 +1,5 @@
 
-import {ISettings} from '../../../../profiles/util/src'
+import {ISettings} from '@mp/api/profiles/util'
 
 export interface IUpdateSettingsRequest {
   UID: string |undefined;

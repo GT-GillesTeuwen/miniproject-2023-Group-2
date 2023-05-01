@@ -91,7 +91,7 @@ export class UpdateMatchHandler implements ICommandHandler<updateMatchCommand, I
     {
 
     let jan : IUpdateMatchResponse;
-    return jan;
+    return jan!;
   }
 
 

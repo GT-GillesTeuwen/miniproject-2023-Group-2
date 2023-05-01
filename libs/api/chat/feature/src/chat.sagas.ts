@@ -10,8 +10,6 @@ import { UserCreatedEvent } from '@mp/api/users/util';
 import { Injectable } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { map, Observable } from 'rxjs';
-import { CreateConversationCommand } from '../../util/src/commands';
-import { ConversationCreatedEvent } from '../../util/src/events';
 
 @Injectable()
 export class ChatSagas {

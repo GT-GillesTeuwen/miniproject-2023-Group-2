@@ -22,6 +22,7 @@ export class ProfilesRepository {
       .doc(profile.UID)
       .get();
     }
+    return null;
   }
 
   async createProfile(profile: IProfile) {
@@ -36,6 +37,7 @@ export class ProfilesRepository {
       .doc(profile.UID)
       .create(profile);
   }
+  return null;
 }
 
   async updateProfile(profile: IProfile) {
@@ -50,6 +52,7 @@ export class ProfilesRepository {
         profile, { merge: true }
         );
       }
+      return null;
     }
 
   async updateMatches(profile: IProfile) {
@@ -89,6 +92,7 @@ export class ProfilesRepository {
           )
 
       }
+      return null;
   }
 
   async removeProfile(profile : IProfile){

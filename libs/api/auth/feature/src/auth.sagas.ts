@@ -40,7 +40,7 @@ export class AuthSagas {
         (event: ContactDetailsUpdatedEvent) =>
           new UpdateAuthCommand({
             auth: {
-              id: event.profile.UID,
+              id: event.profile.UID!,
               phoneNumber: event.profile.ContactDetails?.Cell,
             },
           })

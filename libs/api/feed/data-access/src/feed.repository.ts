@@ -19,6 +19,7 @@ export class FeedRepository {
       .doc(profile.UID)
       .get();
     }
+    return null;
   }
 
   //Hopium
@@ -57,6 +58,6 @@ export class FeedRepository {
 
       }
       
-   
+   return null;
   }
 }

@@ -9,7 +9,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { from, tap } from 'rxjs';
 import { ChatApi } from './chat.api';
-import { AuthApi } from 'libs/app/auth/data-access/src/auth.api';
+import { AuthApi } from '@mp/app/auth/data-access';
 import { IConversation, ICreateConversationRequest, IMessage, IMessageSendRequest, IUpdateMeetingRequest } from '@mp/api/chat/util';
 import { Navigate } from '@ngxs/router-plugin';
 

@@ -21,7 +21,7 @@ export class RemoveProfileHandler
 
     const request = command.request;
     const profileDoc = await this.repository.findOne(request.profile);
-    const profileData = profileDoc.data();
+    const profileData = profileDoc?.data();
 
     if (!profileData) throw new Error('Profile not found (Remove)');
 
